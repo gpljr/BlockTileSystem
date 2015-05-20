@@ -51,6 +51,10 @@ public class WorldEntity : MonoBehaviour
     {
         RegisterMe();
     }
+    void OnDisable()
+    {
+        //DeregisterMe();
+    }
     public void Pushed(Direction direction)
     {
         isPushed = true;

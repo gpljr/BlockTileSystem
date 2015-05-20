@@ -31,6 +31,7 @@ public class WorldManager : MonoBehaviour
     [SerializeField]
     private Texture _pusherTexture;
 
+    private MapEditor mapEditor;
 
     public static WorldManager g;
 
@@ -59,11 +60,14 @@ public class WorldManager : MonoBehaviour
             Destroy(this);
         }
         _world = new TileType[_dims.x, _dims.y];
-        ClearMap();
+        mapEditor = gameObject.GetComponent<MapEditor>();
+        LoadLevel(1);
+    }
 
-        var mapEditor = gameObject.GetComponent<MapEditor>();
-        mapEditor.LoadFile();
-
+    private void LoadLevel(int iLevel)
+    {
+        ClearMap();        
+        mapEditor.LoadFile(iLevel);
         _dims = mapEditor.GetDim();
         _world = new TileType[_dims.x, _dims.y];
         _mainCamera.transform.position = new Vector3(_dims.x * _tileSize / 2, _dims.y * _tileSize / 2, -12f);
@@ -77,30 +81,38 @@ public class WorldManager : MonoBehaviour
             {
                 _entityMap[x, y] = new List<WorldEntity>();
             }
-            //_world[x, 0] = TileType.Wall;
-            //_world[x, _dims.y - 1] = TileType.Wall;
         }
         mapEditor.SetMap();
         mapEditor.SetCharacters();
         mapEditor.SetPushers();
-//default map
-        /*
-        for (int y = 0; y < _dims.y; y++)
-        {
-            _world[0, y] = TileType.Wall;
-            _world[_dims.x - 1, y] = TileType.Wall;
-        }*/
+        Events.g.Raise(new LevelLoadedEvent(iLevel));
+    }
+    private void LoadLevel(LoadLevelEvent e)
+    {
+        LoadLevel(e.iLevel);
+    }
+    void OnEnable()
+    {
+        Events.g.AddListener<LoadLevelEvent>(LoadLevel);
+    }
+    
+    void OnDisable()
+    {
+        Events.g.RemoveListener<LoadLevelEvent>(LoadLevel);
     }
 
     void FixedUpdate()
     {
         foreach (WorldEntity e in _entities)
         {
-            IntVector l = e.Location;
-            _entityMap[l.x, l.y].Remove(e);
-            e.Simulate();
-            l = e.Location;
-            _entityMap[l.x, l.y].Add(e);
+            if (e != null)
+            {
+                IntVector l = e.Location;
+                _entityMap[l.x, l.y].Remove(e);
+                e.Simulate();
+                l = e.Location;
+                _entityMap[l.x, l.y].Add(e);
+            }
         }
     }
     public void GenerateBasicMap(Tile[] tMap)
@@ -123,6 +135,22 @@ public class WorldManager : MonoBehaviour
             }
 
         }
+        List<WorldEntity> entitiesToRemove = new List<WorldEntity>();
+        foreach (WorldEntity e in _entities)
+        {
+            if ((e != null) && (e.entityType != EntityType.Character1) && (e.entityType != EntityType.Character2))
+            {
+                entitiesToRemove.Add(e);
+                IntVector l = e.Location;
+                _entityMap[l.x, l.y].Remove(e);
+                Destroy(e.gameObject);
+
+            }
+        }
+        foreach (WorldEntity e in entitiesToRemove)
+        {
+            _entities.Remove(e);
+        }
     }
     private IntVector Destination(IntVector from, Direction direction)
     {
@@ -140,8 +168,6 @@ public class WorldManager : MonoBehaviour
                 break;
             case Direction.East:
                 destination = new IntVector(from.x + 1, from.y);
-                break;
-            default:
                 break;
         }
         return destination;
@@ -167,32 +193,22 @@ public class WorldManager : MonoBehaviour
                     {
                         case EntityCollidingType.Empty:
                             return MoveResult.Move;
-                            break;
                         case EntityCollidingType.Colliding:
                             return MoveResult.Stuck;
-                            break;
                         case EntityCollidingType.Pushable:
                             switch (CanMove(destination, direction))
                             {
                                 case MoveResult.Move:
                                     PushEntity(_entities[i], direction);
                                     return MoveResult.Push;
-                                    break;
                                 case MoveResult.Stuck:
                                     return MoveResult.Stuck;
-                                    break;
                                 case MoveResult.Push:
                                     PushEntity(_entities[i], direction);
                                     return MoveResult.Push;
-                                    break;
                                 default:
                                     return MoveResult.Stuck;
-                                    break;
-                            }
-                            break;
-                        default:
-                            return MoveResult.Stuck;
-                            break;                        
+                            }                      
                     }
                 }
             }
@@ -213,13 +229,15 @@ public class WorldManager : MonoBehaviour
             print("error! entity on the wall!");
         }
         Instantiate(_pusherPreFab);
-        _pusherPreFab.GetComponent<WorldEntity>().Location = location;
+        var entity = _pusherPreFab.GetComponent<WorldEntity>();
+        entity.Location = location;
         var pusher = _pusherPreFab.GetComponent<Pusher>();
         pusher.direction = direction;
         pusher.isControlled = isControlled;
         pusher.iRange = range;
         pusher.iID = ID;
         pusher.fTimeInterval = timeInterval;
+
     }
 
     void OnDrawGizmos()
@@ -248,27 +266,26 @@ public class WorldManager : MonoBehaviour
                         Gizmos.color = Color.black;
                         break;
                 }
-                
-                //Gizmos.DrawCube(new Vector3(x * _tileSize + _tileSize / 2f, y * _tileSize + _tileSize / 2f, 0f), Vector3.one * _tileSize * 0.9f);
             }
         }
-
         foreach (WorldEntity e in _entities)
         {
-            IntVector l = e.Location;
-            Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
-            //Gizmos.DrawSphere(l.ToVector2() * _tileSize + new Vector2(_tileSize / 2f, _tileSize / 2f), _tileSize / 2f * 0.8f);
-            switch (e.entityType)
+            if (e != null)
             {
-                case EntityType.Character1:
-                    Gizmos.DrawGUITexture(rect, _character1Texture);
-                    break;
-                case EntityType.Character2:
-                    Gizmos.DrawGUITexture(rect, _character2Texture);
-                    break;
-                case EntityType.Pusher:
-                    Gizmos.DrawGUITexture(rect, _pusherTexture);
-                    break;
+                IntVector l = e.Location;
+                Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
+                switch (e.entityType)
+                {
+                    case EntityType.Character1:
+                        Gizmos.DrawGUITexture(rect, _character1Texture);
+                        break;
+                    case EntityType.Character2:
+                        Gizmos.DrawGUITexture(rect, _character2Texture);
+                        break;
+                    case EntityType.Pusher:
+                        Gizmos.DrawGUITexture(rect, _pusherTexture);
+                        break;
+                }
             }
             
         }

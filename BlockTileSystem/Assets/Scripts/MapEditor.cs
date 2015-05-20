@@ -10,7 +10,6 @@ public class MapEditor : MonoBehaviour
     [SerializeField]
     GameObject Char2;
     
-    private string _sLevelName = "Levels/map.xml";
 
     WorldManager worldManage;
     private SavableLevel toLoad;
@@ -20,11 +19,12 @@ public class MapEditor : MonoBehaviour
         worldManage = gameObject.GetComponent<WorldManager>();
     }
 
-    public void LoadFile()
+    public void LoadFile(int iLevel)
     {
         //read the file
         XmlSerializer levelDeserializer = new XmlSerializer(typeof(SavableLevel));
-        FileStream levelReader = new FileStream(Path.Combine(Application.dataPath, _sLevelName), FileMode.Open); // TODO(Julian): Varying filenames
+        string sLevelName="Levels/"+iLevel.ToString()+".xml";
+        FileStream levelReader = new FileStream(Path.Combine(Application.dataPath,sLevelName ), FileMode.Open); // TODO(Julian): Varying filenames
         XmlReader xmlReader = XmlReader.Create(levelReader);
         toLoad = (SavableLevel)levelDeserializer.Deserialize(xmlReader);
         levelReader.Close();
@@ -59,6 +59,7 @@ public class MapEditor : MonoBehaviour
                 break;
             }           
             worldManage.InstantiatePusher(pushers[i].vPosition, pushers[i].isControlled, pushers[i].direction, pushers[i].range, pushers[i].ID, pushers[i].timeInterval);
+            
         }
     }
     public void SetMap()
