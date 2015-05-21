@@ -9,6 +9,7 @@ public struct SavableLevel
         public IntVector vChar1StartPos, vChar2StartPos;
         public Tile[] tMap;
         public PusherInXML[] pPushers;
+        public StarInXML[] sStars;
     }
 
     public struct Tile
@@ -33,6 +34,10 @@ public struct SavableLevel
         public int range;
         public int ID;
         public float timeInterval;
+    }
+    public struct StarInXML
+    {
+        public IntVector vPosition;
     }
 
 
@@ -59,6 +64,7 @@ public struct SavableLevel
         Character1
         ,Character2
         ,Pusher
+        ,LevelStar
     }
 
 public class Structs : MonoBehaviour {

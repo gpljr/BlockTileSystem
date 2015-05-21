@@ -51,12 +51,9 @@ public class WorldEntity : MonoBehaviour
     {
         RegisterMe();
     }
-    void OnDisable()
-    {
-        //DeregisterMe();
-    }
     public void Pushed(Direction direction)
     {
+        //for character being pushed. play pushed animation
         isPushed = true;
         pushedDirection = direction;
     }

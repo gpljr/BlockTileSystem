@@ -16,18 +16,18 @@ public class LevelCode : MonoBehaviour
     [SerializeField]
     AnimationCurve
         _fadeCurve;
-        [SerializeField]
-        private GameObject image;
+    [SerializeField]
+    private GameObject image;
     private Image _image;
     [HideInInspector]
     public bool inFading = true;
+
+    private bool _bPlayer1Entered, _bPlayer2Entered;
 
     void Start()
     {
         image.SetActive(true);
         _image = image.GetComponent<Image>();//TODO
-            
-            
     }
 
     void Update()
@@ -44,12 +44,14 @@ public class LevelCode : MonoBehaviour
         {
             LoadNextLevel();
         }
-
+        if (_bPlayer1Entered && _bPlayer2Entered)
+        {
+            LoadNextLevel();
+        }
         if (_bNewLevelLoaded)
         {
             StartLevel();
-            _bNewLevelLoaded = false;
-            
+            _bNewLevelLoaded = false;            
         }
 
     }
@@ -57,11 +59,40 @@ public class LevelCode : MonoBehaviour
     void OnEnable()
     {
         Events.g.AddListener<LevelLoadedEvent>(LevelLoaded);
+        Events.g.AddListener<LevelStarEvent>(LevelPass);
     }
     
     void OnDisable()
     {
         Events.g.RemoveListener<LevelLoadedEvent>(LevelLoaded);
+        Events.g.RemoveListener<LevelStarEvent>(LevelPass);
+    }
+    void LevelPass(LevelStarEvent e)
+    {
+        if (e.isEntered)
+        {
+            switch (e.CharacterID)
+            {
+                case 1:
+                    _bPlayer1Entered = true;
+                    break;
+                case 2:
+                    _bPlayer2Entered = true;
+                    break;
+            }
+        }
+        else
+        {
+            switch (e.CharacterID)
+            {
+                case 1:
+                    _bPlayer1Entered = false;
+                    break;
+                case 2:
+                    _bPlayer2Entered = false;
+                    break;
+            }
+        }
     }
 
     void LevelLoaded(LevelLoadedEvent e)
@@ -72,6 +103,8 @@ public class LevelCode : MonoBehaviour
 
     public void LoadLevel(int iLevel)
     {
+        _bPlayer1Entered = false;
+        _bPlayer2Entered = false;
         EndLevel(iLevel);
     }
     public void LoadNextLevel()

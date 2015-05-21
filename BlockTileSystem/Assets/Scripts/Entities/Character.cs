@@ -36,7 +36,7 @@ public class Character : MonoBehaviour
     {
         Cache();
         _worldEntity.CollidingType = EntityCollidingType.Pushable;
-        if(_iCharacterID == 1)
+        if (_iCharacterID == 1)
         {
             _worldEntity.entityType = EntityType.Character1;
         }
@@ -99,7 +99,7 @@ public class Character : MonoBehaviour
     {
         if (_bMove)
         {
-            switch (WorldManager.g.CanMove(_worldEntity.Location, _direction))
+            switch (WorldManager.g.CanMove(_worldEntity.Location, _direction,_worldEntity))
             {
                 case MoveResult.Move:
                     Move();

@@ -58,8 +58,17 @@ public class MapEditor : MonoBehaviour
                 pushers[i].direction=Direction.East;
                 break;
             }           
-            worldManage.InstantiatePusher(pushers[i].vPosition, pushers[i].isControlled, pushers[i].direction, pushers[i].range, pushers[i].ID, pushers[i].timeInterval);
+            worldManage.InstantiatePusher(pushers[i].vPosition, pushers[i].isControlled, 
+                pushers[i].direction, pushers[i].range, pushers[i].ID, pushers[i].timeInterval);
             
+        }
+    }
+    public void SetStars()
+    {
+        StarInXML[] stars = toLoad.sStars;
+        for (int i = 0; i < stars.Length; i++)
+        {          
+            worldManage.InstantiateStar(stars[i].vPosition);            
         }
     }
     public void SetMap()

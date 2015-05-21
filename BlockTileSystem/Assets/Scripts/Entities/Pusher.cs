@@ -107,7 +107,7 @@ public class Pusher : MonoBehaviour
     }
     private void TryMove(Direction tryDirection)
     {
-        switch (WorldManager.g.CanMove(_worldEntity.Location, tryDirection))
+        switch (WorldManager.g.CanMove(_worldEntity.Location, tryDirection,_worldEntity))
         {
             case MoveResult.Move:
                 MoveOneStep(tryDirection);
