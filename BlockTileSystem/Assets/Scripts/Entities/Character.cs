@@ -159,23 +159,23 @@ public class Character : MonoBehaviour
         }
         _worldEntity.Location = vec;
     }
-    void OnDrawGizmos()
-    {
-        if (_worldEntity != null)
-        {
-            IntVector l = _worldEntity.Location;
-            //Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
-            Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);
+    // void OnDrawGizmos()
+    // {
+    //     if (_worldEntity != null)
+    //     {
+    //         IntVector l = _worldEntity.Location;
+    //         //Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
+    //         Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);
                 
-            Gizmos.DrawGUITexture(rect, _character1Texture);
-        }        
-    }
-    void OnGUI()
-    {
-        IntVector l = _worldEntity.Location;
-        Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);
-        //GUI.depth=-1;
-        GUI.DrawTexture(rect, _character1Texture);
+    //         Gizmos.DrawGUITexture(rect, _character1Texture);
+    //     }        
+    // }
+    // void OnGUI()
+    // {
+    //     IntVector l = _worldEntity.Location;
+    //     Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);
+    //     //GUI.depth=-1;
+    //     GUI.DrawTexture(rect, _character1Texture);
         
-    }
+    // }
 }

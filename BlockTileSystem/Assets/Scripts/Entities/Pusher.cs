@@ -172,13 +172,13 @@ public class Pusher : MonoBehaviour
                 break;
         }
     }
-    void OnDrawGizmos()
-    {
-        if (_worldEntity != null)
-        {
-            IntVector l = _worldEntity.Location;
-            Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);                
-            Gizmos.DrawGUITexture(rect, _pusherTexture);
-        }
-    }
+    // void OnDrawGizmos()
+    // {
+    //     if (_worldEntity != null)
+    //     {
+    //         IntVector l = _worldEntity.Location;
+    //         Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);                
+    //         Gizmos.DrawGUITexture(rect, _pusherTexture);
+    //     }
+    // }
 }

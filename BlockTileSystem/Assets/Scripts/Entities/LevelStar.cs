@@ -53,14 +53,14 @@ public class LevelStar : MonoBehaviour
             }
         }
     }
-    void OnDrawGizmos()
-    {
-        if (_worldTrigger != null)
-        {
-            IntVector l = _worldTrigger.Location;
-            Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);                
-            Gizmos.DrawGUITexture(rect, _starTexture);
-        }
-    }
+    // void OnDrawGizmos()
+    // {
+    //     if (_worldTrigger != null)
+    //     {
+    //         IntVector l = _worldTrigger.Location;
+    //         Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);                
+    //         Gizmos.DrawGUITexture(rect, _starTexture);
+    //     }
+    // }
 
 }

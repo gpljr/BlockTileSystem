@@ -34,20 +34,21 @@ public class WorldManager : MonoBehaviour
 
     [SerializeField]
     private GameObject _mainCamera;
+    private Camera _camera;
 
     
     [SerializeField]
     private Texture _floorTexture;
     [SerializeField]
     private Texture _wallTexture;
-    // [SerializeField]
-    // private Texture _character1Texture;
-    // [SerializeField]
-    // private Texture _character2Texture;
-    // [SerializeField]
-    // private Texture _pusherTexture;
-    // [SerializeField]
-    // private Texture _starTexture;
+    [SerializeField]
+    private Texture _character1Texture;
+    [SerializeField]
+    private Texture _character2Texture;
+    [SerializeField]
+    private Texture _pusherTexture;
+    [SerializeField]
+    private Texture _starTexture;
 
     private MapEditor mapEditor;
     public static WorldManager g;
@@ -104,6 +105,7 @@ public class WorldManager : MonoBehaviour
         _dims = mapEditor.GetDim();
         _world = new TileType[_dims.x, _dims.y];
         _mainCamera.transform.position = new Vector3(_dims.x * _tileSize / 2, _dims.y * _tileSize / 2, -12f);
+        _camera=_mainCamera.GetComponent<Camera>();
         //_mainCamera.GetComponent<Camera>().orthographicSize = Mathf.Min(_dims.x, _dims.y) * _tileSize / 2 + 2;
 
         _entityMap = new List<WorldEntity>[_dims.x, _dims.y];
@@ -153,7 +155,7 @@ public class WorldManager : MonoBehaviour
         Vector2 cameraLocation = (Char1.Location + Char2.Location).ToVector2() * _tileSize / 2f;
         _mainCamera.transform.position = new Vector3(cameraLocation.x, cameraLocation.y, -12f);
         float distance = Vector2.Distance(Char1.Location.ToVector2(), Char2.Location.ToVector2());
-        _mainCamera.GetComponent<Camera>().orthographicSize = Mathf.Max(distance, 6f) * _tileSize;
+        _camera.orthographicSize = Mathf.Max(distance, 6f) * _tileSize;
     }
     public void GenerateBasicMap(Tile[] tMap)
     {
@@ -365,36 +367,36 @@ public class WorldManager : MonoBehaviour
         }
 
 
-        // foreach (WorldTrigger t in _triggers)
-        // {
-        //     if (t != null)
-        //     {
-        //         IntVector l = t.Location;
-        //         Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
-        //         Gizmos.DrawGUITexture(rect, _starTexture);
-        //     }
-        // }
-        // foreach (WorldEntity e in _entities)
-        // {
-        //     if (e != null)
-        //     {
-        //         IntVector l = e.Location;
-        //         Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
-        //         switch (e.entityType)
-        //         {
-        //             case EntityType.Character1:
-        //                 //Gizmos.DrawGUITexture(rect, _character1Texture);
-        //                 break;
-        //             case EntityType.Character2:
-        //                 //Gizmos.DrawGUITexture(rect, _character2Texture);
-        //                 break;
-        //             case EntityType.Pusher:
-        //                 Gizmos.DrawGUITexture(rect, _pusherTexture);
-        //                 break;
-        //         }
-        //     }
+        foreach (WorldTrigger t in _triggers)
+        {
+            if (t != null)
+            {
+                IntVector l = t.Location;
+                Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
+                Gizmos.DrawGUITexture(rect, _starTexture);
+            }
+        }
+        foreach (WorldEntity e in _entities)
+        {
+            if (e != null)
+            {
+                IntVector l = e.Location;
+                Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
+                switch (e.entityType)
+                {
+                    case EntityType.Character1:
+                        Gizmos.DrawGUITexture(rect, _character1Texture);
+                        break;
+                    case EntityType.Character2:
+                        Gizmos.DrawGUITexture(rect, _character2Texture);
+                        break;
+                    case EntityType.Pusher:
+                        Gizmos.DrawGUITexture(rect, _pusherTexture);
+                        break;
+                }
+            }
             
-        // }
+        }
         
     }
     // void OnGUI()
