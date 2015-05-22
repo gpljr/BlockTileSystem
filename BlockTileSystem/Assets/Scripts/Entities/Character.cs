@@ -15,6 +15,9 @@ public class Character : MonoBehaviour
     [SerializeField]
     KeyCode _downKey;
 
+    [SerializeField]
+    Texture _character1Texture;
+
     private WorldEntity _worldEntity;
     private IntVector _input;
 
@@ -99,7 +102,7 @@ public class Character : MonoBehaviour
     {
         if (_bMove)
         {
-            switch (WorldManager.g.CanMove(_worldEntity.Location, _direction,_worldEntity))
+            switch (WorldManager.g.CanMove(_worldEntity.Location, _direction, _worldEntity))
             {
                 case MoveResult.Move:
                     Move();
@@ -155,5 +158,24 @@ public class Character : MonoBehaviour
             _input.y = 0;            
         }
         _worldEntity.Location = vec;
+    }
+    void OnDrawGizmos()
+    {
+        if (_worldEntity != null)
+        {
+            IntVector l = _worldEntity.Location;
+            //Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
+            Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);
+                
+            Gizmos.DrawGUITexture(rect, _character1Texture);
+        }        
+    }
+    void OnGUI()
+    {
+        IntVector l = _worldEntity.Location;
+        Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);
+        //GUI.depth=-1;
+        GUI.DrawTexture(rect, _character1Texture);
+        
     }
 }

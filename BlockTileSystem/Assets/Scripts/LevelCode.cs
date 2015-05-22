@@ -21,7 +21,6 @@ public class LevelCode : MonoBehaviour
     private Image _image;
     [HideInInspector]
     public bool inFading = true;
-
     private bool _bPlayer1Entered, _bPlayer2Entered;
 
     void Start()
@@ -40,6 +39,10 @@ public class LevelCode : MonoBehaviour
         {
             LoadLevel(1);
         }
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            LoadLevel(_iCurrentLevel);
+        }
         if (Input.GetKeyDown(KeyCode.N))
         {
             LoadNextLevel();
@@ -48,6 +51,7 @@ public class LevelCode : MonoBehaviour
         {
             LoadNextLevel();
         }
+
         if (_bNewLevelLoaded)
         {
             StartLevel();
@@ -159,7 +163,6 @@ public class LevelCode : MonoBehaviour
     IEnumerator FadeOut(float timerDuration, AnimationCurve curve, int iLevelToLoad)
     {
         yield return StartCoroutine(Fade(timerDuration, curve, fadeIn: false));
-        //Application.LoadLevel(Application.loadedLevel + 1);
         Events.g.Raise(new LoadLevelEvent(iLevel: iLevelToLoad));
     }
     
@@ -168,6 +171,4 @@ public class LevelCode : MonoBehaviour
     {
         StartCoroutine(FadeOut(_timeToFadeOut, _fadeCurve, iLevelToLoad));
     }
-
-    //fade, load level, music,general
 }

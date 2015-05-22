@@ -4,6 +4,9 @@ using System.Collections;
 public class LevelStar : MonoBehaviour
 {
     private WorldTrigger _worldTrigger;
+
+    [SerializeField]
+    Texture _starTexture;
     public void Cache()
     {
         _worldTrigger = GetComponent<WorldTrigger>();
@@ -48,6 +51,15 @@ public class LevelStar : MonoBehaviour
                 }
                 _worldTrigger.isMessageSent = true;
             }
+        }
+    }
+    void OnDrawGizmos()
+    {
+        if (_worldTrigger != null)
+        {
+            IntVector l = _worldTrigger.Location;
+            Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);                
+            Gizmos.DrawGUITexture(rect, _starTexture);
         }
     }
 

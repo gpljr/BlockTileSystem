@@ -18,6 +18,9 @@ public class Pusher : MonoBehaviour
     private bool _needMove;
     private float _fTimeBetweenMoves;
     private int _iStep;
+
+    [SerializeField]
+    Texture _pusherTexture;
 	
     public void Cache()
     {
@@ -167,6 +170,15 @@ public class Pusher : MonoBehaviour
             default:
                 return Direction.North;//error
                 break;
+        }
+    }
+    void OnDrawGizmos()
+    {
+        if (_worldEntity != null)
+        {
+            IntVector l = _worldEntity.Location;
+            Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);                
+            Gizmos.DrawGUITexture(rect, _pusherTexture);
         }
     }
 }

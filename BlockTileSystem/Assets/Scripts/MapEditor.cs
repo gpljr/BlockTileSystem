@@ -5,26 +5,20 @@ using System.Xml.Serialization;
 
 public class MapEditor : MonoBehaviour
 {
-    [SerializeField]
-    GameObject Char1;
-    [SerializeField]
-    GameObject Char2;
-    
-
-    WorldManager worldManage;
+    //WorldManager worldManage;
     private SavableLevel toLoad;
 
     void Awake()
     {
-        worldManage = gameObject.GetComponent<WorldManager>();
+        //worldManage = gameObject.GetComponent<WorldManager>();
     }
 
     public void LoadFile(int iLevel)
     {
         //read the file
         XmlSerializer levelDeserializer = new XmlSerializer(typeof(SavableLevel));
-        string sLevelName="Levels/"+iLevel.ToString()+".xml";
-        FileStream levelReader = new FileStream(Path.Combine(Application.dataPath,sLevelName ), FileMode.Open); // TODO(Julian): Varying filenames
+        string sLevelName = "Levels/" + iLevel.ToString() + ".xml";
+        FileStream levelReader = new FileStream(Path.Combine(Application.dataPath, sLevelName), FileMode.Open); // TODO(Julian): Varying filenames
         XmlReader xmlReader = XmlReader.Create(levelReader);
         toLoad = (SavableLevel)levelDeserializer.Deserialize(xmlReader);
         levelReader.Close();
@@ -35,8 +29,7 @@ public class MapEditor : MonoBehaviour
     }
     public void SetCharacters()
     {
-        Char1.GetComponent<WorldEntity>().Location = toLoad.vChar1StartPos;
-        Char2.GetComponent<WorldEntity>().Location = toLoad.vChar2StartPos;
+        WorldManager.g.SetCharacters(toLoad.vChar1StartPos, toLoad.vChar2StartPos);
     }
     public void SetPushers()
     {
@@ -46,19 +39,19 @@ public class MapEditor : MonoBehaviour
             switch (pushers[i].sDirection)
             {
                 case "North":
-                pushers[i].direction=Direction.North;
-                break;
+                    pushers[i].direction = Direction.North;
+                    break;
                 case "South":
-                pushers[i].direction=Direction.South;
-                break;
+                    pushers[i].direction = Direction.South;
+                    break;
                 case "West":
-                pushers[i].direction=Direction.West;
-                break;
+                    pushers[i].direction = Direction.West;
+                    break;
                 case "East":
-                pushers[i].direction=Direction.East;
-                break;
+                    pushers[i].direction = Direction.East;
+                    break;
             }           
-            worldManage.InstantiatePusher(pushers[i].vPosition, pushers[i].isControlled, 
+            WorldManager.g.InstantiatePusher(pushers[i].vPosition, pushers[i].isControlled, 
                 pushers[i].direction, pushers[i].range, pushers[i].ID, pushers[i].timeInterval);
             
         }
@@ -68,7 +61,7 @@ public class MapEditor : MonoBehaviour
         StarInXML[] stars = toLoad.sStars;
         for (int i = 0; i < stars.Length; i++)
         {          
-            worldManage.InstantiateStar(stars[i].vPosition);            
+            WorldManager.g.InstantiateStar(stars[i].vPosition);            
         }
     }
     public void SetMap()
@@ -93,7 +86,7 @@ public class MapEditor : MonoBehaviour
                     break;
             }
         }
-        worldManage.GenerateBasicMap(tMap);
+        WorldManager.g.GenerateBasicMap(tMap);
     }
 
 }
