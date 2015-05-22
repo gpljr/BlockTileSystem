@@ -11,6 +11,8 @@ public class WorldTrigger : MonoBehaviour
     [HideInInspector]
     public EntityType steppingEntityType;
 
+    public TriggerType triggerType;
+
     [SerializeField]
     IntVector _location;
 

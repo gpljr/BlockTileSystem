@@ -64,6 +64,30 @@ public class MapEditor : MonoBehaviour
             WorldManager.g.InstantiateStar(stars[i].vPosition);            
         }
     }
+    public void SetDoors()
+    {
+        DoorInXML[] doors = toLoad.dDoors;
+        for (int i = 0; i < doors.Length; i++)
+        {          
+            WorldManager.g.InstantiateDoor(doors[i].vPosition, ID:doors[i].iID , triggerNumber: doors[i].triggerNumber);         
+        }
+    }
+    public void SetStepTriggers()
+    {
+        StepTriggerInXML[] stepTriggers = toLoad.StepTriggers;
+        for (int i = 0; i < stepTriggers.Length; i++)
+        {          
+            WorldManager.g.InstantiateStepTrigger(stepTriggers[i].vPosition, ID:stepTriggers[i].iID ) ;        
+        }
+    }
+    public void SetStayTriggers()
+    {
+        StayTriggerInXML[] stayTriggers = toLoad.StayTriggers;
+        for (int i = 0; i < stayTriggers.Length; i++)
+        {          
+            WorldManager.g.InstantiateStayTrigger(stayTriggers[i].vPosition, ID:stayTriggers[i].iID ) ;        
+        }
+    }
     public void SetMap()
     {
         Tile[] tMap = toLoad.tMap;

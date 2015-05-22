@@ -10,6 +10,9 @@ public struct SavableLevel
         public Tile[] tMap;
         public PusherInXML[] pPushers;
         public StarInXML[] sStars;
+        public DoorInXML[] dDoors;
+        public StepTriggerInXML[] StepTriggers;
+        public StayTriggerInXML[] StayTriggers;
     }
 
     public struct Tile
@@ -39,6 +42,22 @@ public struct SavableLevel
     {
         public IntVector vPosition;
     }
+    public struct DoorInXML
+    {
+        public IntVector vPosition;
+        public int iID;
+        public int triggerNumber;
+    }
+    public struct StepTriggerInXML
+    {
+        public IntVector vPosition;
+        public int iID;
+    }
+    public struct StayTriggerInXML
+    {
+        public IntVector vPosition;
+        public int iID;
+    }
 
 
     public enum MoveResult
@@ -65,6 +84,12 @@ public struct SavableLevel
         ,Character2
         ,Pusher
         ,LevelStar
+        ,Door
+    }
+    public enum TriggerType{
+        StepTrigger
+        ,StayTrigger
+        ,Star
     }
 
 public class Structs : MonoBehaviour {

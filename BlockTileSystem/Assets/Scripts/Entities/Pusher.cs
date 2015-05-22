@@ -21,7 +21,7 @@ public class Pusher : MonoBehaviour
 
     [SerializeField]
     Texture _pusherTexture;
-	
+    
     public void Cache()
     {
         _worldEntity = GetComponent<WorldEntity>();
@@ -38,11 +38,13 @@ public class Pusher : MonoBehaviour
     void OnEnable()
     {
         _worldEntity.Simulators += Simulate;
+        Events.g.AddListener<StayTriggerEvent>(Triggered);
     }
 
     void OnDisable()
     {
         _worldEntity.Simulators -= Simulate;
+        Events.g.RemoveListener<StayTriggerEvent>(Triggered);
     }
     void Update()
     {
@@ -67,34 +69,21 @@ public class Pusher : MonoBehaviour
             }
             else
             {
-                if (isTriggered)
-                {
-                    _isForward = true;
-                    TriggeredMove();
-                }
-                else
-                {
-                    TriggeredMove();
-                    _isForward = false;
-                }
+                TriggeredMove();
             }
         }
     }
     private void AutoMove()
     {
-        if (_iStep < iRange)
-        {
-            _isForward = true;
-        }
-        else if ((_iStep < 2 * iRange) && (_iStep >= iRange))
+        if (_iStep >= iRange && _isForward)
         {
             _isForward = false;
         }
-        else
+        if (_iStep <= 0 && !_isForward)
         {
-            _iStep = 0;
             _isForward = true;
         }
+
         if (_isForward)
         {
             TryMove(direction);
@@ -104,13 +93,35 @@ public class Pusher : MonoBehaviour
             TryMove(DirectionFlip(direction));
         }
     }
+    private void Triggered(StayTriggerEvent e)
+    {
+        if (e.triggerID == iID)
+        {
+            isTriggered = e.isEntered;
+        }
+    }
     private void TriggeredMove()
     {
-
+        if (isTriggered)
+        {
+            if (_iStep < iRange && _iStep >= 0)
+            {
+                _isForward = true; 
+                TryMove(direction);   
+            }                
+        }
+        else
+        {
+            if (_iStep <= iRange && _iStep > 0)
+            {
+                _isForward = false; 
+                TryMove(DirectionFlip(direction));   
+            }
+        }
     }
     private void TryMove(Direction tryDirection)
     {
-        switch (WorldManager.g.CanMove(_worldEntity.Location, tryDirection,_worldEntity))
+        switch (WorldManager.g.CanMove(_worldEntity.Location, tryDirection, _worldEntity))
         {
             case MoveResult.Move:
                 MoveOneStep(tryDirection);
@@ -149,7 +160,15 @@ public class Pusher : MonoBehaviour
         }
         _worldEntity.Location = vec;
         _needMove = false;
-        _iStep++;
+        if (_isForward)
+        {
+            _iStep++;
+        }
+        else
+        {
+            _iStep--;
+        }
+        
     }
     private Direction DirectionFlip(Direction direction)
     {
@@ -177,7 +196,7 @@ public class Pusher : MonoBehaviour
     //     if (_worldEntity != null)
     //     {
     //         IntVector l = _worldEntity.Location;
-    //         Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);                
+    //         Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);
     //         Gizmos.DrawGUITexture(rect, _pusherTexture);
     //     }
     // }

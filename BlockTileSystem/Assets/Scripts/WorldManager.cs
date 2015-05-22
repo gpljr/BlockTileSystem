@@ -31,6 +31,12 @@ public class WorldManager : MonoBehaviour
     private GameObject _pusherPreFab;
     [SerializeField]
     private GameObject _starPreFab;
+    [SerializeField]
+    private GameObject _doorPreFab;
+    [SerializeField]
+    private GameObject _stepTriggerPreFab;
+    [SerializeField]
+    private GameObject _stayTriggerPreFab;
 
     [SerializeField]
     private GameObject _mainCamera;
@@ -49,6 +55,14 @@ public class WorldManager : MonoBehaviour
     private Texture _pusherTexture;
     [SerializeField]
     private Texture _starTexture;
+    [SerializeField]
+    private Texture _doorTexture;
+    [SerializeField]
+    private Texture _doorHalfOpenTexture;
+    [SerializeField]
+    private Texture _stepTriggerTexture;
+    [SerializeField]
+    private Texture _stayTriggerTexture;
 
     private MapEditor mapEditor;
     public static WorldManager g;
@@ -96,6 +110,10 @@ public class WorldManager : MonoBehaviour
         Char2 = Char2Object.GetComponent<WorldEntity>();
 
         LoadLevel(1);
+
+        // InstantiateDoor(new IntVector(4, 5), ID: 1, triggerNumber: 1);
+        // InstantiateStepTrigger(new IntVector(4, 4), ID: 1);
+        // InstantiateStayTrigger(new IntVector(9, 5), ID: 1);
     }
 
     private void LoadLevel(int iLevel)
@@ -105,7 +123,7 @@ public class WorldManager : MonoBehaviour
         _dims = mapEditor.GetDim();
         _world = new TileType[_dims.x, _dims.y];
         _mainCamera.transform.position = new Vector3(_dims.x * _tileSize / 2, _dims.y * _tileSize / 2, -12f);
-        _camera=_mainCamera.GetComponent<Camera>();
+        _camera = _mainCamera.GetComponent<Camera>();
         //_mainCamera.GetComponent<Camera>().orthographicSize = Mathf.Min(_dims.x, _dims.y) * _tileSize / 2 + 2;
 
         _entityMap = new List<WorldEntity>[_dims.x, _dims.y];
@@ -123,6 +141,9 @@ public class WorldManager : MonoBehaviour
         mapEditor.SetCharacters();
         mapEditor.SetPushers();
         mapEditor.SetStars();
+        mapEditor.SetDoors();
+        mapEditor.SetStepTriggers();
+        mapEditor.SetStayTriggers();
         Events.g.Raise(new LevelLoadedEvent(iLevel));
     }
     private void LoadLevel(LoadLevelEvent e)
@@ -321,10 +342,10 @@ public class WorldManager : MonoBehaviour
         {
             print("error! entity on the wall!");
         }
-        Instantiate(_pusherPreFab);
-        var entity = _pusherPreFab.GetComponent<WorldEntity>();
+        var gameObject = Instantiate(_pusherPreFab);
+        var entity = gameObject.GetComponent<WorldEntity>();
         entity.Location = location;
-        var pusher = _pusherPreFab.GetComponent<Pusher>();
+        var pusher = gameObject.GetComponent<Pusher>();
         pusher.direction = direction;
         pusher.isControlled = isControlled;
         pusher.iRange = range;
@@ -338,10 +359,48 @@ public class WorldManager : MonoBehaviour
         {
             print("error! trigger on the wall!");
         }
-        Instantiate(_starPreFab);
-        var trigger = _starPreFab.GetComponent<WorldTrigger>();
+        var gameObject = Instantiate(_starPreFab);
+        var trigger = gameObject.GetComponent<WorldTrigger>();
         trigger.Location = location;
     }
+    public void InstantiateDoor(IntVector location, int ID, int triggerNumber)
+    {
+        if (_world[location.x, location.y] == TileType.Wall)
+        {
+            print("error! door on the wall!");
+        }
+        var gameObject = Instantiate(_doorPreFab);
+        var entity = gameObject.GetComponent<WorldEntity>();
+        entity.Location = location;
+        var door = gameObject.GetComponent<Door>();
+        door.iID = ID;
+        door.iTriggerNumber = triggerNumber;
+    }
+    public void InstantiateStepTrigger(IntVector location, int ID)
+    {
+        if (_world[location.x, location.y] == TileType.Wall)
+        {
+            print("error! step trigger on the wall!");
+        }
+        var gameObject = Instantiate(_stepTriggerPreFab);
+        var trigger = gameObject.GetComponent<WorldTrigger>();
+        trigger.Location = location;
+        var stepTrigger = gameObject.GetComponent<StepTrigger>();
+        stepTrigger.iID = ID;
+    }
+    public void InstantiateStayTrigger(IntVector location, int ID)
+    {
+        if (_world[location.x, location.y] == TileType.Wall)
+        {
+            print("error! stay trigger on the wall!");
+        }
+        var gameObject = Instantiate(_stayTriggerPreFab);
+        var trigger = gameObject.GetComponent<WorldTrigger>();
+        trigger.Location = location;
+        var stayTrigger = gameObject.GetComponent<StayTrigger>();
+        stayTrigger.iID = ID;
+    }
+
 
     void OnDrawGizmos()
     {
@@ -373,7 +432,23 @@ public class WorldManager : MonoBehaviour
             {
                 IntVector l = t.Location;
                 Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
-                Gizmos.DrawGUITexture(rect, _starTexture);
+                switch (t.triggerType)
+                {
+                    case TriggerType.Star:
+                        Gizmos.DrawGUITexture(rect, _starTexture);
+                        break;
+                    case TriggerType.StayTrigger:
+                        Gizmos.DrawGUITexture(rect, _stayTriggerTexture);
+                        break;
+                    case TriggerType.StepTrigger:
+                        var stepTrigger = t.gameObject.GetComponent<StepTrigger>();
+                        if (stepTrigger!= null && !stepTrigger.isTriggered)
+                        {
+                            Gizmos.DrawGUITexture(rect, _stepTriggerTexture);
+                        }
+                        
+                        break;
+                }
             }
         }
         foreach (WorldEntity e in _entities)
@@ -392,6 +467,22 @@ public class WorldManager : MonoBehaviour
                         break;
                     case EntityType.Pusher:
                         Gizmos.DrawGUITexture(rect, _pusherTexture);
+                        break;
+                    case EntityType.Door:
+                        var door = e.gameObject.GetComponent<Door>();
+                        if (door.isOpen)
+                        {
+
+                        }
+                        else if (door.isHalfOpen)
+                        {
+                            Gizmos.DrawGUITexture(rect, _doorHalfOpenTexture);
+                        }
+                        else
+                        {
+                            Gizmos.DrawGUITexture(rect, _doorTexture);
+                        }
+                        
                         break;
                 }
             }
