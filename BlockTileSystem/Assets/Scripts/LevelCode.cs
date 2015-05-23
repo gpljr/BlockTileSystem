@@ -26,7 +26,7 @@ public class LevelCode : MonoBehaviour
     void Start()
     {
         image.SetActive(true);
-        _image = image.GetComponent<Image>();//TODO
+        _image = image.GetComponent<Image>();
     }
 
     void Update()
@@ -56,6 +56,43 @@ public class LevelCode : MonoBehaviour
         {
             StartLevel();
             _bNewLevelLoaded = false;            
+        }
+
+        if(Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            LoadLevel(1);
+        }
+        if(Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            LoadLevel(2);
+        }
+        if(Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            LoadLevel(3);
+        }
+        if(Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            LoadLevel(4);
+        }
+        if(Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            LoadLevel(5);
+        }
+        if(Input.GetKeyDown(KeyCode.Keypad6))
+        {
+            LoadLevel(6);
+        }
+        if(Input.GetKeyDown(KeyCode.Keypad7))
+        {
+            LoadLevel(7);
+        }
+        if(Input.GetKeyDown(KeyCode.Keypad8))
+        {
+            LoadLevel(8);
+        }
+        if(Input.GetKeyDown(KeyCode.Keypad9))
+        {
+            LoadLevel(9);
         }
 
     }

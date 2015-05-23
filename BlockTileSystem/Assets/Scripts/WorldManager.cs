@@ -7,8 +7,18 @@ public class WorldManager : MonoBehaviour
 
     [SerializeField]
     IntVector _dims;
+    public IntVector Dims
+    {
+        get { return _dims; }
+        //set { _dims = value; }
+    }
     [SerializeField]
     float _tileSize;
+    public float TileSize
+    {
+        get { return _tileSize; }
+        //set { _tileSize = value; }
+    }
     TileType[,] _world;
     List<WorldEntity>[,] _entityMap;
 
@@ -24,8 +34,8 @@ public class WorldManager : MonoBehaviour
     [SerializeField]
     GameObject Char2Object;
 
-    private WorldEntity Char1;
-    private WorldEntity Char2;
+    public WorldEntity Char1;
+    public WorldEntity Char2;
 
     [SerializeField]
     private GameObject _pusherPreFab;
@@ -38,9 +48,9 @@ public class WorldManager : MonoBehaviour
     [SerializeField]
     private GameObject _stayTriggerPreFab;
 
-    [SerializeField]
-    private GameObject _mainCamera;
-    private Camera _camera;
+    // [SerializeField]
+    // private GameObject _mainCamera;
+    // private Camera _camera;
 
     
     [SerializeField]
@@ -108,6 +118,7 @@ public class WorldManager : MonoBehaviour
         mapEditor = gameObject.GetComponent<MapEditor>();
         Char1 = Char1Object.GetComponent<WorldEntity>();
         Char2 = Char2Object.GetComponent<WorldEntity>();
+        //_camera = _mainCamera.GetComponent<Camera>();
 
         LoadLevel(1);
 
@@ -122,8 +133,8 @@ public class WorldManager : MonoBehaviour
         mapEditor.LoadFile(iLevel);
         _dims = mapEditor.GetDim();
         _world = new TileType[_dims.x, _dims.y];
-        _mainCamera.transform.position = new Vector3(_dims.x * _tileSize / 2, _dims.y * _tileSize / 2, -12f);
-        _camera = _mainCamera.GetComponent<Camera>();
+        //_mainCamera.transform.position = new Vector3(_dims.x * _tileSize / 2, _dims.y * _tileSize / 2, -12f);
+        
         //_mainCamera.GetComponent<Camera>().orthographicSize = Mathf.Min(_dims.x, _dims.y) * _tileSize / 2 + 2;
 
         _entityMap = new List<WorldEntity>[_dims.x, _dims.y];
@@ -173,10 +184,10 @@ public class WorldManager : MonoBehaviour
                 _entityMap[l.x, l.y].Add(e);
             }
         }
-        Vector2 cameraLocation = (Char1.Location + Char2.Location).ToVector2() * _tileSize / 2f;
-        _mainCamera.transform.position = new Vector3(cameraLocation.x, cameraLocation.y, -12f);
-        float distance = Vector2.Distance(Char1.Location.ToVector2(), Char2.Location.ToVector2());
-        _camera.orthographicSize = Mathf.Max(distance, 6f) * _tileSize;
+        //Vector2 cameraLocation = (Char1.Location + Char2.Location).ToVector2() * _tileSize / 2f;
+        //_mainCamera.transform.position = new Vector3(cameraLocation.x, cameraLocation.y, -12f);
+        //float distance = Vector2.Distance(Char1.Location.ToVector2(), Char2.Location.ToVector2());
+        //_camera.orthographicSize = Mathf.Max(distance, 6f) * _tileSize;
     }
     public void GenerateBasicMap(Tile[] tMap)
     {

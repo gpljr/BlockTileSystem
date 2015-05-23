@@ -13,6 +13,8 @@ public struct SavableLevel
         public DoorInXML[] dDoors;
         public StepTriggerInXML[] StepTriggers;
         public StayTriggerInXML[] StayTriggers;
+        public ShooterInXML[] sShooters;
+        public CheckPointInXML[] cCheckPoints;
     }
 
     public struct Tile
@@ -57,6 +59,25 @@ public struct SavableLevel
     {
         public IntVector vPosition;
         public int iID;
+    }
+
+    public struct ShooterInXML
+    {
+        public IntVector vPosition;
+        public float shootingTimeInterval;
+        public string sShootingDirection;
+        public Direction shootingDirection;
+
+        public bool isMoving;
+        public string sMovingDirection;
+        public Direction movingDirection;
+        public int range;
+        public float movingTimeInterval;
+    }
+    public struct CheckPointInXML
+    {
+        public IntVector vCheckPoint1Position;
+        public IntVector vCheckPoint2Position;
     }
 
 
