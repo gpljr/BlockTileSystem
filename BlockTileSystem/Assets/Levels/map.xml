@@ -89,34 +89,35 @@
 		</StayTriggerInXML>
 	</StayTriggers>
 
-	<Shooters>
+	<sShooters>
 		<ShooterInXML>
 			<vPosition>
 				<x>10</x>
 				<y>10</y>
+				</vPosition>
 				<shootingTimeInterval>4</shootingTimeInterval>
-				<sShootingDirection>South</sShootingDirection>
+				<sShootingDirection>East</sShootingDirection>
 				<isMoving>0</isMoving>
 				<sMovingDirection>East</sMovingDirection>
 				<range>3</range>
 				<movingTimeInterval>1</movingTimeInterval>
-			</vPosition>
+			
 
 		</ShooterInXML>
 		<ShooterInXML>
 			<vPosition>
 				<x>10</x>
 				<y>11</y>
+				</vPosition>
 				<shootingTimeInterval>4</shootingTimeInterval>
-				<sShootingDirection>South</sShootingDirection>
+				<sShootingDirection>East</sShootingDirection>
 				<isMoving>1</isMoving>
-				<sMovingDirection>East</sMovingDirection>
+				<sMovingDirection>West</sMovingDirection>
 				<range>3</range>
-				<movingTimeInterval>1</movingTimeInterval>
-			</vPosition>
-
+				<movingTimeInterval>1</movingTimeInterval>			
 		</ShooterInXML>
-	</Shooters>
+
+	</sShooters>
 
 	<cCheckPoints>
 		<CheckPointInXML>
