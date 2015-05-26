@@ -38,7 +38,7 @@ public class CheckPointManager : MonoBehaviour
     void MoveCheckPoints()
     {
 		iCheckPointLocationID++;
-        if(CheckPoint1Locations[iCheckPointLocationID] != null && CheckPoint1Locations[iCheckPointLocationID] != null)
+        if(CheckPoint1Locations[iCheckPointLocationID] != null && CheckPoint2Locations[iCheckPointLocationID] != null)
         {
         WorldManager.g.checkPoint1.gameObject.GetComponent<WorldTrigger>().Location=CheckPoint1Locations[iCheckPointLocationID];
         WorldManager.g.checkPoint2.gameObject.GetComponent<WorldTrigger>().Location=CheckPoint2Locations[iCheckPointLocationID];
