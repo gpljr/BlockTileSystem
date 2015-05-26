@@ -26,11 +26,11 @@ public class CheckPoint : MonoBehaviour {
                 {
                     case EntityType.Character1:
                         //print("enter 1");
-                        Events.g.Raise(new LevelStarEvent(isEntered: true, CharacterID: 1));
+                        Events.g.Raise(new CheckPointEvent(isEntered: true, CharacterID: 1));
                         break;
                     case EntityType.Character2:
                         //print("enter 2");
-                        Events.g.Raise(new LevelStarEvent(isEntered: true, CharacterID: 2));
+                        Events.g.Raise(new CheckPointEvent(isEntered: true, CharacterID: 2));
                         break;
                 }
                 _worldTrigger.isMessageSent = true;
@@ -41,11 +41,11 @@ public class CheckPoint : MonoBehaviour {
                 {
                     case EntityType.Character1:
                     //print("leave 1");
-                        Events.g.Raise(new LevelStarEvent(isEntered: false, CharacterID: 1));
+                        Events.g.Raise(new CheckPointEvent(isEntered: false, CharacterID: 1));
                         break;
                     case EntityType.Character2:
                     //print("leave 2");
-                        Events.g.Raise(new LevelStarEvent(isEntered: false, CharacterID: 2));
+                        Events.g.Raise(new CheckPointEvent(isEntered: false, CharacterID: 2));
                         break;
                 }
                 _worldTrigger.isMessageSent = true;

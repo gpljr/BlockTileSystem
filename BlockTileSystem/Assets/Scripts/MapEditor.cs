@@ -151,23 +151,25 @@ public class MapEditor : MonoBehaviour
     }
     public void SetCheckPoints()
     {
+
         if (toLoad.cCheckPoints != null)
         {
-            print("check set");
             CheckPointInXML[] checkPoints = toLoad.cCheckPoints;
             WorldManager.g.InstantiateCheckPoint1(checkPoints[0].vCheckPoint1Position);
             WorldManager.g.InstantiateCheckPoint2(checkPoints[0].vCheckPoint2Position); 
+WorldManager.g.CheckPoint1Locations= new IntVector [checkPoints.Length];
+            WorldManager.g.CheckPoint2Locations= new IntVector [checkPoints.Length];
             for (int i = 0; i < checkPoints.Length; i++)
             {
-                CheckPointManager.g.CheckPoint1Locations[i] = checkPoints[i].vCheckPoint1Position;
-                CheckPointManager.g.CheckPoint2Locations[i] = checkPoints[i].vCheckPoint2Position;
+                WorldManager.g.CheckPoint1Locations[i] = checkPoints[i].vCheckPoint1Position;
+                WorldManager.g.CheckPoint2Locations[i] = checkPoints[i].vCheckPoint2Position;
             }
                        
         }
         else
         {
-            CheckPointManager.g.CheckPoint1Locations=null;
-            CheckPointManager.g.CheckPoint2Locations=null;
+            WorldManager.g.CheckPoint1Locations=null;
+            WorldManager.g.CheckPoint2Locations=null;
         }
     }
 

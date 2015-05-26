@@ -88,7 +88,13 @@ public class WorldManager : MonoBehaviour
     [SerializeField]
     private Texture _checkPointTexture;
 
-    public CheckPoint checkPoint1, checkPoint2;
+    private GameObject checkPoint1Object, checkPoint2Object;
+    private bool _bPlayer1Entered, _bPlayer2Entered;
+    [HideInInspector]
+    public IntVector[] CheckPoint1Locations;
+    [HideInInspector]
+    public IntVector[] CheckPoint2Locations;
+    private int iCheckPointLocationID;
 
     private MapEditor mapEditor;
     public static WorldManager g;
@@ -173,6 +179,7 @@ public class WorldManager : MonoBehaviour
         mapEditor.SetStayTriggers();
         mapEditor.SetShooters();
         mapEditor.SetCheckPoints();
+        iCheckPointLocationID = 0;
         Events.g.Raise(new LevelLoadedEvent(iLevel));
     }
     private void LoadLevel(LoadLevelEvent e)
@@ -182,11 +189,13 @@ public class WorldManager : MonoBehaviour
     void OnEnable()
     {
         Events.g.AddListener<LoadLevelEvent>(LoadLevel);
+        Events.g.AddListener<CheckPointEvent>(CheckPointPass);
     }
     
     void OnDisable()
     {
         Events.g.RemoveListener<LoadLevelEvent>(LoadLevel);
+        Events.g.RemoveListener<CheckPointEvent>(CheckPointPass);
     }
 
     void FixedUpdate()
@@ -202,11 +211,10 @@ public class WorldManager : MonoBehaviour
                 _entityMap[l.x, l.y].Add(e);
             }
         }
-        //Vector2 cameraLocation = (Char1.Location + Char2.Location).ToVector2() * _tileSize / 2f;
-        //_mainCamera.transform.position = new Vector3(cameraLocation.x, cameraLocation.y, -12f);
-        //float distance = Vector2.Distance(Char1.Location.ToVector2(), Char2.Location.ToVector2());
-        //_camera.orthographicSize = Mathf.Max(distance, 6f) * _tileSize;
+        CheckPointsCheck();
     }
+
+    
     public void GenerateBasicMap(Tile[] tMap)
     {
         for (int i = 0; i < tMap.Length; i++)
@@ -451,29 +459,82 @@ public class WorldManager : MonoBehaviour
     }
     public void InstantiateCheckPoint1(IntVector location)
     {
-        print("check");
         if (_world[location.x, location.y] == TileType.Wall)
         {
             print("error! check point on the wall!");
         }
-        var gameObject = Instantiate(_checkPoint1PreFab);
-        var trigger = gameObject.GetComponent<WorldTrigger>();
+        checkPoint1Object = Instantiate(_checkPoint1PreFab);
+        var trigger = checkPoint1Object.GetComponent<WorldTrigger>();
         trigger.Location = location;
-        checkPoint1 = gameObject.GetComponent<CheckPoint>();
+print("checkPoint1Object " + location);
     }
     public void InstantiateCheckPoint2(IntVector location)
     {
-        print("check2");
         if (_world[location.x, location.y] == TileType.Wall)
         {
             print("error! check point on the wall!");
         }
-        var gameObject = Instantiate(_checkPoint2PreFab);
-        var trigger = gameObject.GetComponent<WorldTrigger>();
+        var checkPoint2Object = Instantiate(_checkPoint2PreFab);
+        var trigger = checkPoint2Object.GetComponent<WorldTrigger>();
         trigger.Location = location;
-        checkPoint2 = gameObject.GetComponent<CheckPoint>();
+        print("checkPoint2Object " + location);
     }
+    private void CheckPointsCheck()
+    {
+        if (_bPlayer1Entered && _bPlayer2Entered)
+        {
+            _bPlayer1Entered = false;
+            _bPlayer2Entered = false;
+            MoveCheckPoints();
+        }
+    }
+    private void MoveCheckPoints()
+    {
+        iCheckPointLocationID++;
+        print("iCheckPointLocationID " + iCheckPointLocationID);
+        print("CheckPoint1Locations[iCheckPointLocationID] " + CheckPoint1Locations[iCheckPointLocationID]);
+        print("CheckPoint2Locations[iCheckPointLocationID] " + CheckPoint2Locations[iCheckPointLocationID]);
+        if (CheckPoint1Locations[iCheckPointLocationID] != null &&
+           CheckPoint2Locations[iCheckPointLocationID] != null)
+        {
+            checkPoint1Object.GetComponent<WorldTrigger>().Location = CheckPoint1Locations[iCheckPointLocationID];
+            //var trigger = checkPoint2Object.GetComponent<WorldTrigger>();
+            //trigger.Location = CheckPoint2Locations[iCheckPointLocationID];
+        }
+        else
+        {
+            //destroy
+        }
+    }
+    void CheckPointPass(CheckPointEvent e)
+    {
 
+        if (e.isEntered)
+        {
+            print("enter");
+            switch (e.CharacterID)
+            {
+                case 1:
+                    _bPlayer1Entered = true;
+                    break;
+                case 2:
+                    _bPlayer2Entered = true;
+                    break;
+            }
+        }
+        else
+        {
+            switch (e.CharacterID)
+            {
+                case 1:
+                    _bPlayer1Entered = false;
+                    break;
+                case 2:
+                    _bPlayer2Entered = false;
+                    break;
+            }
+        }
+    }
 
     void OnDrawGizmos()
     {

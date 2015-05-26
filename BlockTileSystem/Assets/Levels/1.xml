@@ -125,10 +125,6 @@
 				<y>8</y>
 			</vCheckPoint2Position>
 		</CheckPointInXML>
-		<CheckPointInXML>
-			<vCheckPoint1Position/>
-			<vCheckPoint2Position/>
-		</CheckPointInXML>
 	</cCheckPoints>
 	<pPushers>
 		<PusherInXML>
@@ -151,28 +147,6 @@
 			<sDirection>South</sDirection>
 			<range>4</range>
 			<ID>0</ID>
-			<timeInterval>0.8</timeInterval>
-		</PusherInXML>
-		<PusherInXML>
-			<vPosition>
-				<x>7</x>
-				<y>7</y>
-			</vPosition>
-			<isControlled>1</isControlled>
-			<sDirection>South</sDirection>
-			<range>4</range>
-			<ID>1</ID>
-			<timeInterval>0.8</timeInterval>
-		</PusherInXML>
-		<PusherInXML>
-			<vPosition>
-				<x>8</x>
-				<y>8</y>
-			</vPosition>
-			<isControlled>1</isControlled>
-			<sDirection>South</sDirection>
-			<range>4</range>
-			<ID>2</ID>
 			<timeInterval>0.8</timeInterval>
 		</PusherInXML>
 	</pPushers>
