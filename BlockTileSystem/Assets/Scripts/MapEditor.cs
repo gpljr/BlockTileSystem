@@ -39,6 +39,7 @@ public class MapEditor : MonoBehaviour
             PusherInXML[] pushers = toLoad.pPushers;
             for (int i = 0; i < pushers.Length; i++)
             {
+                if (pushers[i].vPosition != new IntVector(0, 0)){
                 switch (pushers[i].sDirection)
                 {
                     case "North":
@@ -56,7 +57,7 @@ public class MapEditor : MonoBehaviour
                 }       
                 WorldManager.g.InstantiatePusher(pushers[i].vPosition, pushers[i].isControlled, 
                     pushers[i].direction, pushers[i].range, pushers[i].ID, pushers[i].timeInterval);
-            
+            }
             }
         }
     }
@@ -66,8 +67,11 @@ public class MapEditor : MonoBehaviour
         {
             StarInXML[] stars = toLoad.sStars;
             for (int i = 0; i < stars.Length; i++)
-            {          
-                WorldManager.g.InstantiateStar(stars[i].vPosition);            
+            {
+                if (stars[i].vPosition != new IntVector(0, 0))
+                {          
+                    WorldManager.g.InstantiateStar(stars[i].vPosition);
+                }            
             }
         }
     }
@@ -78,7 +82,9 @@ public class MapEditor : MonoBehaviour
             DoorInXML[] doors = toLoad.dDoors;
             for (int i = 0; i < doors.Length; i++)
             {          
+                if (doors[i].vPosition != new IntVector(0, 0)){
                 WorldManager.g.InstantiateDoor(doors[i].vPosition, ID: doors[i].iID, triggerNumber: doors[i].triggerNumber);         
+            }
             }
         }
     }
@@ -88,8 +94,10 @@ public class MapEditor : MonoBehaviour
         {
             StepTriggerInXML[] stepTriggers = toLoad.StepTriggers;
             for (int i = 0; i < stepTriggers.Length; i++)
-            {          
-                WorldManager.g.InstantiateStepTrigger(stepTriggers[i].vPosition, ID: stepTriggers[i].iID);        
+            {
+            if (stepTriggers[i].vPosition != new IntVector(0, 0)){          
+                WorldManager.g.InstantiateStepTrigger(stepTriggers[i].vPosition, ID: stepTriggers[i].iID); 
+                }       
             }
         }
     }
@@ -99,8 +107,10 @@ public class MapEditor : MonoBehaviour
         {
             StayTriggerInXML[] stayTriggers = toLoad.StayTriggers;
             for (int i = 0; i < stayTriggers.Length; i++)
-            {          
-                WorldManager.g.InstantiateStayTrigger(stayTriggers[i].vPosition, ID: stayTriggers[i].iID);        
+            {
+            if (stayTriggers[i].vPosition != new IntVector(0, 0)){          
+                WorldManager.g.InstantiateStayTrigger(stayTriggers[i].vPosition, ID: stayTriggers[i].iID);  
+                }      
             }
         }
     }
@@ -110,7 +120,8 @@ public class MapEditor : MonoBehaviour
         {
             ShooterInXML[] shooters = toLoad.sShooters;
             for (int i = 0; i < shooters.Length; i++)
-            {       
+            { 
+            if (shooters[i].vPosition != new IntVector(0, 0)){          
                 switch (shooters[i].sShootingDirection)
                 {
                     case "North":
@@ -148,6 +159,7 @@ public class MapEditor : MonoBehaviour
                     fMovingTimeInterval: shooters[i].movingTimeInterval);        
             }
         }
+        }
     }
     public void SetCheckPoints()
     {
@@ -157,19 +169,21 @@ public class MapEditor : MonoBehaviour
             CheckPointInXML[] checkPoints = toLoad.cCheckPoints;
             WorldManager.g.InstantiateCheckPoint1(checkPoints[0].vCheckPoint1Position);
             WorldManager.g.InstantiateCheckPoint2(checkPoints[0].vCheckPoint2Position); 
-WorldManager.g.CheckPoint1Locations= new IntVector [checkPoints.Length];
-            WorldManager.g.CheckPoint2Locations= new IntVector [checkPoints.Length];
+            WorldManager.g.CheckPoint1Locations = new IntVector [checkPoints.Length];
+            WorldManager.g.CheckPoint2Locations = new IntVector [checkPoints.Length];
             for (int i = 0; i < checkPoints.Length; i++)
             {
+                if (checkPoints[i].vCheckPoint1Position != new IntVector(0, 0)){
                 WorldManager.g.CheckPoint1Locations[i] = checkPoints[i].vCheckPoint1Position;
                 WorldManager.g.CheckPoint2Locations[i] = checkPoints[i].vCheckPoint2Position;
+            }
             }
                        
         }
         else
         {
-            WorldManager.g.CheckPoint1Locations=null;
-            WorldManager.g.CheckPoint2Locations=null;
+            WorldManager.g.CheckPoint1Locations = null;
+            WorldManager.g.CheckPoint2Locations = null;
         }
     }
 
