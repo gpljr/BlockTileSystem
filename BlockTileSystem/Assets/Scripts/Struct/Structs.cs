@@ -106,11 +106,15 @@ public struct SavableLevel
         ,Pusher
         ,LevelStar
         ,Door
+        ,Shooter
+        
     }
     public enum TriggerType{
         StepTrigger
         ,StayTrigger
         ,Star
+        ,CheckPoint
+        ,Bullet
     }
 
 public class Structs : MonoBehaviour {

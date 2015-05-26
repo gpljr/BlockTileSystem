@@ -37,6 +37,5 @@ public class StayTrigger : MonoBehaviour {
     {
     	//texture change, sound
     	Events.g.Raise(new StayTriggerEvent(isEntered: stayed, triggerID: iID));
-        _worldTrigger.isMessageSent=true;
     }
 }

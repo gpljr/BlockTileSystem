@@ -1,26 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Pusher : MonoBehaviour
+public class Shooter : MonoBehaviour
 {
-    //set in the XML
-    public int iID;
-    //to associate with the trigger
-    public bool isControlled;
-    public Direction direction;
-    public int iRange;
-    public float fTimeInterval = 0.5f;
 
-    public bool isTriggered;
+    //set in the XML
+    public float fShootingTimeInterval;
+    public Direction shootingDirection;
+
+    public bool isMoving;
+    public Direction movingDirection;
+    public int iRange;
+    public float fMovingTimeInterval;
 
     private WorldEntity _worldEntity;
+
+    private bool _needShoot;
+    private float _fTimeBetweenShots;
+
     private bool _isForward = true;
     private bool _needMove;
     private float _fTimeBetweenMoves;
     private int _iStep;
+    [SerializeField]
+    private GameObject _bullet;
 
     [SerializeField]
-    Texture _pusherTexture;
+    Texture _shooterTexture;
     
     public void Cache()
     {
@@ -31,20 +37,18 @@ public class Pusher : MonoBehaviour
     {
         Cache();
         _worldEntity.CollidingType = EntityCollidingType.Colliding;
-        _worldEntity.entityType = EntityType.Pusher;
+        _worldEntity.entityType = EntityType.Shooter;
 
     }
 
     void OnEnable()
     {
         _worldEntity.Simulators += Simulate;
-        Events.g.AddListener<StayTriggerEvent>(Triggered);
     }
 
     void OnDisable()
     {
         _worldEntity.Simulators -= Simulate;
-        Events.g.RemoveListener<StayTriggerEvent>(Triggered);
     }
     void Update()
     {
@@ -52,27 +56,43 @@ public class Pusher : MonoBehaviour
         if (!_needMove)
         {
             _fTimeBetweenMoves += Time.deltaTime;
-            if (_fTimeBetweenMoves >= fTimeInterval)
+            if (_fTimeBetweenMoves >= fMovingTimeInterval)
             {
                 _needMove = true;
                 _fTimeBetweenMoves = 0f;
             }
         }
-    }
-    private void Simulate()
-    {
-        if (_needMove)
+        if (!_needShoot)
         {
-            if (!isControlled)
+            _fTimeBetweenShots += Time.deltaTime;
+            if (_fTimeBetweenShots >= fMovingTimeInterval)
             {
-                AutoMove();
-            }
-            else
-            {
-                TriggeredMove();
+                _needShoot = true;
+                _fTimeBetweenShots = 0f;
             }
         }
     }
+    private void Simulate()
+    {
+        if (_needShoot)
+        {
+            Shoot();
+        }
+        if (_needMove && isMoving)
+        {
+            AutoMove();
+        }
+    }
+    private void Shoot()
+    {
+    	GameObject bulletObject=(GameObject)Instantiate(_bullet);
+    	var bullet = bulletObject.GetComponent<Bullet>();
+    	var bulletTrigger = bulletObject.GetComponent<WorldTrigger>();
+        bulletTrigger.Location = _worldEntity.Location;
+        bullet.direction=shootingDirection;
+        _needShoot = false;
+    }
+
     private void AutoMove()
     {
         if (_iStep >= iRange && _isForward)
@@ -83,41 +103,14 @@ public class Pusher : MonoBehaviour
         {
             _isForward = true;
         }
-        
-
+print("forward "+_isForward);
         if (_isForward)
         {
-            TryMove(direction);
+            TryMove(movingDirection);
         }
         else
         {
-            TryMove(DirectionFlip(direction));
-        }
-    }
-    private void Triggered(StayTriggerEvent e)
-    {
-        if (e.triggerID == iID)
-        {
-            isTriggered = e.isEntered;
-        }
-    }
-    private void TriggeredMove()
-    {
-        if (isTriggered)
-        {
-            if (_iStep < iRange && _iStep >= 0)
-            {
-                _isForward = true; 
-                TryMove(direction);   
-            }                
-        }
-        else
-        {
-            if (_iStep <= iRange && _iStep > 0)
-            {
-                _isForward = false; 
-                TryMove(DirectionFlip(direction));   
-            }
+            TryMove(DirectionFlip(movingDirection));
         }
     }
     private void TryMove(Direction tryDirection)
@@ -192,13 +185,4 @@ public class Pusher : MonoBehaviour
                 break;
         }
     }
-    // void OnDrawGizmos()
-    // {
-    //     if (_worldEntity != null)
-    //     {
-    //         IntVector l = _worldEntity.Location;
-    //         Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);
-    //         Gizmos.DrawGUITexture(rect, _pusherTexture);
-    //     }
-    // }
 }

@@ -34,7 +34,9 @@ public class WorldManager : MonoBehaviour
     [SerializeField]
     GameObject Char2Object;
 
+    [HideInInspector]
     public WorldEntity Char1;
+    [HideInInspector]
     public WorldEntity Char2;
 
     [SerializeField]
@@ -47,6 +49,12 @@ public class WorldManager : MonoBehaviour
     private GameObject _stepTriggerPreFab;
     [SerializeField]
     private GameObject _stayTriggerPreFab;
+    [SerializeField]
+    private GameObject _shooterPreFab;
+    [SerializeField]
+    private GameObject _checkPoint1PreFab;
+    [SerializeField]
+    private GameObject _checkPoint2PreFab;
 
     // [SerializeField]
     // private GameObject _mainCamera;
@@ -73,6 +81,14 @@ public class WorldManager : MonoBehaviour
     private Texture _stepTriggerTexture;
     [SerializeField]
     private Texture _stayTriggerTexture;
+    [SerializeField]
+    private Texture _shooterTexture;
+    [SerializeField]
+    private Texture _bulletTexture;
+    [SerializeField]
+    private Texture _checkPointTexture;
+
+    public CheckPoint checkPoint1,checkPoint2;
 
     private MapEditor mapEditor;
     public static WorldManager g;
@@ -155,6 +171,7 @@ public class WorldManager : MonoBehaviour
         mapEditor.SetDoors();
         mapEditor.SetStepTriggers();
         mapEditor.SetStayTriggers();
+        mapEditor.SetShooters();
         Events.g.Raise(new LevelLoadedEvent(iLevel));
     }
     private void LoadLevel(LoadLevelEvent e)
@@ -347,7 +364,8 @@ public class WorldManager : MonoBehaviour
         entity.Pushed(direction);
     }
 
-    public void InstantiatePusher(IntVector location, bool isControlled, Direction direction, int range, int ID, float timeInterval)
+    public void InstantiatePusher(IntVector location, bool isControlled, Direction direction, 
+        int range, int ID, float timeInterval)
     {
         if (_world[location.x, location.y] == TileType.Wall)
         {
@@ -412,6 +430,47 @@ public class WorldManager : MonoBehaviour
         stayTrigger.iID = ID;
     }
 
+    public void InstantiateShooter(IntVector location, float fShootingTimeInterval, Direction shootingDirection, 
+        bool isMoving, Direction movingDirection, int iRange, float fMovingTimeInterval)
+    {
+        if (_world[location.x, location.y] == TileType.Wall)
+        {
+            print("error! shooter on the wall!");
+        }
+        var gameObject = Instantiate(_shooterPreFab);
+        var entity = gameObject.GetComponent<WorldEntity>();
+        entity.Location = location;
+        var shooter = gameObject.GetComponent<Shooter>();
+        shooter.fMovingTimeInterval = fShootingTimeInterval;
+        shooter.shootingDirection = shootingDirection;
+        shooter.isMoving = isMoving;
+        shooter.movingDirection = movingDirection;
+        shooter.iRange = iRange;
+        shooter.fMovingTimeInterval = fMovingTimeInterval;
+    }
+    public void InstantiateCheckPoint1(IntVector location)
+    {
+        if (_world[location.x, location.y] == TileType.Wall)
+        {
+            print("error! check point on the wall!");
+        }
+        var gameObject = Instantiate(_checkPoint1PreFab);
+        var trigger = gameObject.GetComponent<WorldTrigger>();
+        trigger.Location = location;
+        checkPoint1 = gameObject.GetComponent<CheckPoint>();
+    }
+    public void InstantiateCheckPoint2(IntVector location)
+    {
+        if (_world[location.x, location.y] == TileType.Wall)
+        {
+            print("error! check point on the wall!");
+        }
+        var gameObject = Instantiate(_checkPoint2PreFab);
+        var trigger = gameObject.GetComponent<WorldTrigger>();
+        trigger.Location = location;
+        checkPoint2 = gameObject.GetComponent<CheckPoint>();
+    }
+
 
     void OnDrawGizmos()
     {
@@ -453,7 +512,7 @@ public class WorldManager : MonoBehaviour
                         break;
                     case TriggerType.StepTrigger:
                         var stepTrigger = t.gameObject.GetComponent<StepTrigger>();
-                        if (stepTrigger!= null && !stepTrigger.isTriggered)
+                        if (stepTrigger != null && !stepTrigger.isTriggered)
                         {
                             Gizmos.DrawGUITexture(rect, _stepTriggerTexture);
                         }
@@ -495,9 +554,27 @@ public class WorldManager : MonoBehaviour
                         }
                         
                         break;
+                    case EntityType.Shooter:
+                        Gizmos.DrawGUITexture(rect, _shooterTexture);
+                        break;
                 }
             }
             
+        }
+        foreach (WorldTrigger t in _triggers)
+        {
+            if (t != null)
+            {
+                IntVector l = t.Location;
+                Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
+                switch (t.triggerType)
+                {
+                    case TriggerType.Bullet:
+                        Gizmos.DrawGUITexture(rect, _bulletTexture);
+                        break;
+
+                }
+            }
         }
         
     }

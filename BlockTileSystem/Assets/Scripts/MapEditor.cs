@@ -22,7 +22,7 @@ public class MapEditor : MonoBehaviour
         XmlReader xmlReader = XmlReader.Create(levelReader);
         toLoad = (SavableLevel)levelDeserializer.Deserialize(xmlReader);
         levelReader.Close();
-        print("level "+iLevel+" is loaded.");
+        print("level " + iLevel + " is loaded.");
     }
     public IntVector GetDim()
     {
@@ -53,7 +53,7 @@ public class MapEditor : MonoBehaviour
                     case "East":
                         pushers[i].direction = Direction.East;
                         break;
-                }           
+                }       
                 WorldManager.g.InstantiatePusher(pushers[i].vPosition, pushers[i].isControlled, 
                     pushers[i].direction, pushers[i].range, pushers[i].ID, pushers[i].timeInterval);
             
@@ -108,7 +108,6 @@ public class MapEditor : MonoBehaviour
     {
         if (toLoad.sShooters != null)
         {
-            print("setshooters");
             ShooterInXML[] shooters = toLoad.sShooters;
             for (int i = 0; i < shooters.Length; i++)
             {       
@@ -141,8 +140,14 @@ public class MapEditor : MonoBehaviour
                     case "East":
                         shooters[i].movingDirection = Direction.East;
                         break;
-                }              
-                //WorldManager.g.InstantiateShooter(shooters[i].vPosition,  ) ;        
+                }
+                print("shooters " + i + " " + shooters[i]);
+                //print("shooters "+i+" " +shooters[i].shootingTimeInterval);                 
+                WorldManager.g.InstantiateShooter(location: shooters[i].vPosition,
+                    fShootingTimeInterval: shooters[i].shootingTimeInterval, 
+                    shootingDirection: shooters[i].shootingDirection, isMoving: shooters[i].isMoving,
+                    movingDirection: shooters[i].movingDirection, iRange: shooters[i].range,
+                    fMovingTimeInterval: shooters[i].movingTimeInterval);        
             }
         }
     }
@@ -150,12 +155,19 @@ public class MapEditor : MonoBehaviour
     {
         if (toLoad.cCheckPoints != null)
         {
-            print("checkpoints");
             CheckPointInXML[] checkPoints = toLoad.cCheckPoints;
             for (int i = 0; i < checkPoints.Length; i++)
-            {          
-                //WorldManager.g.InstantiateStayTrigger(checkPoints[i].vCheckPoint1Position, checkPoints[i].vCheckPoint2Position);        
+            {
+                CheckPointManager.g.CheckPoint1Locations[i] = checkPoints[i].vCheckPoint1Position;
+                CheckPointManager.g.CheckPoint2Locations[i] = checkPoints[i].vCheckPoint2Position;
             }
+            WorldManager.g.InstantiateCheckPoint1(checkPoints[0].vCheckPoint1Position);
+            WorldManager.g.InstantiateCheckPoint2(checkPoints[0].vCheckPoint2Position);            
+        }
+        else
+        {
+            CheckPointManager.g.CheckPoint1Locations=null;
+            CheckPointManager.g.CheckPoint2Locations=null;
         }
     }
 
