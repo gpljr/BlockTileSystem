@@ -103,7 +103,6 @@ public class Shooter : MonoBehaviour
         {
             _isForward = true;
         }
-print("forward "+_isForward);
         if (_isForward)
         {
             TryMove(movingDirection);

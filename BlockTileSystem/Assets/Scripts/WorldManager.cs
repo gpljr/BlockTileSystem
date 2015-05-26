@@ -88,7 +88,7 @@ public class WorldManager : MonoBehaviour
     [SerializeField]
     private Texture _checkPointTexture;
 
-    public CheckPoint checkPoint1,checkPoint2;
+    public CheckPoint checkPoint1, checkPoint2;
 
     private MapEditor mapEditor;
     public static WorldManager g;
@@ -172,6 +172,7 @@ public class WorldManager : MonoBehaviour
         mapEditor.SetStepTriggers();
         mapEditor.SetStayTriggers();
         mapEditor.SetShooters();
+        mapEditor.SetCheckPoints();
         Events.g.Raise(new LevelLoadedEvent(iLevel));
     }
     private void LoadLevel(LoadLevelEvent e)
@@ -450,6 +451,7 @@ public class WorldManager : MonoBehaviour
     }
     public void InstantiateCheckPoint1(IntVector location)
     {
+        print("check");
         if (_world[location.x, location.y] == TileType.Wall)
         {
             print("error! check point on the wall!");
@@ -461,6 +463,7 @@ public class WorldManager : MonoBehaviour
     }
     public void InstantiateCheckPoint2(IntVector location)
     {
+        print("check2");
         if (_world[location.x, location.y] == TileType.Wall)
         {
             print("error! check point on the wall!");
@@ -509,6 +512,9 @@ public class WorldManager : MonoBehaviour
                         break;
                     case TriggerType.StayTrigger:
                         Gizmos.DrawGUITexture(rect, _stayTriggerTexture);
+                        break;
+                    case TriggerType.CheckPoint:
+                        Gizmos.DrawGUITexture(rect, _checkPointTexture);
                         break;
                     case TriggerType.StepTrigger:
                         var stepTrigger = t.gameObject.GetComponent<StepTrigger>();

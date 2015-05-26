@@ -3,13 +3,14 @@ using System.Collections;
 
 public class CheckPointManager : MonoBehaviour
 {
-
-    [SerializeField]
-    private GameObject _checkPoint1Object;
-    [SerializeField]
-    private GameObject _checkPoint2Object;
+// abandoned
+    // [SerializeField]
+    // private GameObject _checkPoint1Object;
+    // [SerializeField]
+    // private GameObject _checkPoint2Object;
     [HideInInspector]
     public IntVector[] CheckPoint1Locations;
+    [HideInInspector]
     public IntVector[] CheckPoint2Locations;
     private int iCheckPointLocationID;
 

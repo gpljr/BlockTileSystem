@@ -140,9 +140,7 @@ public class MapEditor : MonoBehaviour
                     case "East":
                         shooters[i].movingDirection = Direction.East;
                         break;
-                }
-                print("shooters " + i + " " + shooters[i]);
-                //print("shooters "+i+" " +shooters[i].shootingTimeInterval);                 
+                }             
                 WorldManager.g.InstantiateShooter(location: shooters[i].vPosition,
                     fShootingTimeInterval: shooters[i].shootingTimeInterval, 
                     shootingDirection: shooters[i].shootingDirection, isMoving: shooters[i].isMoving,
@@ -155,14 +153,16 @@ public class MapEditor : MonoBehaviour
     {
         if (toLoad.cCheckPoints != null)
         {
+            print("check set");
             CheckPointInXML[] checkPoints = toLoad.cCheckPoints;
+            WorldManager.g.InstantiateCheckPoint1(checkPoints[0].vCheckPoint1Position);
+            WorldManager.g.InstantiateCheckPoint2(checkPoints[0].vCheckPoint2Position); 
             for (int i = 0; i < checkPoints.Length; i++)
             {
                 CheckPointManager.g.CheckPoint1Locations[i] = checkPoints[i].vCheckPoint1Position;
                 CheckPointManager.g.CheckPoint2Locations[i] = checkPoints[i].vCheckPoint2Position;
             }
-            WorldManager.g.InstantiateCheckPoint1(checkPoints[0].vCheckPoint1Position);
-            WorldManager.g.InstantiateCheckPoint2(checkPoints[0].vCheckPoint2Position);            
+                       
         }
         else
         {
