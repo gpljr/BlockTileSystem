@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <SavableLevel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<sLevelName>4</sLevelName>
+	<sLevelName>7</sLevelName>
 	<iLevelType>1</iLevelType>
 	<vChar1StartPos>
-		<x>8</x>
-		<y>11</y>
+		<x>3</x>
+		<y>2</y>
 	</vChar1StartPos>
 	<vChar2StartPos>
-		<x>8</x>
-		<y>10</y>
+		<x>2</x>
+		<y>3</y>
 	</vChar2StartPos>
 	<vDim>
-		<x>11</x>
-		<y>12</y>
+		<x>7</x>
+		<y>18</y>
 	</vDim>
 </SavableLevel>
