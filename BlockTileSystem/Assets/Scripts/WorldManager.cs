@@ -222,6 +222,7 @@ public class WorldManager : MonoBehaviour
             int x = tMap[i].vTilePosition.x;
             int y = tMap[i].vTilePosition.y;
             _world[x, y] = tMap[i].tileType;
+            //_world[x, _dims.y-y-1] = tMap[i].tileType;//make levels in excel from top left
         }
 
     }
