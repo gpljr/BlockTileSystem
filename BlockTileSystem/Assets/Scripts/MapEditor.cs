@@ -156,7 +156,7 @@ public class MapEditor : MonoBehaviour
                         case "East":
                             shooters[i].movingDirection = Direction.East;
                             break;
-                    }             
+                    }        
                     WorldManager.g.InstantiateShooter(location: shooters[i].vPosition,
                         fShootingTimeInterval: shooters[i].shootingTimeInterval, 
                         shootingDirection: shooters[i].shootingDirection, isMoving: shooters[i].isMoving,

@@ -65,7 +65,7 @@ public class Shooter : MonoBehaviour
         if (!_needShoot)
         {
             _fTimeBetweenShots += Time.deltaTime;
-            if (_fTimeBetweenShots >= fMovingTimeInterval)
+            if (_fTimeBetweenShots >= fShootingTimeInterval)
             {
                 _needShoot = true;
                 _fTimeBetweenShots = 0f;

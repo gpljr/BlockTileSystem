@@ -107,6 +107,7 @@ public struct SavableLevel
         ,LevelStar
         ,Door
         ,Shooter
+        ,Bullet
         
     }
     public enum TriggerType{
