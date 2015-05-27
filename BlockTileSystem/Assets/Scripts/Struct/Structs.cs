@@ -104,14 +104,14 @@ public struct SavableLevel
         Character1
         ,Character2
         ,Pusher
-        ,LevelStar
         ,Door
         ,Shooter
         ,Bullet
         
     }
     public enum TriggerType{
-        StepTrigger
+        LevelStar
+        ,StepTrigger
         ,StayTrigger
         ,Star
         ,CheckPoint

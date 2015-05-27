@@ -14,7 +14,7 @@ public class LevelStar : MonoBehaviour
     void Awake()
     {
         Cache();
-        _worldTrigger.triggerType= TriggerType.StepTrigger;
+        _worldTrigger.triggerType= TriggerType.LevelStar;
     }
     
     void LateUpdate()
