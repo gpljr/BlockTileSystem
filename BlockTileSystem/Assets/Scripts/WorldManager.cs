@@ -413,7 +413,6 @@ public class WorldManager : MonoBehaviour
         {
             print("error! trigger on the wall!");
         }
-        print("star");
         var gameObject = Instantiate(_starPreFab);
         var trigger = gameObject.GetComponent<WorldTrigger>();
         trigger.Location = location;
@@ -585,9 +584,8 @@ print("checkPoint1Object " + location);
                 Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
                 switch (t.triggerType)
                 {
-                    case TriggerType.Star:
+                    case TriggerType.LevelStar:
                         Gizmos.DrawGUITexture(rect, _starTexture);
-                        print("draw star");
                         break;
                     case TriggerType.StayTrigger:
                         Gizmos.DrawGUITexture(rect, _stayTriggerTexture);

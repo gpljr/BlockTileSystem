@@ -113,7 +113,6 @@ public struct SavableLevel
         LevelStar
         ,StepTrigger
         ,StayTrigger
-        ,Star
         ,CheckPoint
         ,Bullet
     }
