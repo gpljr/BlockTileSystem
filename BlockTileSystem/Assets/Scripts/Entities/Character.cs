@@ -39,14 +39,9 @@ public class Character : MonoBehaviour
     {
         Cache();
         _worldEntity.CollidingType = EntityCollidingType.Pushable;
-        if (_iCharacterID == 1)
-        {
-            _worldEntity.entityType = EntityType.Character1;
-        }
-        else if (_iCharacterID == 2)
-        {
-            _worldEntity.entityType = EntityType.Character2;
-        }
+        _worldEntity.entityType = EntityType.Character;
+        _worldEntity.characterID = _iCharacterID;
+
     }
 
     void OnEnable()
@@ -168,7 +163,7 @@ public class Character : MonoBehaviour
     //         Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);
                 
     //         Gizmos.DrawGUITexture(rect, _character1Texture);
-    //     }        
+    //     }
     // }
     // void OnGUI()
     // {

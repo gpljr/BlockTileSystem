@@ -28,6 +28,10 @@ public class MapEditor : MonoBehaviour
     {
         return toLoad.vDim;
     }
+    public int GetLevelType()
+    {
+        return toLoad.iLevelType;
+    }
     public void SetCharacters()
     {
         WorldManager.g.SetCharacters(toLoad.vChar1StartPos, toLoad.vChar2StartPos);

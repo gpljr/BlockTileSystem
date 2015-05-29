@@ -10,6 +10,7 @@ public class WorldTrigger : MonoBehaviour
     public bool isMessageSent =true;
     [HideInInspector]
     public EntityType steppingEntityType;
+    public int iStepCharacterID;
 
     public TriggerType triggerType;
 
@@ -65,12 +66,14 @@ public class WorldTrigger : MonoBehaviour
     {
         isSteppedOn = true;
         steppingEntityType = e.entityType;
+        iStepCharacterID = e.characterID;
         isMessageSent=false;
     }
     public void SteppedOut(WorldEntity e)
     {
         isSteppedOn = false;
         steppingEntityType = e.entityType;
+        iStepCharacterID = e.characterID;
         isMessageSent= false;
     }
 

@@ -33,11 +33,15 @@ public class WorldManager : MonoBehaviour
     GameObject Char1Object;
     [SerializeField]
     GameObject Char2Object;
+    [SerializeField]
+    GameObject CharCombinedObject;
 
     [HideInInspector]
     public WorldEntity Char1;
     [HideInInspector]
     public WorldEntity Char2;
+    [HideInInspector]
+    public WorldEntity CharCombined;
 
     [SerializeField]
     private GameObject _pusherPreFab;
@@ -70,6 +74,8 @@ public class WorldManager : MonoBehaviour
     [SerializeField]
     private Texture _character2Texture;
     [SerializeField]
+    private Texture _characterCombinedTexture;
+    [SerializeField]
     private Texture _pusherTexture;
     [SerializeField]
     private Texture _starTexture;
@@ -94,7 +100,9 @@ public class WorldManager : MonoBehaviour
     public IntVector[] CheckPoint1Locations;
     [HideInInspector]
     public IntVector[] CheckPoint2Locations;
-    private int iCheckPointLocationID;
+    public int iCheckPointLocationID;
+
+    public bool inLevel;
 
     private MapEditor mapEditor;
     public static WorldManager g;
@@ -140,9 +148,13 @@ public class WorldManager : MonoBehaviour
         mapEditor = gameObject.GetComponent<MapEditor>();
         Char1 = Char1Object.GetComponent<WorldEntity>();
         Char2 = Char2Object.GetComponent<WorldEntity>();
+        CharCombined = CharCombinedObject.GetComponent<WorldEntity>();
+        Char1Object.SetActive(true);
+        Char2Object.SetActive(true);
+        CharCombinedObject.SetActive(false);
         //_camera = _mainCamera.GetComponent<Camera>();
 
-        LoadLevel(1);
+        //LoadLevel(1);
 
         // InstantiateDoor(new IntVector(4, 5), ID: 1, triggerNumber: 1);
         // InstantiateStepTrigger(new IntVector(4, 4), ID: 1);
@@ -180,7 +192,10 @@ public class WorldManager : MonoBehaviour
         mapEditor.SetShooters();
         mapEditor.SetCheckPoints();
         iCheckPointLocationID = 0;
-        Events.g.Raise(new LevelLoadedEvent(iLevel));
+        int levelType = mapEditor.GetLevelType();
+
+        Events.g.Raise(new LevelLoadedEvent(iLevel, levelType));
+        inLevel = true;
     }
     private void LoadLevel(LoadLevelEvent e)
     {
@@ -198,35 +213,38 @@ public class WorldManager : MonoBehaviour
         Events.g.RemoveListener<CheckPointEvent>(CheckPointPass);
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        foreach (WorldEntity e in _entities)
+        if (inLevel)
         {
-            if (e != null)
+            foreach (WorldEntity e in _entities)
             {
-                IntVector l = e.Location;
-                _entityMap[l.x, l.y].Remove(e);
-                e.Simulate();
-                l = e.Location;
-                _entityMap[l.x, l.y].Add(e);
-            }
-        }
-        foreach (WorldEntity e in _entities)
-        {
-            if (e != null)
-            {
-                IntVector eLocation = e.Location;
-                foreach (WorldTrigger t in _triggers)
+                if (e != null)
                 {
-                    IntVector tLocation = t.Location;
-                    if (eLocation == tLocation && t.triggerType==TriggerType.Bullet)
+                    IntVector l = e.Location;
+                    _entityMap[l.x, l.y].Remove(e);
+                    e.Simulate();
+                    l = e.Location;
+                    _entityMap[l.x, l.y].Add(e);
+                }
+            }
+            foreach (WorldEntity e in _entities)
+            {
+                if (e != null)
+                {
+                    IntVector eLocation = e.Location;
+                    foreach (WorldTrigger t in _triggers)
                     {
-                        StepOnTrigger(t, e);
+                        IntVector tLocation = t.Location;
+                        if (eLocation == tLocation && t.triggerType == TriggerType.Bullet)
+                        {
+                            StepOnTrigger(t, e);
+                        }
                     }
                 }
             }
+            CheckPointsCheck();
         }
-        CheckPointsCheck();
     }
 
     
@@ -234,9 +252,13 @@ public class WorldManager : MonoBehaviour
     {
         for (int i = 0; i < tMap.Length; i++)
         {
+
             int x = tMap[i].vTilePosition.x;
             int y = tMap[i].vTilePosition.y;
-            _world[x, y] = tMap[i].tileType;
+            if (x < _dims.x && y < _dims.y)
+            {
+                _world[x, y] = tMap[i].tileType;
+            }
             //_world[x, _dims.y-y-1] = tMap[i].tileType;//make levels in excel from top left
         }
 
@@ -254,7 +276,7 @@ public class WorldManager : MonoBehaviour
         List<WorldEntity> entitiesToRemove = new List<WorldEntity>();
         foreach (WorldEntity e in _entities)
         {
-            if ((e != null) && (e.entityType != EntityType.Character1) && (e.entityType != EntityType.Character2))
+            if ((e != null) && (e.entityType != EntityType.Character))
             {
                 entitiesToRemove.Add(e);
                 IntVector l = e.Location;
@@ -285,10 +307,32 @@ public class WorldManager : MonoBehaviour
             _triggers.Remove(e);
         }
     }
+    private IntVector PositionFlip(IntVector Position)
+    {
+        int x = Position.x;
+        int y = Position.y;
+        IntVector newPosition = new IntVector(x, _dims.y - y - 1);
+        return newPosition;
+    }
     public void SetCharacters(IntVector Char1Pos, IntVector Char2Pos)
     {
-        Char1.Location = Char1Pos;
-        Char2.Location = Char2Pos;
+        
+        if (mapEditor.GetLevelType() == 4)
+        {
+            Char1Object.SetActive(false);
+            Char2Object.SetActive(false);
+            CharCombinedObject.SetActive(true);
+            CharCombined.Location = PositionFlip(Char1Pos);
+        }
+        else
+        {
+            Char1Object.SetActive(true);
+            Char2Object.SetActive(true);
+            CharCombinedObject.SetActive(false);
+            Char1.Location = PositionFlip(Char1Pos);
+            Char2.Location = PositionFlip(Char2Pos);
+        }
+        
     }
     private IntVector Destination(IntVector from, Direction direction)
     {
@@ -392,13 +436,13 @@ public class WorldManager : MonoBehaviour
     public void InstantiatePusher(IntVector location, bool isControlled, Direction direction, 
         int range, int ID, float timeInterval)
     {
-        if (_world[location.x, location.y] == TileType.Wall)
+        if (_world[PositionFlip(location).x, PositionFlip(location).y] == TileType.Wall)
         {
             print("error! entity on the wall!");
         }
         var gameObject = Instantiate(_pusherPreFab);
         var entity = gameObject.GetComponent<WorldEntity>();
-        entity.Location = location;
+        entity.Location = PositionFlip(location);
         var pusher = gameObject.GetComponent<Pusher>();
         pusher.direction = direction;
         pusher.isControlled = isControlled;
@@ -409,48 +453,48 @@ public class WorldManager : MonoBehaviour
     }
     public void InstantiateStar(IntVector location)
     {
-        if (_world[location.x, location.y] == TileType.Wall)
+        if (_world[PositionFlip(location).x, PositionFlip(location).y] == TileType.Wall)
         {
             print("error! trigger on the wall!");
         }
         var gameObject = Instantiate(_starPreFab);
         var trigger = gameObject.GetComponent<WorldTrigger>();
-        trigger.Location = location;
+        trigger.Location = PositionFlip(location);
     }
     public void InstantiateDoor(IntVector location, int ID, int triggerNumber)
     {
-        if (_world[location.x, location.y] == TileType.Wall)
+        if (_world[PositionFlip(location).x, PositionFlip(location).y] == TileType.Wall)
         {
             print("error! door on the wall!");
         }
         var gameObject = Instantiate(_doorPreFab);
         var entity = gameObject.GetComponent<WorldEntity>();
-        entity.Location = location;
+        entity.Location = PositionFlip(location);
         var door = gameObject.GetComponent<Door>();
         door.iID = ID;
         door.iTriggerNumber = triggerNumber;
     }
     public void InstantiateStepTrigger(IntVector location, int ID)
     {
-        if (_world[location.x, location.y] == TileType.Wall)
+        if (_world[PositionFlip(location).x, PositionFlip(location).y] == TileType.Wall)
         {
             print("error! step trigger on the wall!");
         }
         var gameObject = Instantiate(_stepTriggerPreFab);
         var trigger = gameObject.GetComponent<WorldTrigger>();
-        trigger.Location = location;
+        trigger.Location = PositionFlip(location);
         var stepTrigger = gameObject.GetComponent<StepTrigger>();
         stepTrigger.iID = ID;
     }
     public void InstantiateStayTrigger(IntVector location, int ID)
     {
-        if (_world[location.x, location.y] == TileType.Wall)
+        if (_world[PositionFlip(location).x, PositionFlip(location).y] == TileType.Wall)
         {
             print("error! stay trigger on the wall!");
         }
         var gameObject = Instantiate(_stayTriggerPreFab);
         var trigger = gameObject.GetComponent<WorldTrigger>();
-        trigger.Location = location;
+        trigger.Location = PositionFlip(location);
         var stayTrigger = gameObject.GetComponent<StayTrigger>();
         stayTrigger.iID = ID;
     }
@@ -458,13 +502,13 @@ public class WorldManager : MonoBehaviour
     public void InstantiateShooter(IntVector location, float fShootingTimeInterval, Direction shootingDirection, 
         bool isMoving, Direction movingDirection, int iRange, float fMovingTimeInterval)
     {
-        if (_world[location.x, location.y] == TileType.Wall)
+        if (_world[PositionFlip(location).x, PositionFlip(location).y] == TileType.Wall)
         {
             print("error! shooter on the wall!");
         }
         var gameObject = Instantiate(_shooterPreFab);
         var entity = gameObject.GetComponent<WorldEntity>();
-        entity.Location = location;
+        entity.Location = PositionFlip(location);
         var shooter = gameObject.GetComponent<Shooter>();
         shooter.fShootingTimeInterval = fShootingTimeInterval;
         shooter.shootingDirection = shootingDirection;
@@ -475,25 +519,23 @@ public class WorldManager : MonoBehaviour
     }
     public void InstantiateCheckPoint1(IntVector location)
     {
-        if (_world[location.x, location.y] == TileType.Wall)
+        if (_world[PositionFlip(location).x, PositionFlip(location).y] == TileType.Wall)
         {
             print("error! check point on the wall!");
         }
         checkPoint1Object = Instantiate(_checkPoint1PreFab);
         var trigger = checkPoint1Object.GetComponent<WorldTrigger>();
-        trigger.Location = location;
-print("checkPoint1Object " + location);
+        trigger.Location = PositionFlip(location);
     }
     public void InstantiateCheckPoint2(IntVector location)
     {
-        if (_world[location.x, location.y] == TileType.Wall)
+        if (_world[PositionFlip(location).x, PositionFlip(location).y] == TileType.Wall)
         {
             print("error! check point on the wall!");
         }
         var checkPoint2Object = Instantiate(_checkPoint2PreFab);
         var trigger = checkPoint2Object.GetComponent<WorldTrigger>();
-        trigger.Location = location;
-        print("checkPoint2Object " + location);
+        trigger.Location = PositionFlip(location);
     }
     private void CheckPointsCheck()
     {
@@ -511,15 +553,16 @@ print("checkPoint1Object " + location);
         print("CheckPoint1Locations[iCheckPointLocationID] " + CheckPoint1Locations[iCheckPointLocationID]);
         print("CheckPoint2Locations[iCheckPointLocationID] " + CheckPoint2Locations[iCheckPointLocationID]);
         if (CheckPoint1Locations[iCheckPointLocationID] != null &&
-           CheckPoint2Locations[iCheckPointLocationID] != null)
+            CheckPoint2Locations[iCheckPointLocationID] != null)
         {
             checkPoint1Object.GetComponent<WorldTrigger>().Location = CheckPoint1Locations[iCheckPointLocationID];
-            //var trigger = checkPoint2Object.GetComponent<WorldTrigger>();
-            //trigger.Location = CheckPoint2Locations[iCheckPointLocationID];
+            var trigger = checkPoint2Object.GetComponent<WorldTrigger>();
+            trigger.Location = CheckPoint2Locations[iCheckPointLocationID];
         }
         else
         {
             //destroy
+            iCheckPointLocationID--;
         }
     }
     void CheckPointPass(CheckPointEvent e)
@@ -555,112 +598,144 @@ print("checkPoint1Object " + location);
     void OnDrawGizmos()
     {
         if (_world == null)
+        {
             return;
-        for (int x = 0; x < _dims.x; x++)
-        {
-            for (int y = 0; y < _dims.y; y++)
-            {
-                Rect rect = new Rect(x * _tileSize, y * _tileSize, _tileSize, _tileSize);
-                switch (_world[x, y])
-                {
-                    case TileType.Floor:
-                        Gizmos.DrawGUITexture(rect, _floorTexture);
-                        break;
-                    case TileType.Empty:
-                        break;
-                    case TileType.Wall:
-                        Gizmos.DrawGUITexture(rect, _wallTexture);
-                        break;
-                }
-            }
         }
-
-
-        foreach (WorldTrigger t in _triggers)
+        if (inLevel)
         {
-            if (t != null)
+            for (int x = 0; x < _dims.x; x++)
             {
-                IntVector l = t.Location;
-                Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
-                switch (t.triggerType)
+                for (int y = 0; y < _dims.y; y++)
                 {
-                    case TriggerType.LevelStar:
-                        Gizmos.DrawGUITexture(rect, _starTexture);
-                        break;
-                    case TriggerType.StayTrigger:
-                        Gizmos.DrawGUITexture(rect, _stayTriggerTexture);
-                        break;
-                    case TriggerType.CheckPoint:
-                        Gizmos.DrawGUITexture(rect, _checkPointTexture);
-                        break;
-                    case TriggerType.StepTrigger:
-                        var stepTrigger = t.gameObject.GetComponent<StepTrigger>();
-                        if (stepTrigger != null && !stepTrigger.isTriggered)
-                        {
-                            Gizmos.DrawGUITexture(rect, _stepTriggerTexture);
-                        }
-                        
-                        break;
+                    Rect rect = new Rect(x * _tileSize, y * _tileSize, _tileSize, _tileSize);
+                    switch (_world[x, y])
+                    {
+                        case TileType.Floor:
+                            Gizmos.DrawGUITexture(rect, _floorTexture);
+                            break;
+                        case TileType.Empty:
+                            break;
+                        case TileType.Wall:
+                            Gizmos.DrawGUITexture(rect, _wallTexture);
+                            break;
+                    }
                 }
             }
-        }
-        foreach (WorldEntity e in _entities)
-        {
-            if (e != null)
-            {
-                IntVector l = e.Location;
-                Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
-                switch (e.entityType)
-                {
-                    case EntityType.Character1:
-                        Gizmos.DrawGUITexture(rect, _character1Texture);
-                        break;
-                    case EntityType.Character2:
-                        Gizmos.DrawGUITexture(rect, _character2Texture);
-                        break;
-                    case EntityType.Pusher:
-                        Gizmos.DrawGUITexture(rect, _pusherTexture);
-                        break;
-                    case EntityType.Door:
-                        var door = e.gameObject.GetComponent<Door>();
-                        if (door.isOpen)
-                        {
 
-                        }
-                        else if (door.isHalfOpen)
-                        {
-                            Gizmos.DrawGUITexture(rect, _doorHalfOpenTexture);
-                        }
-                        else
-                        {
-                            Gizmos.DrawGUITexture(rect, _doorTexture);
-                        }
+
+            foreach (WorldTrigger t in _triggers)
+            {
+                if (t != null)
+                {
+                    IntVector l = t.Location;
+                    Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
+                    switch (t.triggerType)
+                    {
+                        case TriggerType.LevelStar:
+                            Gizmos.DrawGUITexture(rect, _starTexture);
+                            break;
+                        case TriggerType.StayTrigger:
+                            Gizmos.DrawGUITexture(rect, _stayTriggerTexture);
+                            break;
+                        case TriggerType.CheckPoint:
+                            Gizmos.DrawGUITexture(rect, _checkPointTexture);
+                            break;
+                        case TriggerType.StepTrigger:
+                            var stepTrigger = t.gameObject.GetComponent<StepTrigger>();
+                            if (stepTrigger != null && !stepTrigger.isTriggered)
+                            {
+                                Gizmos.DrawGUITexture(rect, _stepTriggerTexture);
+                            }
                         
-                        break;
-                    case EntityType.Shooter:
-                        Gizmos.DrawGUITexture(rect, _shooterTexture);
-                        break;
+                            break;
+                    }
                 }
             }
+            foreach (WorldEntity e in _entities)
+            {
+                if (e != null)
+                {
+                    IntVector l = e.Location;
+                    Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
+                    Rect rect1 = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize * 1f, _tileSize);
+                    Rect rect2 = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize * 1f);
+                    switch (e.entityType)
+                    {
+                        case EntityType.Character:
+                            switch (e.characterID)
+                            {
+                                case 1:
+                                    if (mapEditor.GetLevelType() != 4)
+                                    {
+                                        Gizmos.DrawGUITexture(rect, _character1Texture);
+                                    }
+                                    break;
+                                case 2:
+                                    if (mapEditor.GetLevelType() != 4)
+                                    {
+                                        Gizmos.DrawGUITexture(rect, _character2Texture);
+                                    }
+                                    break;
+                                case 3:
+                                    if (mapEditor.GetLevelType() == 4)
+                                    {
+                                        Gizmos.DrawGUITexture(rect, _characterCombinedTexture);
+                                    }
+                                    break;
+                            }
+                        
+                            break;
+                    // case EntityType.Character2:
+                    //     Gizmos.DrawGUITexture(rect2, _character2Texture);
+                    //     break;
+                    //     case EntityType.CharacterCombined:
+                    //     Gizmos.DrawGUITexture(rect, _characterCombinedTexture);
+                    //     break;
+                        case EntityType.Pusher:
+                            Gizmos.DrawGUITexture(rect, _pusherTexture);
+                            break;
+                        case EntityType.Door:
+                            var door = e.gameObject.GetComponent<Door>();
+                            if (door.isOpen)
+                            {
+
+                            }
+                            else if (door.isHalfOpen)
+                            {
+                                Gizmos.DrawGUITexture(rect, _doorHalfOpenTexture);
+                            }
+                            else
+                            {
+                                Gizmos.DrawGUITexture(rect, _doorTexture);
+                            }
+                        
+                            break;
+                        case EntityType.Shooter:
+                            Gizmos.DrawGUITexture(rect, _shooterTexture);
+                            break;
+                    }
+                }
             
-        }
-        foreach (WorldTrigger t in _triggers)
-        {
-            if (t != null)
+            }
+            foreach (WorldTrigger t in _triggers)
             {
-                IntVector l = t.Location;
-                Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
-                switch (t.triggerType)
+                if (t != null)
                 {
-                    case TriggerType.Bullet:
-                        Gizmos.DrawGUITexture(rect, _bulletTexture);
-                        break;
+                    IntVector l = t.Location;
+                    Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
+                    switch (t.triggerType)
+                    {
+                        case TriggerType.Bullet:
+                            Gizmos.DrawGUITexture(rect, _bulletTexture);
+                            break;
 
+                    }
                 }
             }
         }
         
     }
+
     // void OnGUI()
     // {
     //     if (_world == null)

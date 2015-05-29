@@ -16,36 +16,42 @@ public class CheckPoint : MonoBehaviour {
         Cache();
         _worldTrigger.triggerType = TriggerType.CheckPoint;
     }
+    public void MoveCheckPoint()
+    {
+        
+    }
     void LateUpdate()
     {
-        if (!_worldTrigger.isMessageSent)
+        if (!_worldTrigger.isMessageSent &&_worldTrigger.steppingEntityType==EntityType.Character)
         {
             if (_worldTrigger.isSteppedOn)
             {
-                switch (_worldTrigger.steppingEntityType)
+                switch (_worldTrigger.iStepCharacterID)
                 {
-                    case EntityType.Character1:
-                        //print("enter 1");
+                    case 1:
                         Events.g.Raise(new CheckPointEvent(isEntered: true, CharacterID: 1));
                         break;
-                    case EntityType.Character2:
-                        //print("enter 2");
+                    case 2:
                         Events.g.Raise(new CheckPointEvent(isEntered: true, CharacterID: 2));
+                        break;
+                        case 3:
+                        Events.g.Raise(new CheckPointEvent(isEntered: true, CharacterID: 3));
                         break;
                 }
                 _worldTrigger.isMessageSent = true;
             }
             else
             {
-                switch (_worldTrigger.steppingEntityType)
+                switch (_worldTrigger.iStepCharacterID)
                 {
-                    case EntityType.Character1:
-                    //print("leave 1");
+                    case 1:
                         Events.g.Raise(new CheckPointEvent(isEntered: false, CharacterID: 1));
                         break;
-                    case EntityType.Character2:
-                    //print("leave 2");
+                    case 2:
                         Events.g.Raise(new CheckPointEvent(isEntered: false, CharacterID: 2));
+                        break;
+                        case 3:
+                        Events.g.Raise(new CheckPointEvent(isEntered: false, CharacterID: 3));
                         break;
                 }
                 _worldTrigger.isMessageSent = true;

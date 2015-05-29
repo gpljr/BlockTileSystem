@@ -58,8 +58,7 @@ public class Bullet : MonoBehaviour
         if (!_worldTrigger.isMessageSent)
         {
             if (_worldTrigger.isSteppedOn &&
-                (_worldTrigger.steppingEntityType == EntityType.Character1 ||
-                _worldTrigger.steppingEntityType == EntityType.Character2))
+                (_worldTrigger.steppingEntityType == EntityType.Character))
             {
                 BulletHit();
                 _worldTrigger.isMessageSent = true;                
@@ -68,9 +67,9 @@ public class Bullet : MonoBehaviour
     }
     void BulletHit()
     {
-        //texture change, sound, raise event
+        //texture change, sound
         BulletDestroySelf();
-        print("bullet hit");
+        Events.g.Raise(new BulletHitEvent());
         
     }
     private void BulletDestroySelf()

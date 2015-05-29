@@ -6,6 +6,7 @@ public class WorldEntity : MonoBehaviour
     //simulate priority later.
 
     public EntityType entityType;
+    public int characterID;
 
     private EntityCollidingType _collidingType;
     public EntityCollidingType CollidingType
@@ -51,6 +52,15 @@ public class WorldEntity : MonoBehaviour
     {
         RegisterMe();
     }
+    // void OnEnable()
+    // {
+    //     RegisterMe();
+    // }
+
+    // void OnDisable()
+    // {
+    //     DeregisterMe();
+    // }
     public void Pushed(Direction direction)
     {
         //for character being pushed. play pushed animation

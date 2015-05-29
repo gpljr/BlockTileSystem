@@ -101,8 +101,7 @@ public struct SavableLevel
     }
 
     public enum EntityType{
-        Character1
-        ,Character2
+        Character
         ,Pusher
         ,Door
         ,Shooter

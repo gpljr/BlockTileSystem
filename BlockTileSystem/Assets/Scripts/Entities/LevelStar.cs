@@ -23,30 +23,32 @@ public class LevelStar : MonoBehaviour
         {
             if (_worldTrigger.isSteppedOn)
             {
-                switch (_worldTrigger.steppingEntityType)
+                switch (_worldTrigger.iStepCharacterID)
                 {
-                    case EntityType.Character1:
-                        //print("enter 1");
+                    case 1:
                         Events.g.Raise(new LevelStarEvent(isEntered: true, CharacterID: 1));
                         break;
-                    case EntityType.Character2:
-                        //print("enter 2");
+                    case 2:
                         Events.g.Raise(new LevelStarEvent(isEntered: true, CharacterID: 2));
+                        break;
+                        case 3:
+                        Events.g.Raise(new LevelStarEvent(isEntered: true, CharacterID: 3));
                         break;
                 }
                 _worldTrigger.isMessageSent = true;
             }
             else
             {
-                switch (_worldTrigger.steppingEntityType)
+                switch (_worldTrigger.iStepCharacterID)
                 {
-                    case EntityType.Character1:
-                    //print("leave 1");
+                    case 1:
                         Events.g.Raise(new LevelStarEvent(isEntered: false, CharacterID: 1));
                         break;
-                    case EntityType.Character2:
-                    //print("leave 2");
+                    case 2:
                         Events.g.Raise(new LevelStarEvent(isEntered: false, CharacterID: 2));
+                        break;
+                        case 3:
+                        Events.g.Raise(new LevelStarEvent(isEntered: false, CharacterID: 3));
                         break;
                 }
                 _worldTrigger.isMessageSent = true;
