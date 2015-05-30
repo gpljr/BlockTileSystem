@@ -40,7 +40,7 @@
 		<DoorInXML>
 			<vPosition>
 				<x>3</x>
-				<y>1</y>
+				<y>11</y>
 			</vPosition>
 			<iID>2</iID>
 			<triggerNumber>1</triggerNumber>
@@ -99,7 +99,7 @@
 		<ShooterInXML>
 			<vPosition>
 				<x>19</x>
-				<y>11</y>
+				<y>9</y>
 			</vPosition>
 			<shootingTimeInterval>3</shootingTimeInterval>
 			<sShootingDirection>South</sShootingDirection>

@@ -27,6 +27,39 @@ public class Character : MonoBehaviour
     [SerializeField]
     int _iCharacterID;
 
+    [SerializeField]
+    Transform _visuals;
+
+    public Vector2 visPosition
+    {
+        get
+        {
+            return _visuals.position;
+        }
+    }
+
+    [System.Serializable]
+    public struct StateInformation
+    {
+        // [HideInInspector]
+        // public Char2DState lastState;
+        // public Char2DState state;
+
+        [HideInInspector]
+        public float fractionComplete;
+        // Range from 0-1, inclusive
+        [HideInInspector]
+        public IntVector lastLoc;
+        // [HideInInspector]
+        // public bool inactive;
+    }
+    private StateInformation _currStateInfo;
+    public StateInformation StateInfo
+    {
+        get { return _currStateInfo; }
+    }
+    private IntVector _location;
+
     //[SerializeField]
     //Direction _facing;
 
@@ -41,6 +74,8 @@ public class Character : MonoBehaviour
         _worldEntity.CollidingType = EntityCollidingType.Pushable;
         _worldEntity.entityType = EntityType.Character;
         _worldEntity.characterID = _iCharacterID;
+        _location = _worldEntity.Location;
+        _currStateInfo.lastLoc = _location;
 
     }
 
@@ -57,6 +92,23 @@ public class Character : MonoBehaviour
 
     void Update()
     {
+        _location = _worldEntity.Location;
+
+        Vector2 v = Vector2.zero;
+        Vector2 visualOffset = (_location.ToVector2() - _currStateInfo.lastLoc.ToVector2())
+                               * (_currStateInfo.fractionComplete);
+        Vector2 fixedOffset = new Vector2(0.5f, -0.5f);
+        v = _currStateInfo.lastLoc.ToVector2() + visualOffset + fixedOffset;
+        _visuals.position = v * WorldManager.g.TileSize;
+        float speed = 1f;
+
+        _currStateInfo.fractionComplete += speed * Time.deltaTime;
+        if (_currStateInfo.fractionComplete >= 1f)
+        {
+            _currStateInfo.lastLoc = _location;
+            _currStateInfo.fractionComplete = 0f;
+        }
+
         //_input = new IntVector(Vector2.zero);
         if (Input.GetKeyDown(_leftKey))
         {

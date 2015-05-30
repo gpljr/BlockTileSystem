@@ -37,11 +37,15 @@ public class WorldManager : MonoBehaviour
     GameObject CharCombinedObject;
 
     [HideInInspector]
-    public WorldEntity Char1;
+    public Character Char1;
     [HideInInspector]
-    public WorldEntity Char2;
+    public Character Char2;
     [HideInInspector]
-    public WorldEntity CharCombined;
+    public Character CharCombined;
+
+    private WorldEntity _char1Entity;
+    private WorldEntity _char2Entity;
+    private WorldEntity _charCombinedEntity;
 
     [SerializeField]
     private GameObject _pusherPreFab;
@@ -103,6 +107,12 @@ public class WorldManager : MonoBehaviour
     public int iCheckPointLocationID;
 
     public bool inLevel;
+    [SerializeField]
+    private Transform _floor;
+    [SerializeField]
+    private Transform _wall;
+    GameObject[] Floors;
+    GameObject[] Walls;
 
     private MapEditor mapEditor;
     public static WorldManager g;
@@ -146,9 +156,12 @@ public class WorldManager : MonoBehaviour
         }
         _world = new TileType[_dims.x, _dims.y];
         mapEditor = gameObject.GetComponent<MapEditor>();
-        Char1 = Char1Object.GetComponent<WorldEntity>();
-        Char2 = Char2Object.GetComponent<WorldEntity>();
-        CharCombined = CharCombinedObject.GetComponent<WorldEntity>();
+        Char1 = Char1Object.GetComponent<Character>();
+        Char2 = Char2Object.GetComponent<Character>();
+        CharCombined = CharCombinedObject.GetComponent<Character>();
+        _char1Entity = Char1Object.GetComponent<WorldEntity>();
+        _char2Entity = Char2Object.GetComponent<WorldEntity>();
+        _charCombinedEntity = CharCombinedObject.GetComponent<WorldEntity>();
         Char1Object.SetActive(true);
         Char2Object.SetActive(true);
         CharCombinedObject.SetActive(false);
@@ -165,6 +178,7 @@ public class WorldManager : MonoBehaviour
     {
         ClearMap();        
         mapEditor.LoadFile(iLevel);
+
         _dims = mapEditor.GetDim();
         _world = new TileType[_dims.x, _dims.y];
         //_mainCamera.transform.position = new Vector3(_dims.x * _tileSize / 2, _dims.y * _tileSize / 2, -12f);
@@ -190,15 +204,18 @@ public class WorldManager : MonoBehaviour
         mapEditor.SetStepTriggers();
         mapEditor.SetStayTriggers();
         mapEditor.SetShooters();
-        mapEditor.SetCheckPoints();
-        iCheckPointLocationID = 0;
+        //mapEditor.SetCheckPoints();
+        //iCheckPointLocationID = 0;
         int levelType = mapEditor.GetLevelType();
 
         Events.g.Raise(new LevelLoadedEvent(iLevel, levelType));
         inLevel = true;
+
+
     }
     private void LoadLevel(LoadLevelEvent e)
     {
+        
         LoadLevel(e.iLevel);
     }
     void OnEnable()
@@ -243,13 +260,17 @@ public class WorldManager : MonoBehaviour
                     }
                 }
             }
-            CheckPointsCheck();
+            //CheckPointsCheck();
         }
     }
 
     
     public void GenerateBasicMap(Tile[] tMap)
     {
+        Floors = new GameObject[tMap.Length];
+        Walls = new GameObject[tMap.Length];
+        int floorIndex = 0;
+        int wallIndex = 0;
         for (int i = 0; i < tMap.Length; i++)
         {
 
@@ -258,6 +279,17 @@ public class WorldManager : MonoBehaviour
             if (x < _dims.x && y < _dims.y)
             {
                 _world[x, y] = tMap[i].tileType;
+                if (_world[x, y] == TileType.Floor)
+                {
+                    Floors[floorIndex] = (GameObject)Instantiate(_floor.gameObject, new Vector2(x + 0.5F, y - 0.5F), new Quaternion());
+                    floorIndex++;
+                }
+                else if (_world[x, y] == TileType.Wall)
+                {
+                    Walls[floorIndex] = (GameObject)Instantiate(_wall.gameObject, new Vector2(x + 0.5F, y - 0.5F), new Quaternion());
+                    wallIndex++;
+                }
+                
             }
             //_world[x, _dims.y-y-1] = tMap[i].tileType;//make levels in excel from top left
         }
@@ -312,6 +344,7 @@ public class WorldManager : MonoBehaviour
         int x = Position.x;
         int y = Position.y;
         IntVector newPosition = new IntVector(x, _dims.y - y - 1);
+        //IntVector newPosition = new IntVector(x, y);
         return newPosition;
     }
     public void SetCharacters(IntVector Char1Pos, IntVector Char2Pos)
@@ -322,15 +355,15 @@ public class WorldManager : MonoBehaviour
             Char1Object.SetActive(false);
             Char2Object.SetActive(false);
             CharCombinedObject.SetActive(true);
-            CharCombined.Location = PositionFlip(Char1Pos);
+            _charCombinedEntity.Location = PositionFlip(Char1Pos);
         }
         else
         {
             Char1Object.SetActive(true);
             Char2Object.SetActive(true);
             CharCombinedObject.SetActive(false);
-            Char1.Location = PositionFlip(Char1Pos);
-            Char2.Location = PositionFlip(Char2Pos);
+            _char1Entity.Location = PositionFlip(Char1Pos);
+            _char2Entity.Location = PositionFlip(Char2Pos);
         }
         
     }
@@ -570,7 +603,6 @@ public class WorldManager : MonoBehaviour
 
         if (e.isEntered)
         {
-            print("enter");
             switch (e.CharacterID)
             {
                 case 1:
@@ -595,56 +627,56 @@ public class WorldManager : MonoBehaviour
         }
     }
 
-    void OnDrawGizmos()
+
+    void OnGUI()
     {
+        
         if (_world == null)
-        {
             return;
-        }
         if (inLevel)
         {
-            for (int x = 0; x < _dims.x; x++)
-            {
-                for (int y = 0; y < _dims.y; y++)
-                {
-                    Rect rect = new Rect(x * _tileSize, y * _tileSize, _tileSize, _tileSize);
-                    switch (_world[x, y])
-                    {
-                        case TileType.Floor:
-                            Gizmos.DrawGUITexture(rect, _floorTexture);
-                            break;
-                        case TileType.Empty:
-                            break;
-                        case TileType.Wall:
-                            Gizmos.DrawGUITexture(rect, _wallTexture);
-                            break;
-                    }
-                }
-            }
-
-
+            float screenTileSize = Vector3.Distance(Camera.main.WorldToScreenPoint(new Vector3(0f * _tileSize, 0f * _tileSize, 0f)), 
+                                       Camera.main.WorldToScreenPoint(new Vector3(1f * _tileSize, 0f * _tileSize, 0f)));
+            // for (int x = 0; x < _dims.x; x++)
+            // {
+            //     for (int y = 0; y < _dims.y; y++)
+            //     {
+            //         Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(x * _tileSize, y * _tileSize, 0f));
+            //         Rect rect = new Rect(screenPos.x, Screen.height - screenPos.y, screenTileSize, screenTileSize);
+            //         switch (_world[x, y])
+            //         {
+            //             case TileType.Floor:
+            //                 GUI.DrawTexture(rect, _floorTexture);
+            //                 break;
+            //             case TileType.Wall:
+            //                 GUI.DrawTexture(rect, _wallTexture);
+            //                 break;
+            //         }
+            //     }
+            // }
             foreach (WorldTrigger t in _triggers)
             {
                 if (t != null)
                 {
                     IntVector l = t.Location;
-                    Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
+                    Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(l.x * _tileSize, l.y * _tileSize, 0f));
+                    Rect rect = new Rect(screenPos.x, Screen.height - screenPos.y, screenTileSize, screenTileSize);
                     switch (t.triggerType)
                     {
                         case TriggerType.LevelStar:
-                            Gizmos.DrawGUITexture(rect, _starTexture);
+                            GUI.DrawTexture(rect, _starTexture);
                             break;
                         case TriggerType.StayTrigger:
-                            Gizmos.DrawGUITexture(rect, _stayTriggerTexture);
+                            GUI.DrawTexture(rect, _stayTriggerTexture);
                             break;
-                        case TriggerType.CheckPoint:
-                            Gizmos.DrawGUITexture(rect, _checkPointTexture);
-                            break;
+                    // case TriggerType.CheckPoint:
+                    //     GUI.DrawTexture(rect, _checkPointTexture);
+                    //     break;
                         case TriggerType.StepTrigger:
                             var stepTrigger = t.gameObject.GetComponent<StepTrigger>();
                             if (stepTrigger != null && !stepTrigger.isTriggered)
                             {
-                                Gizmos.DrawGUITexture(rect, _stepTriggerTexture);
+                                GUI.DrawTexture(rect, _stepTriggerTexture);
                             }
                         
                             break;
@@ -656,43 +688,37 @@ public class WorldManager : MonoBehaviour
                 if (e != null)
                 {
                     IntVector l = e.Location;
-                    Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
-                    Rect rect1 = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize * 1f, _tileSize);
-                    Rect rect2 = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize * 1f);
+                    Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(l.x * _tileSize, l.y * _tileSize, 0f));
+                    Rect rect = new Rect(screenPos.x, Screen.height - screenPos.y, screenTileSize, screenTileSize);
                     switch (e.entityType)
                     {
-                        case EntityType.Character:
-                            switch (e.characterID)
-                            {
-                                case 1:
-                                    if (mapEditor.GetLevelType() != 4)
-                                    {
-                                        Gizmos.DrawGUITexture(rect, _character1Texture);
-                                    }
-                                    break;
-                                case 2:
-                                    if (mapEditor.GetLevelType() != 4)
-                                    {
-                                        Gizmos.DrawGUITexture(rect, _character2Texture);
-                                    }
-                                    break;
-                                case 3:
-                                    if (mapEditor.GetLevelType() == 4)
-                                    {
-                                        Gizmos.DrawGUITexture(rect, _characterCombinedTexture);
-                                    }
-                                    break;
-                            }
+                    // case EntityType.Character:
+                    //     switch (e.characterID)
+                    //     {
+                    //         case 1:
+                    //             if (mapEditor.GetLevelType() != 4)
+                    //             {
+                    //                 GUI.DrawTexture(rect, _character1Texture);
+                    //             }
+                    //             break;
+                    //         case 2:
+                    //             if (mapEditor.GetLevelType() != 4)
+                    //             {
+                    //                 GUI.DrawTexture(rect, _character2Texture);
+                    //             }
+                    //             break;
+                    //         case 3:
+                    //             if (mapEditor.GetLevelType() == 4)
+                    //             {
+                    //                 GUI.DrawTexture(rect, _characterCombinedTexture);
+                    //             }
+                    //             break;
+                    //     }
                         
-                            break;
-                    // case EntityType.Character2:
-                    //     Gizmos.DrawGUITexture(rect2, _character2Texture);
                     //     break;
-                    //     case EntityType.CharacterCombined:
-                    //     Gizmos.DrawGUITexture(rect, _characterCombinedTexture);
-                    //     break;
+
                         case EntityType.Pusher:
-                            Gizmos.DrawGUITexture(rect, _pusherTexture);
+                            GUI.DrawTexture(rect, _pusherTexture);
                             break;
                         case EntityType.Door:
                             var door = e.gameObject.GetComponent<Door>();
@@ -702,16 +728,16 @@ public class WorldManager : MonoBehaviour
                             }
                             else if (door.isHalfOpen)
                             {
-                                Gizmos.DrawGUITexture(rect, _doorHalfOpenTexture);
+                                GUI.DrawTexture(rect, _doorHalfOpenTexture);
                             }
                             else
                             {
-                                Gizmos.DrawGUITexture(rect, _doorTexture);
+                                GUI.DrawTexture(rect, _doorTexture);
                             }
                         
                             break;
                         case EntityType.Shooter:
-                            Gizmos.DrawGUITexture(rect, _shooterTexture);
+                            GUI.DrawTexture(rect, _shooterTexture);
                             break;
                     }
                 }
@@ -722,42 +748,17 @@ public class WorldManager : MonoBehaviour
                 if (t != null)
                 {
                     IntVector l = t.Location;
-                    Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
+                    Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(l.x * _tileSize, l.y * _tileSize, 0f));
+                    Rect rect = new Rect(screenPos.x, Screen.height - screenPos.y, screenTileSize, screenTileSize);
                     switch (t.triggerType)
                     {
                         case TriggerType.Bullet:
-                            Gizmos.DrawGUITexture(rect, _bulletTexture);
+                            GUI.DrawTexture(rect, _bulletTexture);
                             break;
 
                     }
                 }
             }
-        }
-        
+        }    
     }
-
-    // void OnGUI()
-    // {
-    //     if (_world == null)
-    //         return;
-    //     for (int x = 0; x < _dims.x; x++)
-    //     {
-    //         for (int y = 0; y < _dims.y; y++)
-    //         {
-    //             Rect rect = new Rect(x * _tileSize, y * _tileSize, _tileSize, _tileSize);
-    //             switch (_world[x, y])
-    //             {
-    //                 case TileType.Floor:
-    //                     GUI.DrawTexture(rect, _floorTexture);
-    //                     break;
-    //                 case TileType.Empty:
-    //                     break;
-    //                 case TileType.Wall:
-    //                     GUI.DrawTexture(rect, _wallTexture);
-    //                     break;
-    //             }
-    //         }
-    //     }
-               
-    // }
 }

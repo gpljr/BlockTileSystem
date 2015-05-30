@@ -18,11 +18,19 @@ public class MapEditor : MonoBehaviour
         //read the file
         XmlSerializer levelDeserializer = new XmlSerializer(typeof(SavableLevel));
         string sLevelName = "Levels/" + iLevel.ToString() + ".xml";
-        FileStream levelReader = new FileStream(Path.Combine(Application.dataPath, sLevelName), FileMode.Open); // TODO(Julian): Varying filenames
-        XmlReader xmlReader = XmlReader.Create(levelReader);
-        toLoad = (SavableLevel)levelDeserializer.Deserialize(xmlReader);
-        levelReader.Close();
-        print("level " + iLevel + " is loaded.");
+        FileStream levelReader = new FileStream(Path.Combine(Application.dataPath, sLevelName), FileMode.Open); 
+        if (levelReader != null)
+        {    
+            XmlReader xmlReader = XmlReader.Create(levelReader);
+            toLoad = (SavableLevel)levelDeserializer.Deserialize(xmlReader);
+            levelReader.Close();
+            print("level " + iLevel + " is loaded.");
+        }
+        else
+        {
+            print("no level file");
+
+        }
     }
     public IntVector GetDim()
     {

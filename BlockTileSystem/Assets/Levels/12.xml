@@ -3,8 +3,8 @@
 	<sLevelName>12</sLevelName>
 	<iLevelType>4</iLevelType>
 	<vChar1StartPos>
-		<x>1</x>
-		<y>1</y>
+		<x>2</x>
+		<y>15</y>
 	</vChar1StartPos>
 	<vChar2StartPos>
 		<x>2</x>
@@ -119,7 +119,7 @@
 				<y>6</y>
 			</vPosition>
 			<isControlled>0</isControlled>
-			<sDirection>West</sDirection>
+			<sDirection>East</sDirection>
 			<range>5</range>
 			<ID>0</ID>
 			<timeInterval>0.8</timeInterval>

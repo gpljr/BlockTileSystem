@@ -25,53 +25,65 @@ public class LevelCode : MonoBehaviour
 
     private bool _inLevel;
     private bool _isLastLevel;
-[SerializeField]
+    [SerializeField]
     GameObject startingScreen;
     [SerializeField]
     GameObject endingScreen;
     [SerializeField]
     GameObject inLevelScreen;
 
+    [SerializeField]
+    GameObject error;
+
     void Start()
     {
         image.SetActive(true);
         _image = image.GetComponent<Image>();
         EnterStartingScreen();
+
     }
 
     void Update()
     {
-        if (!_inLevel && Input.anyKeyDown)
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            error.SetActive(!error.activeSelf);
+        }
+        
+        if (!_inLevel && Input.anyKeyDown)//TODO distinguish start and ending
         {
             LoadLevel(1);
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (!inFading)
         {
-            Application.Quit();
-        }
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            EnterStartingScreen();
-        }
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
+            if (Input.GetKeyDown(KeyCode.Backspace))
+            {
+                EnterStartingScreen();
+            }
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
             
-            Restart();
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            LoadNextLevel();
-        }
-        if (_bPlayer1Entered && _bPlayer2Entered)
-        {
+                Restart();
+            }
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                LoadNextLevel();
+            }
+            if (_bPlayer1Entered && _bPlayer2Entered)
+            {
             
-            LoadNextLevel();
-        }
+                LoadNextLevel();
+            }
 
-        if (_bNewLevelLoaded)
-        {
-            StartLevel();
-            _bNewLevelLoaded = false;            
+            if (_bNewLevelLoaded)
+            {
+                StartLevel();
+                _bNewLevelLoaded = false;            
+            }
         }
     }
 
@@ -144,6 +156,7 @@ public class LevelCode : MonoBehaviour
 
     void LevelLoaded(LevelLoadedEvent e)
     {
+        _inLevel = true;
         _bNewLevelLoaded = true;
         inLevelScreen.SetActive(true);
         startingScreen.SetActive(false);
@@ -159,6 +172,13 @@ public class LevelCode : MonoBehaviour
     {
         _bPlayer1Entered = false;
         _bPlayer2Entered = false;
+        
+        EndLevel(iLevel);
+    }
+    public void LoadNextLevel()
+    {
+        _timeToFadeIn = 1f;
+        _timeToFadeOut = 1f;
         if (_isLastLevel)
         {
             _isLastLevel = false;
@@ -166,23 +186,14 @@ public class LevelCode : MonoBehaviour
         }
         else
         {
-            _inLevel = true;
-            
-            EndLevel(iLevel);
+            LoadLevel(_iCurrentLevel + 1);
         }
-    }
-    public void LoadNextLevel()
-    {
-        _timeToFadeIn = 1f;
-        _timeToFadeOut = 1f;
-
-        LoadLevel(_iCurrentLevel + 1);
 
     }
     void EnterEndingScreen()
     {
         _inLevel = false;
-        WorldManager.g.inLevel=false;
+        WorldManager.g.inLevel = false;
         startingScreen.SetActive(false);
         endingScreen.SetActive(true);
         inLevelScreen.SetActive(false);
@@ -190,7 +201,7 @@ public class LevelCode : MonoBehaviour
     }
     void EnterStartingScreen()
     {
-        _inLevel=false;
+        _inLevel = false;
         startingScreen.SetActive(true);
         endingScreen.SetActive(false);
         inLevelScreen.SetActive(false);
