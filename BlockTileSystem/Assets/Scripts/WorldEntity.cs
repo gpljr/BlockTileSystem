@@ -64,6 +64,21 @@ public class WorldEntity : MonoBehaviour
             _visuals.position = value;
         }
     }
+    public float _speed = 1f;
+    public float visSpeed
+    {
+        get
+        {
+            return _speed;
+        }
+        set
+        {
+            _speed = value;
+        }
+    }
+    public AnimationCurve visMovingCurve;
+    public float movingDuration;
+    float timer;
 
     public bool isSpriteSet;
     public void SetVisual(Sprite sprite)
@@ -97,14 +112,22 @@ public class WorldEntity : MonoBehaviour
             
             v = _currStateInfo.lastLoc.ToVector2() + visualOffset + fixedOffset;
             _visuals.position = v * WorldManager.g.TileSize;
-            float speed = 1f;
-            StateInformation.inMoving=true;
-            _currStateInfo.fractionComplete += speed * Time.deltaTime;
+            StateInformation.inMoving = true;
+
+            
+            if (timer < movingDuration)
+            {
+                timer += Time.deltaTime;
+                _currStateInfo.fractionComplete = visMovingCurve.Evaluate(timer / movingDuration);
+            }
+            
+
             if (_currStateInfo.fractionComplete >= 1f)
             {
                 _currStateInfo.lastLoc = _location;
                 _currStateInfo.fractionComplete = 0f;
-                StateInformation.inMoving=false;
+                StateInformation.inMoving = false;
+                timer=0f;
             }
         }
         else
