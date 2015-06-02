@@ -25,9 +25,6 @@ public class Character : MonoBehaviour
     int _iCharacterID;
 
     [SerializeField]
-    float _visualSpeed=2f;
-
-    [SerializeField]
     private Sprite _char1YellowSprite;
     [SerializeField]
     private Sprite _char2GreenSprite;
@@ -45,7 +42,6 @@ public class Character : MonoBehaviour
         _worldEntity.CollidingType = EntityCollidingType.Pushable;
         _worldEntity.entityType = EntityType.Character;
         _worldEntity.characterID = _iCharacterID;
-        _worldEntity.visSpeed=_visualSpeed;
 
     }
 

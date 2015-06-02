@@ -64,18 +64,7 @@ public class WorldEntity : MonoBehaviour
             _visuals.position = value;
         }
     }
-    public float _speed = 1f;
-    public float visSpeed
-    {
-        get
-        {
-            return _speed;
-        }
-        set
-        {
-            _speed = value;
-        }
-    }
+
     public AnimationCurve visMovingCurve;
     public float movingDuration;
     float timer;
