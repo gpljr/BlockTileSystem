@@ -6,7 +6,7 @@ public class LevelStar : MonoBehaviour
     private WorldTrigger _worldTrigger;
 
     [SerializeField]
-    Texture _starTexture;
+    private Sprite _sprite;
     public void Cache()
     {
         _worldTrigger = GetComponent<WorldTrigger>();
@@ -14,11 +14,16 @@ public class LevelStar : MonoBehaviour
     void Awake()
     {
         Cache();
-        _worldTrigger.triggerType= TriggerType.LevelStar;
+        _worldTrigger.triggerType = TriggerType.LevelStar;
     }
     
     void LateUpdate()
     {
+        if (!_worldTrigger.isSpriteSet)
+        {
+            _worldTrigger.SetVisual(_sprite);
+        }
+
         if (!_worldTrigger.isMessageSent)
         {
             if (_worldTrigger.isSteppedOn)
@@ -31,7 +36,7 @@ public class LevelStar : MonoBehaviour
                     case 2:
                         Events.g.Raise(new LevelStarEvent(isEntered: true, CharacterID: 2));
                         break;
-                        case 3:
+                    case 3:
                         Events.g.Raise(new LevelStarEvent(isEntered: true, CharacterID: 3));
                         break;
                 }
@@ -47,7 +52,7 @@ public class LevelStar : MonoBehaviour
                     case 2:
                         Events.g.Raise(new LevelStarEvent(isEntered: false, CharacterID: 2));
                         break;
-                        case 3:
+                    case 3:
                         Events.g.Raise(new LevelStarEvent(isEntered: false, CharacterID: 3));
                         break;
                 }
@@ -55,14 +60,6 @@ public class LevelStar : MonoBehaviour
             }
         }
     }
-    // void OnDrawGizmos()
-    // {
-    //     if (_worldTrigger != null)
-    //     {
-    //         IntVector l = _worldTrigger.Location;
-    //         Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);                
-    //         Gizmos.DrawGUITexture(rect, _starTexture);
-    //     }
-    // }
+
 
 }

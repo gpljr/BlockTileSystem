@@ -3,8 +3,9 @@ using System.Collections;
 
 public class CheckPoint : MonoBehaviour {
 
-	[SerializeField]
-    Texture _checkPointTexture;
+
+    [SerializeField]
+    private Sprite _sprite;
 
     private WorldTrigger _worldTrigger;
     public void Cache()
@@ -22,6 +23,11 @@ public class CheckPoint : MonoBehaviour {
     }
     void LateUpdate()
     {
+        if (!_worldTrigger.isSpriteSet)
+        {
+            _worldTrigger.SetVisual(_sprite);
+        }
+
         if (!_worldTrigger.isMessageSent &&_worldTrigger.steppingEntityType==EntityType.Character)
         {
             if (_worldTrigger.isSteppedOn)

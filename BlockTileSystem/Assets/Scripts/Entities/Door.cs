@@ -15,6 +15,14 @@ public class Door : MonoBehaviour
 
     private WorldEntity _worldEntity;
 
+    [SerializeField]
+    private Sprite _closedDoor;
+    [SerializeField]
+    private Sprite _halfOpenDoor;
+    [SerializeField]
+    private Sprite _openDoor;
+
+
     public void Cache()
     {
         _worldEntity = GetComponent<WorldEntity>();
@@ -26,6 +34,13 @@ public class Door : MonoBehaviour
         _worldEntity.CollidingType = EntityCollidingType.Colliding;
         _worldEntity.entityType = EntityType.Door;
 
+    }
+    void Update()
+    {
+        if (!_worldEntity.isSpriteSet)
+        {
+            _worldEntity.SetVisual(_closedDoor);
+        }
     }
 
     void OnEnable()
@@ -66,12 +81,14 @@ public class Door : MonoBehaviour
     {
         isOpen = true;
         _worldEntity.CollidingType = EntityCollidingType.Empty;
-        //play animation, change texture;
+        _worldEntity.ChangeVisual(_openDoor);
+        //play animation;
     }
     void HalfOpenDoor()
     {
         isHalfOpen = true;
-        //play animation, change texture;
+        _worldEntity.ChangeVisual(_halfOpenDoor);
+        //play animation;
     }
     void Triggered(StepTriggerEvent e)
     {
@@ -79,17 +96,18 @@ public class Door : MonoBehaviour
         {
             if (iTriggerNumber == 1)
             {
-            	isTriggered1=true;
+                isTriggered1 = true;
             }
             else if (iTriggerNumber == 2)
             {
-            	if(isTriggered1)
-            	{
-            		isTriggered2=true;
-            	}
-            	else{
-            		isTriggered1=true;
-            	}
+                if (isTriggered1)
+                {
+                    isTriggered2 = true;
+                }
+                else
+                {
+                    isTriggered1 = true;
+                }
             }
         }
     }

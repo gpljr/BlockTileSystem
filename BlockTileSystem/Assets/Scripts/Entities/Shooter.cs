@@ -26,8 +26,9 @@ public class Shooter : MonoBehaviour
     private GameObject _bullet;
 
     [SerializeField]
-    Texture _shooterTexture;
-    
+    private Sprite _sprite;
+
+   
     public void Cache()
     {
         _worldEntity = GetComponent<WorldEntity>();
@@ -52,7 +53,11 @@ public class Shooter : MonoBehaviour
     }
     void Update()
     {
-
+        if (!_worldEntity.isSpriteSet)
+        {
+            _worldEntity.SetVisual(_sprite);
+        }
+        
         if (!_needMove)
         {
             _fTimeBetweenMoves += Time.deltaTime;
@@ -85,11 +90,11 @@ public class Shooter : MonoBehaviour
     }
     private void Shoot()
     {
-    	GameObject bulletObject=(GameObject)Instantiate(_bullet);
-    	var bullet = bulletObject.GetComponent<Bullet>();
-    	var bulletTrigger = bulletObject.GetComponent<WorldTrigger>();
-        bulletTrigger.Location = _worldEntity.Location;
-        bullet.direction=shootingDirection;
+        GameObject bulletObject = (GameObject)Instantiate(_bullet);
+        var bullet = bulletObject.GetComponent<Bullet>();
+        var bulletEntity = bulletObject.GetComponent<WorldEntity>();
+        bulletEntity.Location = _worldEntity.Location;
+        bullet.direction = shootingDirection;
         _needShoot = false;
     }
 

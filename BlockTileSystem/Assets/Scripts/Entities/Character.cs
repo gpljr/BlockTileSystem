@@ -15,9 +15,6 @@ public class Character : MonoBehaviour
     [SerializeField]
     KeyCode _downKey;
 
-    [SerializeField]
-    Texture _character1Texture;
-
     private WorldEntity _worldEntity;
     private IntVector _input;
 
@@ -27,48 +24,47 @@ public class Character : MonoBehaviour
     [SerializeField]
     int _iCharacterID;
 
-
     [SerializeField]
-    private GameObject _visualPrefab;
+    private Sprite _char1YellowSprite;
+    [SerializeField]
+    private Sprite _char2GreenSprite;
+    [SerializeField]
+    private Sprite _char3CombinedSprite;
 
-    private Transform _visuals;
+    // [SerializeField]
+    // private GameObject _visualPrefab;
 
-    public Vector2 visPosition
-    {
-        get
-        {
-            return _visuals.position;
-        }
-        set
-        {
-            _visuals.position = value;
-        }
-    }
+    // private Transform _visuals;
 
-    [System.Serializable]
-    public struct StateInformation
-    {
-        // [HideInInspector]
-        // public Char2DState lastState;
-        // public Char2DState state;
+    // public Vector2 visPosition
+    // {
+    //     get
+    //     {
+    //         return _visuals.position;
+    //     }
+    // }
 
-        [HideInInspector]
-        public float fractionComplete;
-        // Range from 0-1, inclusive
-        [HideInInspector]
-        public IntVector lastLoc;
-        // [HideInInspector]
-        // public bool inactive;
-    }
-    private StateInformation _currStateInfo;
-    public StateInformation StateInfo
-    {
-        get { return _currStateInfo; }
-    }
-    private IntVector _location;
+    // [System.Serializable]
+    // public struct StateInformation
+    // {
+    //     // [HideInInspector]
+    //     // public Char2DState lastState;
+    //     // public Char2DState state;
 
-    //[SerializeField]
-    //Direction _facing;
+    //     [HideInInspector]
+    //     public float fractionComplete;
+    //     // Range from 0-1, inclusive
+    //     [HideInInspector]
+    //     public IntVector lastLoc;
+    //     // [HideInInspector]
+    //     // public bool inactive;
+    // }
+    // private StateInformation _currStateInfo;
+    // public StateInformation StateInfo
+    // {
+    //     get { return _currStateInfo; }
+    // }
+
 
     public void Cache()
     {
@@ -81,9 +77,7 @@ public class Character : MonoBehaviour
         _worldEntity.CollidingType = EntityCollidingType.Pushable;
         _worldEntity.entityType = EntityType.Character;
         _worldEntity.characterID = _iCharacterID;
-        _location = _worldEntity.Location;
-        _currStateInfo.lastLoc = _location;
-        _visuals = Instantiate(_visualPrefab).transform;
+
 
     }
 
@@ -95,28 +89,29 @@ public class Character : MonoBehaviour
     void OnDisable()
     {
         _worldEntity.Simulators -= Simulate;
-        Destroy(_visuals.gameObject);
     }
 
 
     void Update()
     {
-        _location = _worldEntity.Location;
-
-        Vector2 v = Vector2.zero;
-        Vector2 visualOffset = (_location.ToVector2() - _currStateInfo.lastLoc.ToVector2())
-                               * (_currStateInfo.fractionComplete);
-        Vector2 fixedOffset = new Vector2(0.5f, -0.5f);
-        v = _currStateInfo.lastLoc.ToVector2() + visualOffset + fixedOffset;
-        _visuals.position = v * WorldManager.g.TileSize;
-        float speed = 1f;
-
-        _currStateInfo.fractionComplete += speed * Time.deltaTime;
-        if (_currStateInfo.fractionComplete >= 1f)
+        if (!_worldEntity.isSpriteSet)
         {
-            _currStateInfo.lastLoc = _location;
-            _currStateInfo.fractionComplete = 0f;
+            switch (_iCharacterID)
+            {
+                case 1:
+                _worldEntity.SetVisual(_char1YellowSprite);
+                break;
+                case 2:
+                _worldEntity.SetVisual(_char2GreenSprite);
+                break;
+                case 3:
+                _worldEntity.SetVisual(_char3CombinedSprite);
+                break;
+            }
+            _worldEntity.SetOrderLayer(10);
         }
+
+        
 
         //_input = new IntVector(Vector2.zero);
         if (Input.GetKeyDown(_leftKey))
@@ -215,23 +210,4 @@ public class Character : MonoBehaviour
         }
         _worldEntity.Location = vec;
     }
-    // void OnDrawGizmos()
-    // {
-    //     if (_worldEntity != null)
-    //     {
-    //         IntVector l = _worldEntity.Location;
-    //         //Rect rect = new Rect(l.ToVector2().x * _tileSize, l.ToVector2().y * _tileSize, _tileSize, _tileSize);
-    //         Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);
-                
-    //         Gizmos.DrawGUITexture(rect, _character1Texture);
-    //     }
-    // }
-    // void OnGUI()
-    // {
-    //     IntVector l = _worldEntity.Location;
-    //     Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);
-    //     //GUI.depth=-1;
-    //     GUI.DrawTexture(rect, _character1Texture);
-        
-    // }
 }

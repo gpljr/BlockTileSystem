@@ -56,22 +56,22 @@ public class CameraControl : MonoBehaviour
                 {
                     if (isCombined)
                     {
-                        Vector2 cameraLocation = WorldManager.g.CharCombined.visPosition * _tileSize;
+                        Vector2 cameraLocation = WorldManager.g.charCombinedEntity.visPosition * _tileSize;
                         _singleCameraObject.transform.position = new Vector3(cameraLocation.x, cameraLocation.y, -12f);
                         _singleCamera.orthographicSize = _fSingleCameraSize * _tileSize;
                     }
                     else
                     {
-                        Vector2 cameraLocation = (WorldManager.g.Char1.visPosition + WorldManager.g.Char2.visPosition) * _tileSize / 2f;
+                        Vector2 cameraLocation = (WorldManager.g.char1Entity.visPosition + WorldManager.g.char2Entity.visPosition) * _tileSize / 2f;
                         _singleCameraObject.transform.position = new Vector3(cameraLocation.x, cameraLocation.y, -12f);
-                        float distance = Vector2.Distance(WorldManager.g.Char1.visPosition, WorldManager.g.Char2.visPosition);
+                        float distance = Vector2.Distance(WorldManager.g.char1Entity.visPosition, WorldManager.g.char2Entity.visPosition);
                         _singleCamera.orthographicSize = Mathf.Max(distance, _fSingleCameraSize) * _tileSize;
                     }
                 }
                 else
                 {
-                    Vector2 cameraLocation1 = WorldManager.g.Char1.visPosition * _tileSize;
-                    Vector2 cameraLocation2 = WorldManager.g.Char2.visPosition * _tileSize;
+                    Vector2 cameraLocation1 = WorldManager.g.char1Entity.visPosition * _tileSize;
+                    Vector2 cameraLocation2 = WorldManager.g.char2Entity.visPosition * _tileSize;
                     _doubleCameraObject1.transform.position = new Vector3(cameraLocation1.x, cameraLocation1.y, -12f);
                     _doubleCameraObject2.transform.position = new Vector3(cameraLocation2.x, cameraLocation2.y, -12f);
                     _doubleCamera1.orthographicSize = _fDoubleCameraSize * _tileSize;

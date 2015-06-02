@@ -27,6 +27,90 @@ public class WorldEntity : MonoBehaviour
         get { return _location; }
         set { _location = value; }
     }
+    [SerializeField]
+    private GameObject _visualPrefab;
+    private Transform _visuals;
+
+    [System.Serializable]
+    public struct StateInformation
+    {
+        // [HideInInspector]
+        // public Char2DState lastState;
+        // public Char2DState state;
+
+        [HideInInspector]
+        public float fractionComplete;
+        // Range from 0-1, inclusive
+        [HideInInspector]
+        public IntVector lastLoc;
+        // [HideInInspector]
+        // public bool inactive;
+    }
+    private StateInformation _currStateInfo;
+    public StateInformation StateInfo
+    {
+        get { return _currStateInfo; }
+    }
+    public Vector2 visPosition
+    {
+        get
+        {
+            return _visuals.position;
+        }
+        set
+        {
+            _visuals.position = value;
+        }
+    }
+
+    public bool isSpriteSet;
+    public void SetVisual(Sprite sprite)
+    {
+        _visuals = Instantiate(_visualPrefab).transform;
+        _visuals.position = (_location.ToVector2() + new Vector2(0.5f, -0.5f)) * WorldManager.g.TileSize;
+        _visuals.gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+        isSpriteSet = true;
+    }
+    public void ChangeVisual(Sprite sprite)
+    {
+        _visuals.gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+    }
+    public void SetOrderLayer(int layer)
+    {
+        _visuals.gameObject.GetComponent<SpriteRenderer>().sortingOrder = layer;
+    }
+
+    private void Update()
+    {
+        Vector2 fixedOffset = new Vector2(0.5f, -0.5f);
+        
+        float distance = Vector2.Distance(_location.ToVector2(), _currStateInfo.lastLoc.ToVector2());
+        
+//print("_location "+ _location.ToVector2()+" last loc "+_currStateInfo.lastLoc.ToVector2()+ " distance "+ distance);
+        if (distance < 1.1f && distance > 0f)
+        {
+            Vector2 v = Vector2.zero;
+            Vector2 visualOffset = (_location.ToVector2() - _currStateInfo.lastLoc.ToVector2())
+                                   * (_currStateInfo.fractionComplete);
+            
+            v = _currStateInfo.lastLoc.ToVector2() + visualOffset + fixedOffset;
+            _visuals.position = v * WorldManager.g.TileSize;
+            float speed = 1f;
+
+            _currStateInfo.fractionComplete += speed * Time.deltaTime;
+            if (_currStateInfo.fractionComplete >= 1f)
+            {
+                _currStateInfo.lastLoc = _location;
+                _currStateInfo.fractionComplete = 0f;
+            }
+        }
+        else
+        {
+            Vector2 v = _currStateInfo.lastLoc.ToVector2() + fixedOffset;
+            _visuals.position = v * WorldManager.g.TileSize;
+            _currStateInfo.lastLoc = _location;
+        }
+    }
 
     private bool _registered = false;
 
@@ -48,19 +132,24 @@ public class WorldEntity : MonoBehaviour
         }
     }
 
+    void Awake()
+    {
+        _currStateInfo.lastLoc = _location;
+    }
     void Start()
     {
         RegisterMe();
+        
     }
     // void OnEnable()
     // {
     //     RegisterMe();
     // }
 
-    // void OnDisable()
-    // {
-    //     DeregisterMe();
-    // }
+    void OnDisable()
+    {
+        Destroy(_visuals.gameObject);
+    }
     public void Pushed(Direction direction)
     {
         //for character being pushed. play pushed animation

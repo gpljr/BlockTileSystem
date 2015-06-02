@@ -9,6 +9,9 @@ public class StepTrigger : MonoBehaviour
 
     public bool isTriggered;
 
+    [SerializeField]
+    private Sprite _sprite;
+
     private WorldTrigger _worldTrigger;
     public void Cache()
     {
@@ -21,6 +24,11 @@ public class StepTrigger : MonoBehaviour
     }
     void LateUpdate()
     {
+        if (!_worldTrigger.isSpriteSet)
+        {
+            _worldTrigger.SetVisual(_sprite);
+        }
+        
         if (!_worldTrigger.isMessageSent)
         {
             if (_worldTrigger.isSteppedOn)
@@ -35,5 +43,6 @@ public class StepTrigger : MonoBehaviour
     	//texture change, sound
     	isTriggered=true;
     	Events.g.Raise(new StepTriggerEvent(triggerID: iID));
+        _worldTrigger.DestroyVisual();
     }
 }

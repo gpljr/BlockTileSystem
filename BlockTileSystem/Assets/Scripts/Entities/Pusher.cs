@@ -19,8 +19,9 @@ public class Pusher : MonoBehaviour
     private float _fTimeBetweenMoves;
     private int _iStep;
 
+    
     [SerializeField]
-    Texture _pusherTexture;
+    private Sprite _sprite;
     
     public void Cache()
     {
@@ -32,6 +33,7 @@ public class Pusher : MonoBehaviour
         Cache();
         _worldEntity.CollidingType = EntityCollidingType.Colliding;
         _worldEntity.entityType = EntityType.Pusher;
+
 
     }
 
@@ -45,9 +47,14 @@ public class Pusher : MonoBehaviour
     {
         _worldEntity.Simulators -= Simulate;
         Events.g.RemoveListener<StayTriggerEvent>(Triggered);
+
     }
     void Update()
     {
+        if (!_worldEntity.isSpriteSet)
+        {
+            _worldEntity.SetVisual(_sprite);
+        }
 
         if (!_needMove)
         {
@@ -192,13 +199,5 @@ public class Pusher : MonoBehaviour
                 break;
         }
     }
-    // void OnDrawGizmos()
-    // {
-    //     if (_worldEntity != null)
-    //     {
-    //         IntVector l = _worldEntity.Location;
-    //         Rect rect = new Rect(l.ToVector2().x, l.ToVector2().y, 1, 1);
-    //         Gizmos.DrawGUITexture(rect, _pusherTexture);
-    //     }
-    // }
+
 }
