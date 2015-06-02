@@ -155,6 +155,7 @@ public class WorldManager : MonoBehaviour
             Destroy(this);
         }
         _world = new TileType[_dims.x, _dims.y];
+        _entityMap = new List<WorldEntity>[_dims.x, _dims.y];
         mapEditor = gameObject.GetComponent<MapEditor>();
         Char1 = Char1Object.GetComponent<Character>();
         Char2 = Char2Object.GetComponent<Character>();
@@ -162,9 +163,9 @@ public class WorldManager : MonoBehaviour
         _char1Entity = Char1Object.GetComponent<WorldEntity>();
         _char2Entity = Char2Object.GetComponent<WorldEntity>();
         _charCombinedEntity = CharCombinedObject.GetComponent<WorldEntity>();
-        Char1Object.SetActive(true);
-        Char2Object.SetActive(true);
-        CharCombinedObject.SetActive(false);
+        // Char1Object.SetActive(true);
+        // Char2Object.SetActive(true);
+        // CharCombinedObject.SetActive(false);
         //_camera = _mainCamera.GetComponent<Camera>();
 
         //LoadLevel(1);
@@ -286,7 +287,7 @@ public class WorldManager : MonoBehaviour
                 }
                 else if (_world[x, y] == TileType.Wall)
                 {
-                    Walls[floorIndex] = (GameObject)Instantiate(_wall.gameObject, new Vector2(x + 0.5F, y - 0.5F), new Quaternion());
+                    Walls[wallIndex] = (GameObject)Instantiate(_wall.gameObject, new Vector2(x + 0.5F, y - 0.5F), new Quaternion());
                     wallIndex++;
                 }
                 
@@ -297,6 +298,28 @@ public class WorldManager : MonoBehaviour
     }
     private void ClearMap()
     {
+        if (Floors != null)
+        {
+            foreach (GameObject f in Floors)
+            {
+                if (f != null)
+                {
+                    Destroy(f);
+                }
+            }
+
+        }
+        if (Walls != null)
+        {
+            foreach (GameObject w in Walls)
+            {
+                if (w != null)
+                {
+                    Destroy(w);
+                }
+
+            }
+        }
         for (int x = 0; x < _dims.x; x++)
         {
             for (int y = 0; y < _dims.y; y++)

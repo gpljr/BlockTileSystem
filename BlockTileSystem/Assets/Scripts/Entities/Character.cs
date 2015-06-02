@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using InControl;
 
@@ -27,14 +27,21 @@ public class Character : MonoBehaviour
     [SerializeField]
     int _iCharacterID;
 
+
     [SerializeField]
-    Transform _visuals;
+    private GameObject _visualPrefab;
+
+    private Transform _visuals;
 
     public Vector2 visPosition
     {
         get
         {
             return _visuals.position;
+        }
+        set
+        {
+            _visuals.position = value;
         }
     }
 
@@ -76,6 +83,7 @@ public class Character : MonoBehaviour
         _worldEntity.characterID = _iCharacterID;
         _location = _worldEntity.Location;
         _currStateInfo.lastLoc = _location;
+        _visuals = Instantiate(_visualPrefab).transform;
 
     }
 
@@ -87,6 +95,7 @@ public class Character : MonoBehaviour
     void OnDisable()
     {
         _worldEntity.Simulators -= Simulate;
+        Destroy(_visuals.gameObject);
     }
 
 

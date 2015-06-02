@@ -32,8 +32,6 @@ public class LevelCode : MonoBehaviour
     [SerializeField]
     GameObject inLevelScreen;
 
-    [SerializeField]
-    GameObject error;
 
     void Start()
     {
@@ -45,10 +43,6 @@ public class LevelCode : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            error.SetActive(!error.activeSelf);
-        }
         
         if (!_inLevel && Input.anyKeyDown)//TODO distinguish start and ending
         {
