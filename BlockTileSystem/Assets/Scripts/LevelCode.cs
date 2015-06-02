@@ -32,6 +32,15 @@ public class LevelCode : MonoBehaviour
     [SerializeField]
     GameObject inLevelScreen;
 
+    public enum GameState
+    {
+        Starting,
+InTransition,
+InLevel,
+Ending
+    }
+    public static GameState gameState;
+
 
     void Start()
     {
@@ -43,42 +52,49 @@ public class LevelCode : MonoBehaviour
 
     void Update()
     {
+        switch (gameState)
+        {
+            case GameState.Starting:
+                if (Input.anyKeyDown)
+                {
+                    
+                    LoadLevel(1);
+                }
+                break;
+            case GameState.InLevel:
+            
+            
+                if (Input.GetKeyDown(KeyCode.Return))
+                {            
+                    Restart();
+                }
+                if (Input.GetKeyDown(KeyCode.N))
+                {
+                    LoadNextLevel();
+                }
+                if (_bPlayer1Entered && _bPlayer2Entered)
+                {
+            
+                    LoadNextLevel();
+                }
+                break;
+        }
         
-        if (!_inLevel && Input.anyKeyDown)//TODO distinguish start and ending
+        if (Input.GetKeyDown(KeyCode.Backspace))
         {
-            LoadLevel(1);
+            EnterStartingScreen();
         }
-        if (!inFading)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                Application.Quit();
-            }
-            if (Input.GetKeyDown(KeyCode.Backspace))
-            {
-                EnterStartingScreen();
-            }
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-            
-                Restart();
-            }
-            if (Input.GetKeyDown(KeyCode.N))
-            {
-                LoadNextLevel();
-            }
-            if (_bPlayer1Entered && _bPlayer2Entered)
-            {
-            
-                LoadNextLevel();
-            }
+            Application.Quit();
+        }
 
-            if (_bNewLevelLoaded)
-            {
-                StartLevel();
-                _bNewLevelLoaded = false;            
-            }
+        if (_bNewLevelLoaded)
+        {
+            StartLevel();
+            _bNewLevelLoaded = false;            
         }
+        
     }
 
     void OnEnable()
@@ -186,8 +202,7 @@ public class LevelCode : MonoBehaviour
     }
     void EnterEndingScreen()
     {
-        _inLevel = false;
-        WorldManager.g.inLevel = false;
+        gameState=GameState.Ending;
         startingScreen.SetActive(false);
         endingScreen.SetActive(true);
         inLevelScreen.SetActive(false);
@@ -195,7 +210,7 @@ public class LevelCode : MonoBehaviour
     }
     void EnterStartingScreen()
     {
-        _inLevel = false;
+        gameState=GameState.Starting;
         startingScreen.SetActive(true);
         endingScreen.SetActive(false);
         inLevelScreen.SetActive(false);
@@ -204,6 +219,7 @@ public class LevelCode : MonoBehaviour
     void StartLevel()
     {
         StartCoroutine(Fade(_timeToFadeIn, _fadeCurve, fadeIn: true));
+        gameState = GameState.InLevel;
     }
 
     private IEnumerator Fade(float timerDuration, AnimationCurve curve, bool fadeIn)
@@ -254,6 +270,7 @@ public class LevelCode : MonoBehaviour
 
     public void EndLevel(int iLevelToLoad)
     {
+        gameState = GameState.InTransition;
         StartCoroutine(FadeOut(_timeToFadeOut, _fadeCurve, iLevelToLoad));
     }
 }

@@ -109,7 +109,6 @@ public class WorldManager : MonoBehaviour
     public IntVector[] CheckPoint2Locations;
     public int iCheckPointLocationID;
 
-    public bool inLevel;
     [SerializeField]
     private Transform _floor;
     [SerializeField]
@@ -213,7 +212,6 @@ public class WorldManager : MonoBehaviour
         int levelType = mapEditor.GetLevelType();
 
         Events.g.Raise(new LevelLoadedEvent(iLevel, levelType));
-        inLevel = true;
 
 
     }
@@ -236,7 +234,7 @@ public class WorldManager : MonoBehaviour
 
     void Update()
     {
-        if (inLevel)
+        if (LevelCode.gameState==LevelCode.GameState.InLevel)
         {
             foreach (WorldEntity e in _entities)
             {
