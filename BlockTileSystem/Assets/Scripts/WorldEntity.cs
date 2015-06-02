@@ -45,6 +45,8 @@ public class WorldEntity : MonoBehaviour
         public IntVector lastLoc;
         // [HideInInspector]
         // public bool inactive;
+        [HideInInspector]
+        public static bool inMoving;
     }
     private StateInformation _currStateInfo;
     public StateInformation StateInfo
@@ -96,12 +98,13 @@ public class WorldEntity : MonoBehaviour
             v = _currStateInfo.lastLoc.ToVector2() + visualOffset + fixedOffset;
             _visuals.position = v * WorldManager.g.TileSize;
             float speed = 1f;
-
+            StateInformation.inMoving=true;
             _currStateInfo.fractionComplete += speed * Time.deltaTime;
             if (_currStateInfo.fractionComplete >= 1f)
             {
                 _currStateInfo.lastLoc = _location;
                 _currStateInfo.fractionComplete = 0f;
+                StateInformation.inMoving=false;
             }
         }
         else

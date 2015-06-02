@@ -31,41 +31,6 @@ public class Character : MonoBehaviour
     [SerializeField]
     private Sprite _char3CombinedSprite;
 
-    // [SerializeField]
-    // private GameObject _visualPrefab;
-
-    // private Transform _visuals;
-
-    // public Vector2 visPosition
-    // {
-    //     get
-    //     {
-    //         return _visuals.position;
-    //     }
-    // }
-
-    // [System.Serializable]
-    // public struct StateInformation
-    // {
-    //     // [HideInInspector]
-    //     // public Char2DState lastState;
-    //     // public Char2DState state;
-
-    //     [HideInInspector]
-    //     public float fractionComplete;
-    //     // Range from 0-1, inclusive
-    //     [HideInInspector]
-    //     public IntVector lastLoc;
-    //     // [HideInInspector]
-    //     // public bool inactive;
-    // }
-    // private StateInformation _currStateInfo;
-    // public StateInformation StateInfo
-    // {
-    //     get { return _currStateInfo; }
-    // }
-
-
     public void Cache()
     {
         _worldEntity = GetComponent<WorldEntity>();
@@ -99,46 +64,47 @@ public class Character : MonoBehaviour
             switch (_iCharacterID)
             {
                 case 1:
-                _worldEntity.SetVisual(_char1YellowSprite);
-                break;
+                    _worldEntity.SetVisual(_char1YellowSprite);
+                    break;
                 case 2:
-                _worldEntity.SetVisual(_char2GreenSprite);
-                break;
+                    _worldEntity.SetVisual(_char2GreenSprite);
+                    break;
                 case 3:
-                _worldEntity.SetVisual(_char3CombinedSprite);
-                break;
+                    _worldEntity.SetVisual(_char3CombinedSprite);
+                    break;
             }
             _worldEntity.SetOrderLayer(10);
         }
 
-        
-
-        //_input = new IntVector(Vector2.zero);
-        if (Input.GetKeyDown(_leftKey))
+        print("WorldEntity.StateInformation.inMoving "+WorldEntity.StateInformation.inMoving);
+        if (!WorldEntity.StateInformation.inMoving)
         {
-            _input.x -= 1;
-            _direction = Direction.West;
-            _bMove = true;
+            //_input = new IntVector(Vector2.zero);
+            if (Input.GetKeyDown(_leftKey))
+            {
+                _input.x -= 1;
+                _direction = Direction.West;
+                _bMove = true;
+            }
+            if (Input.GetKeyDown(_rightKey))
+            {
+                _input.x += 1;
+                _direction = Direction.East;
+                _bMove = true;
+            }
+            if (Input.GetKeyDown(_upKey))
+            {
+                _input.y += 1;
+                _direction = Direction.North;
+                _bMove = true;
+            }
+            if (Input.GetKeyDown(_downKey))
+            {
+                _input.y -= 1;
+                _direction = Direction.South;
+                _bMove = true;
+            }
         }
-        if (Input.GetKeyDown(_rightKey))
-        {
-            _input.x += 1;
-            _direction = Direction.East;
-            _bMove = true;
-        }
-        if (Input.GetKeyDown(_upKey))
-        {
-            _input.y += 1;
-            _direction = Direction.North;
-            _bMove = true;
-        }
-        if (Input.GetKeyDown(_downKey))
-        {
-            _input.y -= 1;
-            _direction = Direction.South;
-            _bMove = true;
-        }
-
         if (_worldEntity.isPushed)
         {
             Pushed(_worldEntity.pushedDirection);
