@@ -46,7 +46,7 @@ public class WorldEntity : MonoBehaviour
         // [HideInInspector]
         // public bool inactive;
         [HideInInspector]
-        public static bool inMoving;
+        public static bool characterInMoving;
     }
     private StateInformation _currStateInfo;
     public StateInformation StateInfo
@@ -88,42 +88,51 @@ public class WorldEntity : MonoBehaviour
 
     private void Update()
     {
-        Vector2 fixedOffset = new Vector2(0.5f, -0.5f);
+        if (isSpriteSet)
+        {
+            Vector2 fixedOffset = new Vector2(0.5f, -0.5f);
         
-        float distance = Vector2.Distance(_location.ToVector2(), _currStateInfo.lastLoc.ToVector2());
+            float distance = Vector2.Distance(_location.ToVector2(), _currStateInfo.lastLoc.ToVector2());
         
 //print("_location "+ _location.ToVector2()+" last loc "+_currStateInfo.lastLoc.ToVector2()+ " distance "+ distance);
-        if (distance < 1.1f && distance > 0f)
-        {
-            Vector2 v = Vector2.zero;
-            Vector2 visualOffset = (_location.ToVector2() - _currStateInfo.lastLoc.ToVector2())
-                                   * (_currStateInfo.fractionComplete);
+            if (distance < 1.1f && distance > 0f)
+            {
+                Vector2 v = Vector2.zero;
+                Vector2 visualOffset = (_location.ToVector2() - _currStateInfo.lastLoc.ToVector2())
+                                       * (_currStateInfo.fractionComplete);
             
-            v = _currStateInfo.lastLoc.ToVector2() + visualOffset + fixedOffset;
-            _visuals.position = v * WorldManager.g.TileSize;
-            StateInformation.inMoving = true;
+                v = _currStateInfo.lastLoc.ToVector2() + visualOffset + fixedOffset;
+                _visuals.position = v * WorldManager.g.TileSize;
+                if (entityType == EntityType.Character)
+                {
+                    StateInformation.characterInMoving = true;
+                }
 
             
-            if (timer < movingDuration)
-            {
-                timer += Time.deltaTime;
-                _currStateInfo.fractionComplete = visMovingCurve.Evaluate(timer / movingDuration);
+                if (timer < movingDuration)
+                {
+                    timer += Time.deltaTime;
+                    _currStateInfo.fractionComplete = visMovingCurve.Evaluate(timer / movingDuration);
+                }
+            
+
+                if (_currStateInfo.fractionComplete >= 1f)
+                {
+                    _currStateInfo.lastLoc = _location;
+                    _currStateInfo.fractionComplete = 0f;
+                    if (entityType == EntityType.Character)
+                {
+                    StateInformation.characterInMoving = false;
+                }
+                    timer = 0f;
+                }
             }
-            
-
-            if (_currStateInfo.fractionComplete >= 1f)
+            else
             {
+                Vector2 v = _currStateInfo.lastLoc.ToVector2() + fixedOffset;
+                _visuals.position = v * WorldManager.g.TileSize;
                 _currStateInfo.lastLoc = _location;
-                _currStateInfo.fractionComplete = 0f;
-                StateInformation.inMoving = false;
-                timer=0f;
             }
-        }
-        else
-        {
-            Vector2 v = _currStateInfo.lastLoc.ToVector2() + fixedOffset;
-            _visuals.position = v * WorldManager.g.TileSize;
-            _currStateInfo.lastLoc = _location;
         }
     }
 
@@ -164,6 +173,7 @@ public class WorldEntity : MonoBehaviour
     void OnDisable()
     {
         Destroy(_visuals.gameObject);
+        isSpriteSet = false;
     }
     public void Pushed(Direction direction)
     {

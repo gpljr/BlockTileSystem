@@ -94,6 +94,11 @@ Ending
             StartLevel();
             _bNewLevelLoaded = false;            
         }
+
+        if(Input.GetKeyDown(KeyCode.J))
+        {
+            LoadLevel(10);
+        }
         
     }
 
@@ -166,7 +171,6 @@ Ending
 
     void LevelLoaded(LevelLoadedEvent e)
     {
-        _inLevel = true;
         _bNewLevelLoaded = true;
         inLevelScreen.SetActive(true);
         startingScreen.SetActive(false);

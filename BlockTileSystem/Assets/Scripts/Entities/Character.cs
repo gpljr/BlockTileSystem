@@ -73,10 +73,11 @@ public class Character : MonoBehaviour
                     break;
             }
             _worldEntity.SetOrderLayer(10);
+            
         }
 
         //print("WorldEntity.StateInformation.inMoving "+WorldEntity.StateInformation.inMoving);
-        if (!WorldEntity.StateInformation.inMoving && LevelCode.gameState==LevelCode.GameState.InLevel)
+        if (!WorldEntity.StateInformation.characterInMoving && LevelCode.gameState==LevelCode.GameState.InLevel)
         {
             //_input = new IntVector(Vector2.zero);
             if (Input.GetKeyDown(_leftKey))

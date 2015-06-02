@@ -35,11 +35,15 @@ public class WorldTrigger : MonoBehaviour
         _visuals = Instantiate(_visualPrefab).transform;
         _visuals.position = (_location.ToVector2() + new Vector2(0.5f, -0.5f)) * WorldManager.g.TileSize;
         _visuals.gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
-        isSpriteSet=true;
+        isSpriteSet = true;
     }
     public void DestroyVisual()
     {
-        Destroy(_visuals.gameObject);
+        if (isSpriteSet)
+        {
+            Destroy(_visuals.gameObject);
+            isSpriteSet = false;
+        }
     }
 
     public void RegisterMe()

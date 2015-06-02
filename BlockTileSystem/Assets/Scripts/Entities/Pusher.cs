@@ -19,9 +19,10 @@ public class Pusher : MonoBehaviour
     private float _fTimeBetweenMoves;
     private int _iStep;
 
-    
     [SerializeField]
-    private Sprite _sprite;
+    private Sprite _spriteVertical;
+    [SerializeField]
+    private Sprite _spriteHorizontal;
     
     public void Cache()
     {
@@ -53,9 +54,23 @@ public class Pusher : MonoBehaviour
     {
         if (!_worldEntity.isSpriteSet)
         {
-            _worldEntity.SetVisual(_sprite);
+            switch(direction)
+            {
+                case Direction.North:
+                _worldEntity.SetVisual(_spriteVertical);
+                break;
+                case Direction.South:
+                _worldEntity.SetVisual(_spriteVertical);
+                break;
+                case Direction.West:
+                _worldEntity.SetVisual(_spriteHorizontal);
+                break;
+                case Direction.East:
+                _worldEntity.SetVisual(_spriteHorizontal);
+                break;
+            }
+            
         }
-
         if (!_needMove)
         {
             _fTimeBetweenMoves += Time.deltaTime;

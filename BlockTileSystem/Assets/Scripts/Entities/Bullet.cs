@@ -115,6 +115,7 @@ public class Bullet : MonoBehaviour
                 break;
         }
         _worldEntity.Location = vec;
+        _worldTrigger.Location = vec;
         _needMove = false;
         _iStep++;
     }

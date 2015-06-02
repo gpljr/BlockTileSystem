@@ -26,7 +26,13 @@ public class Shooter : MonoBehaviour
     private GameObject _bullet;
 
     [SerializeField]
-    private Sprite _sprite;
+    private Sprite _spriteUp;
+    [SerializeField]
+    private Sprite _spriteDown;
+    [SerializeField]
+    private Sprite _spriteLeft;
+    [SerializeField]
+    private Sprite _spriteRight;
 
    
     public void Cache()
@@ -55,7 +61,22 @@ public class Shooter : MonoBehaviour
     {
         if (!_worldEntity.isSpriteSet)
         {
-            _worldEntity.SetVisual(_sprite);
+            switch(shootingDirection)
+            {
+                case Direction.North:
+                _worldEntity.SetVisual(_spriteUp);
+                break;
+                case Direction.South:
+                _worldEntity.SetVisual(_spriteDown);
+                break;
+                case Direction.West:
+                _worldEntity.SetVisual(_spriteLeft);
+                break;
+                case Direction.East:
+                _worldEntity.SetVisual(_spriteRight);
+                break;
+            }
+            
         }
         
         if (!_needMove)
@@ -94,6 +115,8 @@ public class Shooter : MonoBehaviour
         var bullet = bulletObject.GetComponent<Bullet>();
         var bulletEntity = bulletObject.GetComponent<WorldEntity>();
         bulletEntity.Location = _worldEntity.Location;
+        var bulletTrigger = bulletObject.GetComponent<WorldEntity>();
+        bulletTrigger.Location = _worldEntity.Location;
         bullet.direction = shootingDirection;
         _needShoot = false;
     }

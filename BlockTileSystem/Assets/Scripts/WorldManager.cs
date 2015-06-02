@@ -247,9 +247,9 @@ public class WorldManager : MonoBehaviour
                     _entityMap[l.x, l.y].Add(e);
                 }
             }
-            foreach (WorldEntity e in _entities)
+            foreach (WorldEntity e in _entities)//check for bullet hit
             {
-                if (e != null)
+                if (e != null && e.entityType != EntityType.Bullet)
                 {
                     IntVector eLocation = e.Location;
                     foreach (WorldTrigger t in _triggers)
@@ -257,6 +257,7 @@ public class WorldManager : MonoBehaviour
                         IntVector tLocation = t.Location;
                         if (eLocation == tLocation && t.triggerType == TriggerType.Bullet)
                         {
+                            
                             StepOnTrigger(t, e);
                         }
                     }

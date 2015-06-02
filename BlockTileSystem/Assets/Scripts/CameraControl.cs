@@ -38,7 +38,7 @@ public class CameraControl : MonoBehaviour
     }
     void Update()
     {
-        if (_levelLoaded)
+        if (LevelCode.gameState==LevelCode.GameState.InLevel)
         {
             if (Input.GetKeyDown(KeyCode.B))
             {
