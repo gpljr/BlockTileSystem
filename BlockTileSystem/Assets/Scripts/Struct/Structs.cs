@@ -114,6 +114,7 @@ public struct SavableLevel
         ,StayTrigger
         ,CheckPoint
         ,Bullet
+        ,TutorialKey
     }
 
     public enum GameState

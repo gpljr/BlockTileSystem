@@ -66,40 +66,43 @@ public class WorldManager : MonoBehaviour
     private GameObject _checkPoint1PreFab;
     [SerializeField]
     private GameObject _checkPoint2PreFab;
+    [SerializeField]
+    private GameObject _tutorialKeyPrefab;
+    
 
     // [SerializeField]
     // private GameObject _mainCamera;
     // private Camera _camera;
 
     
-    [SerializeField]
-    private Texture _floorTexture;
-    [SerializeField]
-    private Texture _wallTexture;
-    [SerializeField]
-    private Texture _character1Texture;
-    [SerializeField]
-    private Texture _character2Texture;
-    [SerializeField]
-    private Texture _characterCombinedTexture;
-    [SerializeField]
-    private Texture _pusherTexture;
-    [SerializeField]
-    private Texture _starTexture;
-    [SerializeField]
-    private Texture _doorTexture;
-    [SerializeField]
-    private Texture _doorHalfOpenTexture;
-    [SerializeField]
-    private Texture _stepTriggerTexture;
-    [SerializeField]
-    private Texture _stayTriggerTexture;
-    [SerializeField]
-    private Texture _shooterTexture;
-    [SerializeField]
-    private Texture _bulletTexture;
-    [SerializeField]
-    private Texture _checkPointTexture;
+    // [SerializeField]
+    // private Texture _floorTexture;
+    // [SerializeField]
+    // private Texture _wallTexture;
+    // [SerializeField]
+    // private Texture _character1Texture;
+    // [SerializeField]
+    // private Texture _character2Texture;
+    // [SerializeField]
+    // private Texture _characterCombinedTexture;
+    // [SerializeField]
+    // private Texture _pusherTexture;
+    // [SerializeField]
+    // private Texture _starTexture;
+    // [SerializeField]
+    // private Texture _doorTexture;
+    // [SerializeField]
+    // private Texture _doorHalfOpenTexture;
+    // [SerializeField]
+    // private Texture _stepTriggerTexture;
+    // [SerializeField]
+    // private Texture _stayTriggerTexture;
+    // [SerializeField]
+    // private Texture _shooterTexture;
+    // [SerializeField]
+    // private Texture _bulletTexture;
+    // [SerializeField]
+    // private Texture _checkPointTexture;
 
     private GameObject checkPoint1Object, checkPoint2Object;
     private bool _bPlayer1Entered, _bPlayer2Entered;
@@ -210,6 +213,17 @@ public class WorldManager : MonoBehaviour
         //mapEditor.SetCheckPoints();
         //iCheckPointLocationID = 0;
         // int levelType = mapEditor.GetLevelType();
+        if(iLevel==1)
+        {
+            InstantiateTutorialKeys(new IntVector(2,1), 1);
+            InstantiateTutorialKeys(new IntVector(1,2), 2);
+            InstantiateTutorialKeys(new IntVector(2,3), 3);
+            InstantiateTutorialKeys(new IntVector(3,2), 4);
+            InstantiateTutorialKeys(new IntVector(6,7), 5);
+            InstantiateTutorialKeys(new IntVector(6,9), 6);
+            InstantiateTutorialKeys(new IntVector(5,8), 7);
+            InstantiateTutorialKeys(new IntVector(7,8), 8);
+        }
 
         Events.g.Raise(new LevelLoadedEvent(iLevel));
 
@@ -234,7 +248,7 @@ public class WorldManager : MonoBehaviour
 
     void Update()
     {
-        if (LevelCode.gameState==GameState.InLevel)
+        if (LevelCode.gameState == GameState.InLevel)
         {
             foreach (WorldEntity e in _entities)
             {
@@ -375,7 +389,7 @@ public class WorldManager : MonoBehaviour
     public void SetCharacters(IntVector Char1Pos, IntVector Char2Pos)
     {
         
-        if (LevelCode.levelType==LevelType.Combined)
+        if (LevelCode.levelType == LevelType.Combined)
         {
             Char1Object.SetActive(false);
             Char2Object.SetActive(false);
@@ -489,6 +503,14 @@ public class WorldManager : MonoBehaviour
     {
         entity.Location = Destination(entity.Location, direction);
         entity.Pushed(direction);
+    }
+    public void InstantiateTutorialKeys(IntVector location, int ID)
+    {
+        var gameObject = Instantiate(_tutorialKeyPrefab);
+        var trigger = gameObject.GetComponent<WorldTrigger>();
+        trigger.Location = PositionFlip(location);
+        var tutorialKey = gameObject.GetComponent<TutorialKey>();
+        tutorialKey.iID = ID;
     }
 
     public void InstantiatePusher(IntVector location, bool isControlled, Direction direction, 
@@ -658,132 +680,132 @@ public class WorldManager : MonoBehaviour
         
     //     if (_world == null)
     //         return;
-        // if (inLevel)
-        // {
-        //     float screenTileSize = Vector3.Distance(Camera.main.WorldToScreenPoint(new Vector3(0f * _tileSize, 0f * _tileSize, 0f)), 
-        //                                Camera.main.WorldToScreenPoint(new Vector3(1f * _tileSize, 0f * _tileSize, 0f)));
-            // for (int x = 0; x < _dims.x; x++)
-            // {
-            //     for (int y = 0; y < _dims.y; y++)
-            //     {
-            //         Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(x * _tileSize, y * _tileSize, 0f));
-            //         Rect rect = new Rect(screenPos.x, Screen.height - screenPos.y, screenTileSize, screenTileSize);
-            //         switch (_world[x, y])
-            //         {
-            //             case TileType.Floor:
-            //                 GUI.DrawTexture(rect, _floorTexture);
-            //                 break;
-            //             case TileType.Wall:
-            //                 GUI.DrawTexture(rect, _wallTexture);
-            //                 break;
-            //         }
-            //     }
-            // }
-            // foreach (WorldTrigger t in _triggers)
-            // {
-            //     if (t != null)
-            //     {
-            //         IntVector l = t.Location;
-            //         Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(l.x * _tileSize, l.y * _tileSize, 0f));
-            //         Rect rect = new Rect(screenPos.x, Screen.height - screenPos.y, screenTileSize, screenTileSize);
-            //         switch (t.triggerType)
-            //         {
-                        // case TriggerType.LevelStar:
-                        //     GUI.DrawTexture(rect, _starTexture);
-                        //     break;
-                        // case TriggerType.StayTrigger:
-                        //     GUI.DrawTexture(rect, _stayTriggerTexture);
-                        //     break;
-                    // case TriggerType.CheckPoint:
-                    //     GUI.DrawTexture(rect, _checkPointTexture);
-                    //     break;
-                        // case TriggerType.StepTrigger:
-                        //     var stepTrigger = t.gameObject.GetComponent<StepTrigger>();
-                        //     if (stepTrigger != null && !stepTrigger.isTriggered)
-                        //     {
-                        //         GUI.DrawTexture(rect, _stepTriggerTexture);
-                        //     }
+    // if (inLevel)
+    // {
+    //     float screenTileSize = Vector3.Distance(Camera.main.WorldToScreenPoint(new Vector3(0f * _tileSize, 0f * _tileSize, 0f)),
+    //                                Camera.main.WorldToScreenPoint(new Vector3(1f * _tileSize, 0f * _tileSize, 0f)));
+    // for (int x = 0; x < _dims.x; x++)
+    // {
+    //     for (int y = 0; y < _dims.y; y++)
+    //     {
+    //         Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(x * _tileSize, y * _tileSize, 0f));
+    //         Rect rect = new Rect(screenPos.x, Screen.height - screenPos.y, screenTileSize, screenTileSize);
+    //         switch (_world[x, y])
+    //         {
+    //             case TileType.Floor:
+    //                 GUI.DrawTexture(rect, _floorTexture);
+    //                 break;
+    //             case TileType.Wall:
+    //                 GUI.DrawTexture(rect, _wallTexture);
+    //                 break;
+    //         }
+    //     }
+    // }
+    // foreach (WorldTrigger t in _triggers)
+    // {
+    //     if (t != null)
+    //     {
+    //         IntVector l = t.Location;
+    //         Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(l.x * _tileSize, l.y * _tileSize, 0f));
+    //         Rect rect = new Rect(screenPos.x, Screen.height - screenPos.y, screenTileSize, screenTileSize);
+    //         switch (t.triggerType)
+    //         {
+    // case TriggerType.LevelStar:
+    //     GUI.DrawTexture(rect, _starTexture);
+    //     break;
+    // case TriggerType.StayTrigger:
+    //     GUI.DrawTexture(rect, _stayTriggerTexture);
+    //     break;
+    // case TriggerType.CheckPoint:
+    //     GUI.DrawTexture(rect, _checkPointTexture);
+    //     break;
+    // case TriggerType.StepTrigger:
+    //     var stepTrigger = t.gameObject.GetComponent<StepTrigger>();
+    //     if (stepTrigger != null && !stepTrigger.isTriggered)
+    //     {
+    //         GUI.DrawTexture(rect, _stepTriggerTexture);
+    //     }
                         
-                        //     break;
-            //         }
-            //     }
-            // }
-            // foreach (WorldEntity e in _entities)
-            // {
-            //     if (e != null)
-            //     {
-            //         IntVector l = e.Location;
-            //         Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(l.x * _tileSize, l.y * _tileSize, 0f));
-            //         Rect rect = new Rect(screenPos.x, Screen.height - screenPos.y, screenTileSize, screenTileSize);
-            //         switch (e.entityType)
-            //         {
-                    // case EntityType.Character:
-                    //     switch (e.characterID)
-                    //     {
-                    //         case 1:
-                    //             if (mapEditor.GetLevelType() != 4)
-                    //             {
-                    //                 GUI.DrawTexture(rect, _character1Texture);
-                    //             }
-                    //             break;
-                    //         case 2:
-                    //             if (mapEditor.GetLevelType() != 4)
-                    //             {
-                    //                 GUI.DrawTexture(rect, _character2Texture);
-                    //             }
-                    //             break;
-                    //         case 3:
-                    //             if (mapEditor.GetLevelType() == 4)
-                    //             {
-                    //                 GUI.DrawTexture(rect, _characterCombinedTexture);
-                    //             }
-                    //             break;
-                    //     }
+    //     break;
+    //         }
+    //     }
+    // }
+    // foreach (WorldEntity e in _entities)
+    // {
+    //     if (e != null)
+    //     {
+    //         IntVector l = e.Location;
+    //         Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(l.x * _tileSize, l.y * _tileSize, 0f));
+    //         Rect rect = new Rect(screenPos.x, Screen.height - screenPos.y, screenTileSize, screenTileSize);
+    //         switch (e.entityType)
+    //         {
+    // case EntityType.Character:
+    //     switch (e.characterID)
+    //     {
+    //         case 1:
+    //             if (mapEditor.GetLevelType() != 4)
+    //             {
+    //                 GUI.DrawTexture(rect, _character1Texture);
+    //             }
+    //             break;
+    //         case 2:
+    //             if (mapEditor.GetLevelType() != 4)
+    //             {
+    //                 GUI.DrawTexture(rect, _character2Texture);
+    //             }
+    //             break;
+    //         case 3:
+    //             if (mapEditor.GetLevelType() == 4)
+    //             {
+    //                 GUI.DrawTexture(rect, _characterCombinedTexture);
+    //             }
+    //             break;
+    //     }
                         
-                    //     break;
+    //     break;
 
-                        // case EntityType.Pusher:
-                        //     GUI.DrawTexture(rect, _pusherTexture);
-                        //     break;
-                        // case EntityType.Door:
-                        //     var door = e.gameObject.GetComponent<Door>();
-                        //     if (door.isOpen)
-                        //     {
+    // case EntityType.Pusher:
+    //     GUI.DrawTexture(rect, _pusherTexture);
+    //     break;
+    // case EntityType.Door:
+    //     var door = e.gameObject.GetComponent<Door>();
+    //     if (door.isOpen)
+    //     {
 
-                        //     }
-                        //     else if (door.isHalfOpen)
-                        //     {
-                        //         GUI.DrawTexture(rect, _doorHalfOpenTexture);
-                        //     }
-                        //     else
-                        //     {
-                        //         GUI.DrawTexture(rect, _doorTexture);
-                        //     }
+    //     }
+    //     else if (door.isHalfOpen)
+    //     {
+    //         GUI.DrawTexture(rect, _doorHalfOpenTexture);
+    //     }
+    //     else
+    //     {
+    //         GUI.DrawTexture(rect, _doorTexture);
+    //     }
                         
-                        //     break;
-            //             case EntityType.Shooter:
-            //                 GUI.DrawTexture(rect, _shooterTexture);
-            //                 break;
-            //         }
-            //     }
+    //     break;
+    //             case EntityType.Shooter:
+    //                 GUI.DrawTexture(rect, _shooterTexture);
+    //                 break;
+    //         }
+    //     }
             
-            // }
-            // foreach (WorldTrigger t in _triggers)
-            // {
-            //     if (t != null)
-            //     {
-            //         IntVector l = t.Location;
-            //         Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(l.x * _tileSize, l.y * _tileSize, 0f));
-            //         Rect rect = new Rect(screenPos.x, Screen.height - screenPos.y, screenTileSize, screenTileSize);
-            //         switch (t.triggerType)
-            //         {
-            //             case TriggerType.Bullet:
-            //                 GUI.DrawTexture(rect, _bulletTexture);
-            //                 break;
+    // }
+    // foreach (WorldTrigger t in _triggers)
+    // {
+    //     if (t != null)
+    //     {
+    //         IntVector l = t.Location;
+    //         Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(l.x * _tileSize, l.y * _tileSize, 0f));
+    //         Rect rect = new Rect(screenPos.x, Screen.height - screenPos.y, screenTileSize, screenTileSize);
+    //         switch (t.triggerType)
+    //         {
+    //             case TriggerType.Bullet:
+    //                 GUI.DrawTexture(rect, _bulletTexture);
+    //                 break;
 
-            //         }
-            //     }
-            // }
-    //     }    
+    //         }
+    //     }
+    // }
+    //     }
     // }
 }
