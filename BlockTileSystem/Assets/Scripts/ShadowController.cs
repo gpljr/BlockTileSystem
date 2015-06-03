@@ -12,6 +12,8 @@ public class ShadowController : MonoBehaviour
 
     [SerializeField]
     private AnimationCurve _fadeCurve;
+    [SerializeField]
+    private AnimationCurve _fadeCurve2;
 
     [SerializeField]
     private float separationRadius = 0.3f;
@@ -28,7 +30,7 @@ public class ShadowController : MonoBehaviour
     
     void LateUpdate()
     {
-        if ( LevelCode.gameState == GameState.Starting)
+        if (LevelCode.gameState == GameState.Starting)
         {
             _shadowRenderer.gameObject.SetActive(false);
         }
@@ -55,15 +57,23 @@ public class ShadowController : MonoBehaviour
     void Normal()
     {
         float aspectRatio = Camera.main.aspect;
-        //print("aspectRatio " + aspectRatio);
         Vector2 vPos1 = Camera.main.WorldToViewportPoint(WorldManager.g.char1Entity.visPosition);
         vPos1.y *= 1 / aspectRatio;
-        //print("vPos1 " + vPos1);
+        
         Vector2 vPos2 = Camera.main.WorldToViewportPoint(WorldManager.g.char2Entity.visPosition);
         vPos2.y *= 1 / aspectRatio;
     
-        float fDistance = Vector2.Distance(vPos1, vPos2);
-        float radius = _fadeCurve.Evaluate(fDistance);
+        float fScreenDistance = Vector2.Distance(vPos1, vPos2);
+        float fPhysicalDistance = Vector2.Distance(WorldManager.g.char1Entity.visPosition, WorldManager.g.char2Entity.visPosition);
+        float radius;
+        if (aspectRatio < 1.5f)
+        {
+            radius = _fadeCurve2.Evaluate(fPhysicalDistance);
+        }
+        else{
+            radius = _fadeCurve.Evaluate(fPhysicalDistance);
+        }
+        print("aspectRatio " + aspectRatio + " distance " + fPhysicalDistance + " radius " + radius);
         SetShader(radius, vPos1, vPos2);
     }
     void Combined()
