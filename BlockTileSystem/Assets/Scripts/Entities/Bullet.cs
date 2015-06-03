@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     //for all the bullets
     [SerializeField]
     private float _fBulletMoveInterval = 0.5f;
-//time between moves
+    //time between moves
     [SerializeField]
     private int _iRange = 5;
 
@@ -18,7 +18,9 @@ public class Bullet : MonoBehaviour
     private int _iStep;
 
     [SerializeField]
-    private Sprite _sprite;
+    private Sprite _spriteVertical;
+    [SerializeField]
+    private Sprite _spriteHorizontal;
     
     private WorldTrigger _worldTrigger;
     private WorldEntity _worldEntity;
@@ -48,7 +50,7 @@ public class Bullet : MonoBehaviour
     {
         if (!_worldEntity.isSpriteSet)
         {
-            _worldEntity.SetVisual(_sprite);
+            _worldEntity.SetVisual(GetSpriteByDirection());
             _worldEntity.SetOrderLayer(11);
         }
 
@@ -118,5 +120,27 @@ public class Bullet : MonoBehaviour
         _worldTrigger.Location = vec;
         _needMove = false;
         _iStep++;
+    }
+    private Sprite GetSpriteByDirection()
+    {
+        Sprite sprite = new Sprite();
+
+        switch (direction)
+        {
+            case Direction.North:
+                sprite = _spriteVertical;
+                break;
+            case Direction.South:
+                sprite = _spriteVertical;
+                break;
+            case Direction.West:
+                sprite = _spriteHorizontal;
+                break;
+            case Direction.East:
+                sprite = _spriteHorizontal;
+                break;
+        }
+        
+        return sprite;
     }
 }

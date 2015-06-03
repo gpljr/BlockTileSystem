@@ -61,22 +61,7 @@ public class Shooter : MonoBehaviour
     {
         if (!_worldEntity.isSpriteSet)
         {
-            switch(shootingDirection)
-            {
-                case Direction.North:
-                _worldEntity.SetVisual(_spriteUp);
-                break;
-                case Direction.South:
-                _worldEntity.SetVisual(_spriteDown);
-                break;
-                case Direction.West:
-                _worldEntity.SetVisual(_spriteLeft);
-                break;
-                case Direction.East:
-                _worldEntity.SetVisual(_spriteRight);
-                break;
-            }
-            
+            _worldEntity.SetVisual(GetSpriteByID());
         }
         
         if (!_needMove)
@@ -211,5 +196,27 @@ public class Shooter : MonoBehaviour
                 return Direction.North;//error
                 break;
         }
+    }
+    private Sprite GetSpriteByID()
+    {
+        Sprite sprite = new Sprite();
+
+        switch (shootingDirection)
+        {
+            case Direction.North:
+                sprite = _spriteUp;
+                break;
+            case Direction.South:
+                sprite = _spriteDown;
+                break;
+            case Direction.West:
+                sprite = _spriteLeft;
+                break;
+            case Direction.East:
+                sprite = _spriteRight;
+                break;
+        }
+        
+        return sprite;
     }
 }

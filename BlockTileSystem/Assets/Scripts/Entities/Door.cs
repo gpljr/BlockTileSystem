@@ -16,11 +16,23 @@ public class Door : MonoBehaviour
     private WorldEntity _worldEntity;
 
     [SerializeField]
-    private Sprite _closedDoor;
+    private Sprite _closedDoor1;
     [SerializeField]
-    private Sprite _halfOpenDoor;
+    private Sprite _halfOpenDoor1;
     [SerializeField]
-    private Sprite _openDoor;
+    private Sprite _openDoor1;
+    [SerializeField]
+    private Sprite _closedDoor2;
+    [SerializeField]
+    private Sprite _halfOpenDoor2;
+    [SerializeField]
+    private Sprite _openDoor2;
+    [SerializeField]
+    private Sprite _closedDoor3;
+    [SerializeField]
+    private Sprite _halfOpenDoor3;
+    [SerializeField]
+    private Sprite _openDoor3;
 
 
     public void Cache()
@@ -39,7 +51,7 @@ public class Door : MonoBehaviour
     {
         if (!_worldEntity.isSpriteSet)
         {
-            _worldEntity.SetVisual(_closedDoor);
+            _worldEntity.SetVisual(GetSpriteByID());
         }
     }
 
@@ -81,13 +93,13 @@ public class Door : MonoBehaviour
     {
         isOpen = true;
         _worldEntity.CollidingType = EntityCollidingType.Empty;
-        _worldEntity.ChangeVisual(_openDoor);
+        _worldEntity.ChangeVisual(GetSpriteByID());
         //play animation;
     }
     void HalfOpenDoor()
     {
         isHalfOpen = true;
-        _worldEntity.ChangeVisual(_halfOpenDoor);
+        _worldEntity.ChangeVisual(GetSpriteByID());
         //play animation;
     }
     void Triggered(StepTriggerEvent e)
@@ -110,5 +122,58 @@ public class Door : MonoBehaviour
                 }
             }
         }
+    }
+    private Sprite GetSpriteByID()
+    {
+        Sprite sprite = new Sprite();
+
+        if (isHalfOpen)
+        {
+            switch (iID)
+            {
+                case 1:
+                    sprite = _halfOpenDoor1;
+                    break;
+                case 2:
+                    sprite = _halfOpenDoor2;
+                    break;
+                case 3:
+                    sprite = _halfOpenDoor3;
+                    break;
+            }
+        }
+        else if (isOpen)
+        {
+            switch (iID)
+            {
+                case 1:
+                    sprite = _openDoor1;
+                    break;
+                case 2:
+                    sprite = _openDoor2;
+                    break;
+                case 3:
+                    sprite = _openDoor3;
+                    break;
+            }
+        }
+        else
+        {
+            switch (iID)
+            {
+                case 1:
+                    sprite = _closedDoor1;
+                    break;
+                case 2:
+                    sprite = _closedDoor2;
+                    break;
+                case 3:
+                    sprite = _closedDoor3;
+                    break;
+            }
+        }
+        
+        
+        return sprite;
     }
 }

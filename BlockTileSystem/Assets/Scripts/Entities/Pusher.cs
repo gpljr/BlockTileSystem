@@ -20,9 +20,17 @@ public class Pusher : MonoBehaviour
     private int _iStep;
 
     [SerializeField]
-    private Sprite _spriteVertical;
+    private Sprite _spriteVertical1;
     [SerializeField]
-    private Sprite _spriteHorizontal;
+    private Sprite _spriteHorizontal1;
+    [SerializeField]
+    private Sprite _spriteVertical2;
+    [SerializeField]
+    private Sprite _spriteHorizontal2;
+    [SerializeField]
+    private Sprite _spriteVertical3;
+    [SerializeField]
+    private Sprite _spriteHorizontal3;
     
     public void Cache()
     {
@@ -54,21 +62,7 @@ public class Pusher : MonoBehaviour
     {
         if (!_worldEntity.isSpriteSet)
         {
-            switch(direction)
-            {
-                case Direction.North:
-                _worldEntity.SetVisual(_spriteVertical);
-                break;
-                case Direction.South:
-                _worldEntity.SetVisual(_spriteVertical);
-                break;
-                case Direction.West:
-                _worldEntity.SetVisual(_spriteHorizontal);
-                break;
-                case Direction.East:
-                _worldEntity.SetVisual(_spriteHorizontal);
-                break;
-            }
+            _worldEntity.SetVisual(GetSpriteByID());
             
         }
         if (!_needMove)
@@ -213,6 +207,72 @@ public class Pusher : MonoBehaviour
                 return Direction.North;//error
                 break;
         }
+    }
+    private Sprite GetSpriteByID()
+    {
+        Sprite sprite = new Sprite();
+
+        switch (direction)
+        {
+            case Direction.North:
+                switch (iID)
+                {
+                    case 1:
+                        sprite = _spriteVertical1;
+                        break;
+                    case 2:
+                        sprite = _spriteVertical2;
+                        break;
+                    case 3:
+                        sprite = _spriteVertical3;
+                        break;
+                }
+                break;
+            case Direction.South:
+                switch (iID)
+                {
+                    case 1:
+                        sprite = _spriteVertical1;
+                        break;
+                    case 2:
+                        sprite = _spriteVertical2;
+                        break;
+                    case 3:
+                        sprite = _spriteVertical3;
+                        break;
+                }
+                break;
+            case Direction.West:
+                switch (iID)
+                {
+                    case 1:
+                        sprite = _spriteHorizontal1;
+                        break;
+                    case 2:
+                        sprite = _spriteHorizontal2;
+                        break;
+                    case 3:
+                        sprite = _spriteHorizontal3;
+                        break;
+                }
+                break;
+            case Direction.East:
+                switch (iID)
+                {
+                    case 1:
+                        sprite = _spriteHorizontal1;
+                        break;
+                    case 2:
+                        sprite = _spriteHorizontal2;
+                        break;
+                    case 3:
+                        sprite = _spriteHorizontal3;
+                        break;
+                }
+                break;
+        }
+        
+        return sprite;
     }
 
 }

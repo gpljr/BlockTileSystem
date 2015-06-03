@@ -97,6 +97,7 @@ public class WorldEntity : MonoBehaviour
 //print("_location "+ _location.ToVector2()+" last loc "+_currStateInfo.lastLoc.ToVector2()+ " distance "+ distance);
             if (distance < 1.1f && distance > 0f)
             {
+                
                 Vector2 v = Vector2.zero;
                 Vector2 visualOffset = (_location.ToVector2() - _currStateInfo.lastLoc.ToVector2())
                                        * (_currStateInfo.fractionComplete);
