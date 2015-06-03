@@ -44,5 +44,6 @@ public class StepTrigger : MonoBehaviour
     	isTriggered=true;
     	Events.g.Raise(new StepTriggerEvent(triggerID: iID));
         _worldTrigger.DestroyVisual();
+        Destroy(this);
     }
 }

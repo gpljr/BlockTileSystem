@@ -93,7 +93,9 @@ public class Door : MonoBehaviour
     {
         isOpen = true;
         _worldEntity.CollidingType = EntityCollidingType.Empty;
-        _worldEntity.ChangeVisual(GetSpriteByID());
+        _worldEntity.DestroyVisual();
+        Destroy(this);
+        //_worldEntity.ChangeVisual(GetSpriteByID());
         //play animation;
     }
     void HalfOpenDoor()
@@ -142,21 +144,21 @@ public class Door : MonoBehaviour
                     break;
             }
         }
-        else if (isOpen)
-        {
-            switch (iID)
-            {
-                case 1:
-                    sprite = _openDoor1;
-                    break;
-                case 2:
-                    sprite = _openDoor2;
-                    break;
-                case 3:
-                    sprite = _openDoor3;
-                    break;
-            }
-        }
+        // else if (isOpen)
+        // {
+        //     switch (iID)
+        //     {
+        //         case 1:
+        //             sprite = _openDoor1;
+        //             break;
+        //         case 2:
+        //             sprite = _openDoor2;
+        //             break;
+        //         case 3:
+        //             sprite = _openDoor3;
+        //             break;
+        //     }
+        // }
         else
         {
             switch (iID)

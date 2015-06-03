@@ -173,8 +173,16 @@ public class WorldEntity : MonoBehaviour
 
     void OnDisable()
     {
-        Destroy(_visuals.gameObject);
+        DestroyVisual();
         isSpriteSet = false;
+    }
+        public void DestroyVisual()
+    {
+        if (isSpriteSet)
+        {
+            Destroy(_visuals.gameObject);
+            isSpriteSet = false;
+        }
     }
     public void Pushed(Direction direction)
     {
