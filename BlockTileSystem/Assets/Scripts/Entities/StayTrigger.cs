@@ -9,7 +9,11 @@ public class StayTrigger : MonoBehaviour
     //to associate with the trigger
 
     [SerializeField]
-    private Sprite _sprite;
+    private Sprite _sprite1;
+    [SerializeField]
+    private Sprite _sprite2;
+    [SerializeField]
+    private Sprite _sprite3;
 
     [SerializeField]
     AudioClip audio;
@@ -28,7 +32,7 @@ public class StayTrigger : MonoBehaviour
     {
         if (!_worldTrigger.isSpriteSet)
         {
-            _worldTrigger.SetVisual(_sprite);
+            _worldTrigger.SetVisual(GetSpriteByID());
         }
 
         if (!_worldTrigger.isMessageSent)
@@ -49,5 +53,22 @@ public class StayTrigger : MonoBehaviour
     {
         
         Events.g.Raise(new StayTriggerEvent(isEntered: stayed, triggerID: iID));
+    }
+    private Sprite GetSpriteByID()
+    {
+        Sprite sprite = new Sprite();
+        switch (iID)
+        {
+            case 1:
+                sprite = _sprite1;
+                break;
+            case 2:
+                sprite = _sprite2;
+                break;
+            case 3:
+                sprite = _sprite3;
+                break;
+        }
+        return sprite;
     }
 }
