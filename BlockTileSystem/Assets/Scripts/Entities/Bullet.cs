@@ -6,6 +6,9 @@ public class Bullet : MonoBehaviour
 
     public Direction direction;
 
+    [SerializeField]
+    AudioClip audio;
+
     //for all the bullets
     [SerializeField]
     private float _fBulletMoveInterval = 0.5f;
@@ -75,7 +78,7 @@ public class Bullet : MonoBehaviour
     }
     void BulletHit()
     {
-        //texture change, sound
+        AudioSource.PlayClipAtPoint (audio, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
         BulletDestroySelf();
         Events.g.Raise(new BulletHitEvent());
         

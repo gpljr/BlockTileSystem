@@ -34,9 +34,11 @@ public class LevelCode : MonoBehaviour
     [SerializeField]
     Text levelProgression;
 
-    
     public static GameState gameState;
     public static LevelType levelType;
+
+    public static float musicVolume=1f;
+    public static float audioVolume=0.3f;
 
 
     void Start()

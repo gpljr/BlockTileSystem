@@ -35,6 +35,8 @@ public class Door : MonoBehaviour
     private Sprite _openDoor3;
 
 
+
+
     public void Cache()
     {
         _worldEntity = GetComponent<WorldEntity>();
@@ -49,7 +51,7 @@ public class Door : MonoBehaviour
     }
     void Update()
     {
-        if (!_worldEntity.isSpriteSet)
+        if (!_worldEntity.isSpriteSet && !isOpen)
         {
             _worldEntity.SetVisual(GetSpriteByID());
         }
@@ -94,7 +96,7 @@ public class Door : MonoBehaviour
         isOpen = true;
         _worldEntity.CollidingType = EntityCollidingType.Empty;
         _worldEntity.DestroyVisual();
-        Destroy(this);
+        //Destroy(this);
         //_worldEntity.ChangeVisual(GetSpriteByID());
         //play animation;
     }

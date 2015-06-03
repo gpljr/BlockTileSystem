@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StayTrigger : MonoBehaviour {
+public class StayTrigger : MonoBehaviour
+{
 
-	//set in the XML
+    //set in the XML
     public int iID;
     //to associate with the trigger
 
     [SerializeField]
     private Sprite _sprite;
+
+    [SerializeField]
+    AudioClip audio;
 
     private WorldTrigger _worldTrigger;
     public void Cache()
@@ -32,18 +36,18 @@ public class StayTrigger : MonoBehaviour {
             if (_worldTrigger.isSteppedOn)
             {
                 TriggerStayed(true);
-                
+                AudioSource.PlayClipAtPoint(audio, _worldTrigger.Location.ToVector2(), LevelCode.audioVolume);
             }
             else
             {
-            	TriggerStayed(false);
+                TriggerStayed(false);
             }
             _worldTrigger.isMessageSent = true;
         }
     }
     void TriggerStayed(bool stayed)
     {
-    	//texture change, sound
-    	Events.g.Raise(new StayTriggerEvent(isEntered: stayed, triggerID: iID));
+        
+        Events.g.Raise(new StayTriggerEvent(isEntered: stayed, triggerID: iID));
     }
 }

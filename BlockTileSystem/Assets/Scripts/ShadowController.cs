@@ -55,10 +55,10 @@ public class ShadowController : MonoBehaviour
     void Normal()
     {
         float aspectRatio = Camera.main.aspect;
-        print("aspectRatio " + aspectRatio);
+        //print("aspectRatio " + aspectRatio);
         Vector2 vPos1 = Camera.main.WorldToViewportPoint(WorldManager.g.char1Entity.visPosition);
         vPos1.y *= 1 / aspectRatio;
-        print("vPos1 " + vPos1);
+        //print("vPos1 " + vPos1);
         Vector2 vPos2 = Camera.main.WorldToViewportPoint(WorldManager.g.char2Entity.visPosition);
         vPos2.y *= 1 / aspectRatio;
     

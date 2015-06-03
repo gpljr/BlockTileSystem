@@ -7,6 +7,10 @@ public class LevelStar : MonoBehaviour
 
     [SerializeField]
     private Sprite _sprite;
+
+    [SerializeField]
+    AudioClip audio;
+    
     public void Cache()
     {
         _worldTrigger = GetComponent<WorldTrigger>();
@@ -33,6 +37,8 @@ public class LevelStar : MonoBehaviour
 
             if (_worldTrigger.isSteppedOn)
             {
+                AudioSource.PlayClipAtPoint (audio, _worldTrigger.Location.ToVector2(), LevelCode.audioVolume);
+        
                 switch (_worldTrigger.iStepCharacterID)
                 {
                     case 1:

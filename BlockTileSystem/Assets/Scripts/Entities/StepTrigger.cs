@@ -12,6 +12,9 @@ public class StepTrigger : MonoBehaviour
     [SerializeField]
     private Sprite _sprite;
 
+    [SerializeField]
+    AudioClip audio;
+
     private WorldTrigger _worldTrigger;
     public void Cache()
     {
@@ -24,7 +27,7 @@ public class StepTrigger : MonoBehaviour
     }
     void LateUpdate()
     {
-        if (!_worldTrigger.isSpriteSet)
+        if (!_worldTrigger.isSpriteSet && !isTriggered)
         {
             _worldTrigger.SetVisual(_sprite);
         }
@@ -40,10 +43,11 @@ public class StepTrigger : MonoBehaviour
     }
     void TriggerSteppedOn()
     {
-    	//texture change, sound
-    	isTriggered=true;
-    	Events.g.Raise(new StepTriggerEvent(triggerID: iID));
+        //texture change, sound
+        isTriggered = true;
+        AudioSource.PlayClipAtPoint(audio, _worldTrigger.Location.ToVector2(), LevelCode.audioVolume);
+        Events.g.Raise(new StepTriggerEvent(triggerID: iID));
         _worldTrigger.DestroyVisual();
-        Destroy(this);
+        //Destroy(this);
     }
 }
