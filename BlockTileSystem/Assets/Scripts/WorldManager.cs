@@ -213,7 +213,7 @@ public class WorldManager : MonoBehaviour
         //mapEditor.SetCheckPoints();
         //iCheckPointLocationID = 0;
         // int levelType = mapEditor.GetLevelType();
-        if(iLevel==1)
+        if(iLevel==1)//a temporary way to make tutorial key icons in the first level
         {
             InstantiateTutorialKeys(new IntVector(2,1), 1);
             InstantiateTutorialKeys(new IntVector(1,2), 2);

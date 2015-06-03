@@ -3,12 +3,12 @@
 	<sLevelName>7</sLevelName>
 	<iLevelType>1</iLevelType>
 	<vChar1StartPos>
-		<x>1</x>
-		<y>2</y>
-	</vChar1StartPos>
-	<vChar2StartPos>
 		<x>2</x>
 		<y>1</y>
+	</vChar1StartPos>
+	<vChar2StartPos>
+		<x>1</x>
+		<y>2</y>
 	</vChar2StartPos>
 	<vDim>
 		<x>18</x>
@@ -67,7 +67,7 @@
 				<x>5</x>
 				<y>11</y>
 			</vPosition>
-			<shootingTimeInterval>3</shootingTimeInterval>
+			<shootingTimeInterval>5</shootingTimeInterval>
 			<sShootingDirection>West</sShootingDirection>
 			<isMoving>0</isMoving>
 		</ShooterInXML>
@@ -76,7 +76,7 @@
 				<x>1</x>
 				<y>14</y>
 			</vPosition>
-			<shootingTimeInterval>3</shootingTimeInterval>
+			<shootingTimeInterval>5</shootingTimeInterval>
 			<sShootingDirection>East</sShootingDirection>
 			<isMoving>0</isMoving>
 		</ShooterInXML>

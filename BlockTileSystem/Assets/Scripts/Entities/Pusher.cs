@@ -217,6 +217,9 @@ public class Pusher : MonoBehaviour
             case Direction.North:
                 switch (iID)
                 {
+                    case 0:
+                        sprite = _spriteVertical1;
+                        break;
                     case 1:
                         sprite = _spriteVertical1;
                         break;
@@ -231,7 +234,10 @@ public class Pusher : MonoBehaviour
             case Direction.South:
                 switch (iID)
                 {
-                    case 1:
+                    case 0:
+                        sprite = _spriteVertical1;
+                        break;
+                        case 1:
                         sprite = _spriteVertical1;
                         break;
                     case 2:
@@ -245,7 +251,10 @@ public class Pusher : MonoBehaviour
             case Direction.West:
                 switch (iID)
                 {
-                    case 1:
+                    case 0:
+                        sprite = _spriteHorizontal1;
+                        break;
+                        case 1:
                         sprite = _spriteHorizontal1;
                         break;
                     case 2:
@@ -259,7 +268,11 @@ public class Pusher : MonoBehaviour
             case Direction.East:
                 switch (iID)
                 {
-                    case 1:
+                    
+                    case 0:
+                        sprite = _spriteHorizontal1;
+                        break;
+                        case 1:
                         sprite = _spriteHorizontal1;
                         break;
                     case 2:

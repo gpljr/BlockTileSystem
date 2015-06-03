@@ -4,11 +4,11 @@
 	<iLevelType>1</iLevelType>
 	<vChar1StartPos>
 		<x>3</x>
-		<y>3</y>
+		<y>2</y>
 	</vChar1StartPos>
 	<vChar2StartPos>
 		<x>3</x>
-		<y>2</y>
+		<y>3</y>
 	</vChar2StartPos>
 	<vDim>
 		<x>20</x>
@@ -78,7 +78,7 @@
 				<x>4</x>
 				<y>7</y>
 			</vPosition>
-			<shootingTimeInterval>2</shootingTimeInterval>
+			<shootingTimeInterval>4</shootingTimeInterval>
 			<sShootingDirection>North</sShootingDirection>
 			<isMoving>0</isMoving>
 		</ShooterInXML>

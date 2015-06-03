@@ -3,12 +3,12 @@
 	<sLevelName>6</sLevelName>
 	<iLevelType>1</iLevelType>
 	<vChar1StartPos>
-		<x>1</x>
-		<y>2</y>
-	</vChar1StartPos>
-	<vChar2StartPos>
 		<x>2</x>
 		<y>1</y>
+	</vChar1StartPos>
+	<vChar2StartPos>
+		<x>1</x>
+		<y>2</y>
 	</vChar2StartPos>
 	<vDim>
 		<x>14</x>
