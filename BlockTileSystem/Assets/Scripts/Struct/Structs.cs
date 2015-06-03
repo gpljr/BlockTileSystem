@@ -116,6 +116,21 @@ public struct SavableLevel
         ,Bullet
     }
 
+    public enum GameState
+    {
+        Starting,
+        InTransition,
+        InLevel,
+        Ending
+    }
+    
+    public enum LevelType{
+        Normal
+        ,Separation
+        ,Merging
+        ,Combined
+    }
+
 public class Structs : MonoBehaviour {
 	
 }

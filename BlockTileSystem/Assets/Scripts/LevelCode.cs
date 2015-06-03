@@ -24,7 +24,6 @@ public class LevelCode : MonoBehaviour
     private bool _bPlayer1Entered, _bPlayer2Entered;
 
     private bool _inLevel;
-    private bool _isLastLevel;
     [SerializeField]
     GameObject startingScreen;
     [SerializeField]
@@ -32,14 +31,9 @@ public class LevelCode : MonoBehaviour
     [SerializeField]
     GameObject inLevelScreen;
 
-    public enum GameState
-    {
-        Starting,
-InTransition,
-InLevel,
-Ending
-    }
+    
     public static GameState gameState;
+    public static LevelType levelType;
 
 
     void Start()
@@ -95,7 +89,7 @@ Ending
             _bNewLevelLoaded = false;            
         }
 
-        if(Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.J))
         {
             LoadLevel(10);
         }
@@ -176,10 +170,7 @@ Ending
         startingScreen.SetActive(false);
         endingScreen.SetActive(false);
         _iCurrentLevel = e.iLevel;
-        if (e.iLevelType == 4)
-        {
-            _isLastLevel = true;
-        }
+
     }
 
     public void LoadLevel(int iLevel)
@@ -193,9 +184,8 @@ Ending
     {
         _timeToFadeIn = 1f;
         _timeToFadeOut = 1f;
-        if (_isLastLevel)
+        if (levelType==LevelType.Combined)
         {
-            _isLastLevel = false;
             EnterEndingScreen();
         }
         else
@@ -206,7 +196,7 @@ Ending
     }
     void EnterEndingScreen()
     {
-        gameState=GameState.Ending;
+        gameState = GameState.Ending;
         startingScreen.SetActive(false);
         endingScreen.SetActive(true);
         inLevelScreen.SetActive(false);
@@ -214,7 +204,7 @@ Ending
     }
     void EnterStartingScreen()
     {
-        gameState=GameState.Starting;
+        gameState = GameState.Starting;
         startingScreen.SetActive(true);
         endingScreen.SetActive(false);
         inLevelScreen.SetActive(false);

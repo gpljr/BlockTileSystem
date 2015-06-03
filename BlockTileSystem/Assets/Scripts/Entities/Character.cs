@@ -48,11 +48,13 @@ public class Character : MonoBehaviour
     void OnEnable()
     {
         _worldEntity.Simulators += Simulate;
+        Events.g.AddListener<MergingStarEvent>(StepOnMergingStar);
     }
 
     void OnDisable()
     {
         _worldEntity.Simulators -= Simulate;
+        Events.g.RemoveListener<MergingStarEvent>(StepOnMergingStar);
     }
 
 
@@ -60,24 +62,13 @@ public class Character : MonoBehaviour
     {
         if (!_worldEntity.isSpriteSet)
         {
-            switch (_iCharacterID)
-            {
-                case 1:
-                    _worldEntity.SetVisual(_char1YellowSprite);
-                    break;
-                case 2:
-                    _worldEntity.SetVisual(_char2GreenSprite);
-                    break;
-                case 3:
-                    _worldEntity.SetVisual(_char3CombinedSprite);
-                    break;
-            }
+            _worldEntity.SetVisual(GetSpriteByID(false));
             _worldEntity.SetOrderLayer(10);
-            
+
         }
 
         //print("WorldEntity.StateInformation.inMoving "+WorldEntity.StateInformation.inMoving);
-        if (!WorldEntity.StateInformation.characterInMoving && LevelCode.gameState==LevelCode.GameState.InLevel)
+        if (!WorldEntity.StateInformation.characterInMoving && LevelCode.gameState == GameState.InLevel)
         {
             //_input = new IntVector(Vector2.zero);
             if (Input.GetKeyDown(_leftKey))
@@ -175,5 +166,71 @@ public class Character : MonoBehaviour
             _input.y = 0;            
         }
         _worldEntity.Location = vec;
+    }
+
+    void StepOnMergingStar(MergingStarEvent e)
+    {
+        if (e.CharacterID == _iCharacterID)
+        {
+            if (e.isEntered)
+            {
+                _worldEntity.CollidingType = EntityCollidingType.Empty;
+                SetSprite(isInMerging: true);
+            }
+            else
+            {
+                _worldEntity.CollidingType = EntityCollidingType.Colliding;
+                SetSprite(isInMerging: false);
+            }
+        }
+    }
+    void SetSprite(bool isInMerging)
+    {
+        _worldEntity.ChangeVisual(GetSpriteByID(isInMerging));
+        if (!isInMerging)
+        {
+            
+            _worldEntity.SetOrderLayer(10);
+        }
+        else
+        {
+            _worldEntity.SetOrderLayer(9);
+        }
+
+    }
+    private Sprite GetSpriteByID(bool isInMerging)
+    {
+        Sprite sprite = new Sprite();
+        if (!isInMerging)
+        {
+            switch (_iCharacterID)
+            {
+                case 1:
+                    sprite = _char1YellowSprite;
+                    break;
+                case 2:
+                    sprite = _char2GreenSprite;
+                    break;
+                case 3:
+                    sprite = _char3CombinedSprite;
+                    break;
+            }
+        }
+        else
+        {
+            switch (_iCharacterID)
+            {
+                case 1:
+                    sprite = _char1YellowSprite;
+                    break;
+                case 2:
+                    sprite = _char2GreenSprite;
+                    break;
+                case 3:
+                    sprite = _char3CombinedSprite;
+                    break;
+            }
+        }
+        return sprite;
     }
 }

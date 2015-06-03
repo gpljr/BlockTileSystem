@@ -23,6 +23,7 @@ public class MapEditor : MonoBehaviour
         {    
             XmlReader xmlReader = XmlReader.Create(levelReader);
             toLoad = (SavableLevel)levelDeserializer.Deserialize(xmlReader);
+            SetLevelType();
             levelReader.Close();
             print("level " + iLevel + " is loaded.");
         }
@@ -36,10 +37,28 @@ public class MapEditor : MonoBehaviour
     {
         return toLoad.vDim;
     }
-    public int GetLevelType()
+    public void SetLevelType()
     {
-        return toLoad.iLevelType;
+        switch (toLoad.iLevelType)
+        {
+            case 1:
+            LevelCode.levelType=LevelType.Normal;
+            break;
+            case 2:
+            LevelCode.levelType=LevelType.Separation;
+            break;
+            case 3:
+            LevelCode.levelType=LevelType.Merging;
+            break;
+            case 4:
+            LevelCode.levelType=LevelType.Combined;
+            break;
+        }
     }
+    // public int GetLevelType()
+    // {
+    //     return toLoad.iLevelType;
+    // }
     public void SetCharacters()
     {
         WorldManager.g.SetCharacters(toLoad.vChar1StartPos, toLoad.vChar2StartPos);

@@ -26,6 +26,11 @@ public class LevelStar : MonoBehaviour
 
         if (!_worldTrigger.isMessageSent)
         {
+            if (LevelCode.levelType == LevelType.Merging)
+            {
+                MergingStar();
+            }
+
             if (_worldTrigger.isSteppedOn)
             {
                 switch (_worldTrigger.iStepCharacterID)
@@ -40,7 +45,7 @@ public class LevelStar : MonoBehaviour
                         Events.g.Raise(new LevelStarEvent(isEntered: true, CharacterID: 3));
                         break;
                 }
-                _worldTrigger.isMessageSent = true;
+                    
             }
             else
             {
@@ -56,9 +61,46 @@ public class LevelStar : MonoBehaviour
                         Events.g.Raise(new LevelStarEvent(isEntered: false, CharacterID: 3));
                         break;
                 }
-                _worldTrigger.isMessageSent = true;
+
             }
+            
+            _worldTrigger.isMessageSent = true;
         }
+    }
+    void MergingStar()
+    {
+        if (_worldTrigger.isSteppedOn)
+            {
+                switch (_worldTrigger.iStepCharacterID)
+                {
+                    case 1:
+                        Events.g.Raise(new MergingStarEvent(isEntered: true, CharacterID: 1));
+                        break;
+                    case 2:
+                        Events.g.Raise(new MergingStarEvent(isEntered: true, CharacterID: 2));
+                        break;
+                    case 3:
+                        Events.g.Raise(new MergingStarEvent(isEntered: true, CharacterID: 3));
+                        break;
+                }
+                    
+            }
+            else
+            {
+                switch (_worldTrigger.iStepCharacterID)
+                {
+                    case 1:
+                        Events.g.Raise(new MergingStarEvent(isEntered: false, CharacterID: 1));
+                        break;
+                    case 2:
+                        Events.g.Raise(new MergingStarEvent(isEntered: false, CharacterID: 2));
+                        break;
+                    case 3:
+                        Events.g.Raise(new MergingStarEvent(isEntered: false, CharacterID: 3));
+                        break;
+                }
+
+            }
     }
 
 

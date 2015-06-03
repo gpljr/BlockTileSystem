@@ -121,9 +121,9 @@ public class WorldEntity : MonoBehaviour
                     _currStateInfo.lastLoc = _location;
                     _currStateInfo.fractionComplete = 0f;
                     if (entityType == EntityType.Character)
-                {
-                    StateInformation.characterInMoving = false;
-                }
+                    {
+                        StateInformation.characterInMoving = false;
+                    }
                     timer = 0f;
                 }
             }

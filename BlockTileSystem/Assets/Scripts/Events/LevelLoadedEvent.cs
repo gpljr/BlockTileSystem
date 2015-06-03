@@ -1,11 +1,11 @@
 ﻿public class LevelLoadedEvent : GameEvent
 {
 public int iLevel;
-public int iLevelType;
-    public LevelLoadedEvent(int iLevel,int iLevelType)
+//public int iLevelType;
+    public LevelLoadedEvent(int iLevel)
     {
         this.iLevel = iLevel;
-        this.iLevelType=iLevelType;
+        //this.iLevelType=iLevelType;
     }
 
 

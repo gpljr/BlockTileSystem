@@ -24,7 +24,6 @@ public class CameraControl : MonoBehaviour
     Camera _singleCamera, _doubleCamera1, _doubleCamera2;
     IntVector _dims;
     float _tileSize;
-    bool _levelLoaded;
 
     void Awake()
     {
@@ -38,7 +37,7 @@ public class CameraControl : MonoBehaviour
     }
     void Update()
     {
-        if (LevelCode.gameState==LevelCode.GameState.InLevel)
+        if (LevelCode.gameState == GameState.InLevel)
         {
             if (Input.GetKeyDown(KeyCode.B))
             {
@@ -52,33 +51,42 @@ public class CameraControl : MonoBehaviour
             }
             else
             {
-                if (isSingleCamera)
+                Vector2 cameraLocation;
+                switch (LevelCode.levelType)
                 {
-                    if (isCombined)
-                    {
-                        Vector2 cameraLocation = WorldManager.g.charCombinedEntity.visPosition * _tileSize;
-                        _singleCameraObject.transform.position = new Vector3(cameraLocation.x, cameraLocation.y, -12f);
-                        _singleCamera.orthographicSize = _fSingleCameraSize * _tileSize;
-                    }
-                    else
-                    {
-                        Vector2 cameraLocation = (WorldManager.g.char1Entity.visPosition + WorldManager.g.char2Entity.visPosition) * _tileSize / 2f;
+                    case LevelType.Normal:
+                        cameraLocation = (WorldManager.g.char1Entity.visPosition + WorldManager.g.char2Entity.visPosition) * _tileSize / 2f;
                         _singleCameraObject.transform.position = new Vector3(cameraLocation.x, cameraLocation.y, -12f);
                         float distance = Vector2.Distance(WorldManager.g.char1Entity.visPosition, WorldManager.g.char2Entity.visPosition);
                         _singleCamera.orthographicSize = Mathf.Max(distance, _fSingleCameraSize) * _tileSize;
-                    }
+                    
+                        break;
+                    case LevelType.Combined:
+                        cameraLocation = WorldManager.g.charCombinedEntity.visPosition * _tileSize;
+                        _singleCameraObject.transform.position = new Vector3(cameraLocation.x, cameraLocation.y, -12f);
+                        _singleCamera.orthographicSize = _fSingleCameraSize * _tileSize;
+                        break;
+                    case LevelType.Separation: 
+                        CameraSeparation();
+                        break;
+                    case LevelType.Merging:
+                        CameraSeparation();
+                        break;
                 }
-                else
-                {
-                    Vector2 cameraLocation1 = WorldManager.g.char1Entity.visPosition * _tileSize;
-                    Vector2 cameraLocation2 = WorldManager.g.char2Entity.visPosition * _tileSize;
-                    _doubleCameraObject1.transform.position = new Vector3(cameraLocation1.x, cameraLocation1.y, -12f);
-                    _doubleCameraObject2.transform.position = new Vector3(cameraLocation2.x, cameraLocation2.y, -12f);
-                    _doubleCamera1.orthographicSize = _fDoubleCameraSize * _tileSize;
-                    _doubleCamera2.orthographicSize = _fDoubleCameraSize * _tileSize;
-                }
+                
+                
+
             }
         }
+    }
+    void CameraSeparation()
+    {
+        Vector2 cameraLocation1 = WorldManager.g.char1Entity.visPosition * _tileSize;
+        Vector2 cameraLocation2 = WorldManager.g.char2Entity.visPosition * _tileSize;
+        _doubleCameraObject1.transform.position = new Vector3(cameraLocation1.x, cameraLocation1.y, -12f);
+        _doubleCameraObject2.transform.position = new Vector3(cameraLocation2.x, cameraLocation2.y, -12f);
+        _doubleCamera1.orthographicSize = _fDoubleCameraSize * _tileSize;
+        _doubleCamera2.orthographicSize = _fDoubleCameraSize * _tileSize;
     }
     void OnEnable()
     {
@@ -91,24 +99,7 @@ public class CameraControl : MonoBehaviour
     }
     void LevelLoaded(LevelLoadedEvent e)
     {
-        _levelLoaded = true;
-        if (e.iLevelType == 2 || e.iLevelType == 3)
-        {
-            isCombined = false;
-            isSingleCamera = false;
-        }
-        else if (e.iLevelType == 4)
-        {
-            isSingleCamera = true;
-            isCombined = true;
-        }
-        else
-        {
-            isSingleCamera = true;
-            isCombined = false;
-        }
-
-        if (isSingleCamera)
+        if (LevelCode.levelType == LevelType.Combined || LevelCode.levelType == LevelType.Normal)
         {
             _singleCameraObject.SetActive(true);
             _doubleCameraObject1.SetActive(false);

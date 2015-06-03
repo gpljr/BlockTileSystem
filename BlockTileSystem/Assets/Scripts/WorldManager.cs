@@ -209,9 +209,9 @@ public class WorldManager : MonoBehaviour
         mapEditor.SetShooters();
         //mapEditor.SetCheckPoints();
         //iCheckPointLocationID = 0;
-        int levelType = mapEditor.GetLevelType();
+        // int levelType = mapEditor.GetLevelType();
 
-        Events.g.Raise(new LevelLoadedEvent(iLevel, levelType));
+        Events.g.Raise(new LevelLoadedEvent(iLevel));
 
 
     }
@@ -234,7 +234,7 @@ public class WorldManager : MonoBehaviour
 
     void Update()
     {
-        if (LevelCode.gameState==LevelCode.GameState.InLevel)
+        if (LevelCode.gameState==GameState.InLevel)
         {
             foreach (WorldEntity e in _entities)
             {
@@ -375,7 +375,7 @@ public class WorldManager : MonoBehaviour
     public void SetCharacters(IntVector Char1Pos, IntVector Char2Pos)
     {
         
-        if (mapEditor.GetLevelType() == 4)
+        if (LevelCode.levelType==LevelType.Combined)
         {
             Char1Object.SetActive(false);
             Char2Object.SetActive(false);
