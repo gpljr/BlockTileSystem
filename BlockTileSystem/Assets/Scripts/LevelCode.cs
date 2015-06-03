@@ -31,6 +31,9 @@ public class LevelCode : MonoBehaviour
     [SerializeField]
     GameObject inLevelScreen;
 
+    [SerializeField]
+    Text levelProgression;
+
     
     public static GameState gameState;
     public static LevelType levelType;
@@ -57,7 +60,7 @@ public class LevelCode : MonoBehaviour
                 break;
             case GameState.InLevel:
             
-            
+                levelProgression.text = "Level: "+_iCurrentLevel+ "/12";
                 if (Input.GetKeyDown(KeyCode.Return))
                 {            
                     Restart();
