@@ -14,21 +14,27 @@ public class ShadowController : MonoBehaviour
     private AnimationCurve _fadeCurve;
 
     [SerializeField]
-    private float separationRadius=0.3f;
+    private float separationRadius = 0.3f;
     [SerializeField]
-    private float combinedRadius=0.6f;
+    private float combinedRadius = 0.6f;
 
     private float fixedAspectRatio;
 
     void Start()
     {
         fixedAspectRatio = Camera.main.aspect;
+        _shadowRenderer.gameObject.SetActive(false);
     }
     
     void LateUpdate()
     {
+        if ( LevelCode.gameState == GameState.Starting)
+        {
+            _shadowRenderer.gameObject.SetActive(false);
+        }
         if (LevelCode.gameState == GameState.InLevel)
         {
+            _shadowRenderer.gameObject.SetActive(true);
             switch (LevelCode.levelType)
             {
                 case LevelType.Normal:
@@ -49,8 +55,10 @@ public class ShadowController : MonoBehaviour
     void Normal()
     {
         float aspectRatio = Camera.main.aspect;
+        print("aspectRatio " + aspectRatio);
         Vector2 vPos1 = Camera.main.WorldToViewportPoint(WorldManager.g.char1Entity.visPosition);
         vPos1.y *= 1 / aspectRatio;
+        print("vPos1 " + vPos1);
         Vector2 vPos2 = Camera.main.WorldToViewportPoint(WorldManager.g.char2Entity.visPosition);
         vPos2.y *= 1 / aspectRatio;
     
