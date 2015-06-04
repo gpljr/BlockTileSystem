@@ -9,6 +9,8 @@ public class WorldEntity : MonoBehaviour
     public int characterID;
 
     private EntityCollidingType _collidingType;
+    EntityCollidingType _tempCollisionType;
+    bool tempCollisionTypeSet;
     public EntityCollidingType CollidingType
     {
         get { return _collidingType; }
@@ -27,6 +29,9 @@ public class WorldEntity : MonoBehaviour
         get { return _location; }
         set { _location = value; }
     }
+
+    IntVector tempLocation;
+
     [SerializeField]
     private GameObject _visualPrefab;
     private Transform _visuals;
@@ -42,11 +47,11 @@ public class WorldEntity : MonoBehaviour
         public float fractionComplete;
         // Range from 0-1, inclusive
         [HideInInspector]
-        public IntVector lastLoc;
+        public Vector2 lastLoc;
         // [HideInInspector]
         // public bool inactive;
         [HideInInspector]
-        public static bool characterInMoving;
+        public bool characterInMoving;
     }
     private StateInformation _currStateInfo;
     public StateInformation StateInfo
@@ -69,7 +74,8 @@ public class WorldEntity : MonoBehaviour
     public bool instantMove;
 
     public AnimationCurve visMovingCurve;
-    public float movingDuration;
+    public float oneStepDuration = 0.5f;
+    private float movingDuration;
     float timer;
 
     public bool isSpriteSet;
@@ -77,7 +83,7 @@ public class WorldEntity : MonoBehaviour
     {
         _visuals = ((GameObject)Instantiate(_visualPrefab, (_location.ToVector2() + new Vector2(0.5f, -0.5f)) * WorldManager.g.TileSize, new Quaternion(0, 0, 0, 0))).transform;
         _visuals.gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
-        _currStateInfo.lastLoc = _location;
+        _currStateInfo.lastLoc = _location.ToVector2();
         isSpriteSet = true;
     }
     public void ChangeVisual(Sprite sprite)
@@ -91,31 +97,47 @@ public class WorldEntity : MonoBehaviour
 
     private void Update()
     {
+        if (!tempCollisionTypeSet)
+        {
+            _tempCollisionType = _collidingType;
+            tempCollisionTypeSet = true;
+        }
+        
         if (isSpriteSet)
         {
             Vector2 fixedOffset = new Vector2(0.5f, -0.5f);
-        
-            float distance = Vector2.Distance(_location.ToVector2(), _currStateInfo.lastLoc.ToVector2());
-        
+            
+            float distance = Vector2.Distance(_location.ToVector2(), _currStateInfo.lastLoc);
+            
 //print("_location "+ _location.ToVector2()+" last loc "+_currStateInfo.lastLoc.ToVector2()+ " distance "+ distance);
             //if (distance < 1.1f && distance > 0f)
+
             if (!instantMove && distance > 0f)
             {
-                
+                print("move");
+                _collidingType = EntityCollidingType.Colliding;
                 Vector2 v = Vector2.zero;
-                Vector2 visualOffset = (_location.ToVector2() - _currStateInfo.lastLoc.ToVector2())
-                                       * (_currStateInfo.fractionComplete);
-            
-                v = _currStateInfo.lastLoc.ToVector2() + visualOffset + fixedOffset;
+                Vector2 visualOffset = (_location.ToVector2() - _currStateInfo.lastLoc)
+                                           * (_currStateInfo.fractionComplete);
+
+                v = _currStateInfo.lastLoc + visualOffset + fixedOffset;
                 _visuals.position = v * WorldManager.g.TileSize;
+                    
                 if (entityType == EntityType.Character)
                 {
-                    StateInformation.characterInMoving = true;
+                    _currStateInfo.characterInMoving = true;
                 }
-
-            
+                // if (tempLocation != _location && timer>0)
+                //     {
+                //         //an input when the move is not finished
+                //         timer = 0f;
+                //         _currStateInfo.lastLoc += visualOffset;
+                //         print("reset");
+                //         movingDuration+=0.05f;
+                //     }
                 if (timer < movingDuration)
                 {
+
                     timer += Time.deltaTime;
                     _currStateInfo.fractionComplete = visMovingCurve.Evaluate(timer / movingDuration);
                 }
@@ -123,22 +145,27 @@ public class WorldEntity : MonoBehaviour
 
                 if (_currStateInfo.fractionComplete >= 1f)
                 {
-                    _currStateInfo.lastLoc = _location;
+                    _currStateInfo.lastLoc = _location.ToVector2();
                     _currStateInfo.fractionComplete = 0f;
                     if (entityType == EntityType.Character)
                     {
-                        StateInformation.characterInMoving = false;
+                        _currStateInfo.characterInMoving = false;
                     }
                     timer = 0f;
+                    _collidingType = _tempCollisionType;
+                    movingDuration = oneStepDuration;
                 }
+                    
             }
             else
             {
-                Vector2 v = _currStateInfo.lastLoc.ToVector2() + fixedOffset;
+                Vector2 v = _currStateInfo.lastLoc + fixedOffset;
                 _visuals.position = v * WorldManager.g.TileSize;
-                _currStateInfo.lastLoc = _location;
+                _currStateInfo.lastLoc = _location.ToVector2();
                 instantMove = false;
+                _collidingType = _tempCollisionType;
             }
+            //tempLocation = _location;
         }
     }
 
@@ -164,7 +191,8 @@ public class WorldEntity : MonoBehaviour
 
     void Awake()
     {
-        
+        tempLocation = new IntVector(0, 0);
+        movingDuration = oneStepDuration;
     }
     void Start()
     {

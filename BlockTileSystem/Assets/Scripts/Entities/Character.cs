@@ -49,6 +49,8 @@ public class Character : MonoBehaviour
     {
         _worldEntity.CollidingType = EntityCollidingType.Pushable;
         onMergingStar=false;
+        _worldEntity.DestroyVisual();
+        _worldEntity.isSpriteSet=false;
     }
     void OnEnable()
     {
@@ -75,8 +77,8 @@ public class Character : MonoBehaviour
         }
 
         //print("WorldEntity.StateInformation.inMoving "+WorldEntity.StateInformation.inMoving);
-        if (!WorldEntity.StateInformation.characterInMoving 
-            && LevelCode.gameState == GameState.InLevel
+        if (!_worldEntity.StateInfo.characterInMoving
+            &&LevelCode.gameState == GameState.InLevel
             && !onMergingStar)
         {
             //_input = new IntVector(Vector2.zero);
@@ -129,8 +131,6 @@ public class Character : MonoBehaviour
                     break;
                 case MoveResult.Push:
                     Push();
-                    break;
-                default:
                     break;
             }
             _bMove = false;
