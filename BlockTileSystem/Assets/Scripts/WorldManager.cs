@@ -49,6 +49,8 @@ public class WorldManager : MonoBehaviour
     public WorldEntity char2Entity;
     [HideInInspector]
     public WorldEntity charCombinedEntity;
+    [HideInInspector]
+    public float fCharacterDistance;
 
     [SerializeField]
     private GameObject _pusherPreFab;
@@ -278,6 +280,7 @@ public class WorldManager : MonoBehaviour
                 }
             }
             CheckPointsCheck();
+            fCharacterDistance = Vector2.Distance(char1Entity.visPosition, char2Entity.visPosition);
         }
     }
 
@@ -662,7 +665,7 @@ public class WorldManager : MonoBehaviour
         else
         {
             if (CheckPoint1Locations[iCheckPointLocationID] != null &&
-                CheckPoint1Locations[iCheckPointLocationID] != zero )
+                CheckPoint1Locations[iCheckPointLocationID] != zero)
             {
                 checkPoint1Object.GetComponent<WorldTrigger>().Location 
                 = PositionFlip(CheckPoint1Locations[iCheckPointLocationID]);

@@ -63,8 +63,8 @@ public class ShadowController : MonoBehaviour
         Vector2 vPos2 = Camera.main.WorldToViewportPoint(WorldManager.g.char2Entity.visPosition);
         vPos2.y *= 1 / aspectRatio;
     
-        float fScreenDistance = Vector2.Distance(vPos1, vPos2);
-        float fPhysicalDistance = Vector2.Distance(WorldManager.g.char1Entity.visPosition, WorldManager.g.char2Entity.visPosition);
+        //float fScreenDistance = Vector2.Distance(vPos1, vPos2);
+        float fPhysicalDistance = WorldManager.g.fCharacterDistance;
         float radius;
         if (aspectRatio < 1.5f)
         {
