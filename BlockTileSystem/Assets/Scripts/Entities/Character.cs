@@ -243,6 +243,10 @@ public class Character : MonoBehaviour
                     break;
             }
         }
+        if( sprite == null)
+        {
+            print("sprite unset");
+        }
         return sprite;
     }
 }

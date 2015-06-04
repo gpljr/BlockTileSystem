@@ -10,17 +10,17 @@ public class BgMusic : MonoBehaviour
     public AudioClip sadMusic;
     public AudioClip happyMusic;
 
-    void OnEnable()
-    {			
-        Events.g.AddListener<LevelLoadedEvent>(LevelEntered);
-    }
+    // void OnEnable()
+    // {			
+    //     Events.g.AddListener<LevelLoadedEvent>(LevelEntered);
+    // }
 	
-    void OnDisable()
-    {
-        Events.g.AddListener<LevelLoadedEvent>(LevelEntered);
-    }
+    // void OnDisable()
+    // {
+    //     Events.g.AddListener<LevelLoadedEvent>(LevelEntered);
+    // }
 
-    void LevelEntered(LevelLoadedEvent e)
+    void Update()
     {
         switch (LevelCode.gameState)
         {

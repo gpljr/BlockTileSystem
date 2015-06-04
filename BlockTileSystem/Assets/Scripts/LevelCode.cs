@@ -53,6 +53,10 @@ public class LevelCode : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            LoadLevel(10);
+        }
         switch (gameState)
         {
             case GameState.Starting:
@@ -106,10 +110,7 @@ public class LevelCode : MonoBehaviour
             _bNewLevelLoaded = false;            
         }
 
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            LoadLevel(10);
-        }
+        
         
     }
 

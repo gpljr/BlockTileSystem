@@ -57,7 +57,7 @@ public class StayTrigger : MonoBehaviour
     private Sprite GetSpriteByID()
     {
         Sprite sprite = new Sprite();
-        switch (iID)
+        switch (iID%3)
         {
             case 1:
                 sprite = _sprite1;
@@ -71,6 +71,10 @@ public class StayTrigger : MonoBehaviour
                 case 4:
                 sprite = _sprite1;
                 break;
+        }
+        if( sprite == null)
+        {
+            print("sprite unset");
         }
         return sprite;
     }

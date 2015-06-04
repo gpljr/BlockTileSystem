@@ -216,88 +216,67 @@ public class Pusher : MonoBehaviour
         switch (direction)
         {
             case Direction.North:
-                switch (iID)
+                switch (iID%3)
                 {
-                    case 0:
-                        sprite = _spriteVertical1;
-                        break;
                     case 1:
                         sprite = _spriteVertical1;
                         break;
                     case 2:
                         sprite = _spriteVertical2;
                         break;
-                    case 3:
+                    case 0:
                         sprite = _spriteVertical3;
-                        break;
-                    case 4:
-                        sprite = _spriteVertical1;
                         break;
                 }
+
                 break;
             case Direction.South:
-                switch (iID)
+                switch (iID%3)
                 {
-                    case 0:
-                        sprite = _spriteVertical1;
-                        break;
                     case 1:
                         sprite = _spriteVertical1;
                         break;
                     case 2:
                         sprite = _spriteVertical2;
                         break;
-                    case 3:
+                    case 0:
                         sprite = _spriteVertical3;
-                        break;
-                    case 4:
-                        sprite = _spriteVertical1;
                         break;
                 }
                 break;
             case Direction.West:
-                switch (iID)
+                switch (iID%3)
                 {
-                    case 0:
-                        sprite = _spriteHorizontal1;
-                        break;
                     case 1:
                         sprite = _spriteHorizontal1;
                         break;
                     case 2:
                         sprite = _spriteHorizontal2;
                         break;
-                    case 3:
+                    case 0:
                         sprite = _spriteHorizontal3;
-                        break;
-                    case 4:
-                        sprite = _spriteHorizontal1;
                         break;
                 }
                 break;
             case Direction.East:
-                switch (iID)
+                switch (iID%3)
                 {
-                    
-                    case 0:
-                        sprite = _spriteHorizontal1;
-                        break;
                     case 1:
                         sprite = _spriteHorizontal1;
                         break;
                     case 2:
                         sprite = _spriteHorizontal2;
                         break;
-                    case 3:
+                    case 0:
                         sprite = _spriteHorizontal3;
-                        break;
-                    case 4:
-                        sprite = _spriteHorizontal1;
                         break;
                 }
                 break;
         }
-        
+        if( sprite == null)
+        {
+            print("sprite unset");
+        }
         return sprite;
     }
 

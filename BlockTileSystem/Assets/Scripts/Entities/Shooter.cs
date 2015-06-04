@@ -217,7 +217,10 @@ public class Shooter : MonoBehaviour
                 sprite = _spriteRight;
                 break;
         }
-        
+        if( sprite == null)
+        {
+            print("sprite unset");
+        }
         return sprite;
     }
 }

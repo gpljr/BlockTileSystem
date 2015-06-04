@@ -59,7 +59,7 @@ public class StepTrigger : MonoBehaviour
     private Sprite GetSpriteByID()
     {
         Sprite sprite = new Sprite();
-        switch (iID)
+        switch (iID%3)
         {
             case 1:
                 sprite = _sprite1;
@@ -67,9 +67,13 @@ public class StepTrigger : MonoBehaviour
             case 2:
                 sprite = _sprite2;
                 break;
-            case 3:
+            case 0:
                 sprite = _sprite3;
                 break;
+        }
+        if( sprite == null)
+        {
+            print("sprite unset");
         }
         return sprite;
     }

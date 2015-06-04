@@ -133,7 +133,7 @@ public class Door : MonoBehaviour
 
         if (isHalfOpen)
         {
-            switch (iID)
+            switch (iID%3)
             {
                 case 1:
                     sprite = _halfOpenDoor1;
@@ -141,7 +141,7 @@ public class Door : MonoBehaviour
                 case 2:
                     sprite = _halfOpenDoor2;
                     break;
-                case 3:
+                case 0:
                     sprite = _halfOpenDoor3;
                     break;
             }
@@ -163,7 +163,7 @@ public class Door : MonoBehaviour
         // }
         else
         {
-            switch (iID)
+            switch (iID%3)
             {
                 case 1:
                     sprite = _closedDoor1;
@@ -171,13 +171,16 @@ public class Door : MonoBehaviour
                 case 2:
                     sprite = _closedDoor2;
                     break;
-                case 3:
+                case 0:
                     sprite = _closedDoor3;
                     break;
             }
         }
         
-        
+        if( sprite == null)
+        {
+            print("sprite unset");
+        }
         return sprite;
     }
 }
