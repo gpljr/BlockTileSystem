@@ -58,6 +58,8 @@ public class WorldEntity : MonoBehaviour
         get
         {
             return _visuals.position;
+
+
         }
         set
         {
@@ -73,9 +75,9 @@ public class WorldEntity : MonoBehaviour
     public bool isSpriteSet;
     public void SetVisual(Sprite sprite)
     {
-        _visuals = Instantiate(_visualPrefab).transform;
-        _visuals.position = (_location.ToVector2() + new Vector2(0.5f, -0.5f)) * WorldManager.g.TileSize;
+        _visuals = ((GameObject)Instantiate(_visualPrefab, (_location.ToVector2() + new Vector2(0.5f, -0.5f)) * WorldManager.g.TileSize, new Quaternion(0, 0, 0, 0))).transform;
         _visuals.gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+        _currStateInfo.lastLoc = _location;
         isSpriteSet = true;
     }
     public void ChangeVisual(Sprite sprite)
@@ -135,7 +137,7 @@ public class WorldEntity : MonoBehaviour
                 Vector2 v = _currStateInfo.lastLoc.ToVector2() + fixedOffset;
                 _visuals.position = v * WorldManager.g.TileSize;
                 _currStateInfo.lastLoc = _location;
-                instantMove=false;
+                instantMove = false;
             }
         }
     }
@@ -162,7 +164,7 @@ public class WorldEntity : MonoBehaviour
 
     void Awake()
     {
-        _currStateInfo.lastLoc = _location;
+        
     }
     void Start()
     {
@@ -179,11 +181,14 @@ public class WorldEntity : MonoBehaviour
         DestroyVisual();
         isSpriteSet = false;
     }
-        public void DestroyVisual()
+    public void DestroyVisual()
     {
         if (isSpriteSet)
         {
-            Destroy(_visuals.gameObject);
+            if (_visuals != null)
+            {
+                Destroy(_visuals.gameObject);
+            }
             isSpriteSet = false;
         }
     }

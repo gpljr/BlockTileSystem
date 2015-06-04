@@ -280,7 +280,10 @@ public class WorldManager : MonoBehaviour
                 }
             }
             CheckPointsCheck();
-            fCharacterDistance = Vector2.Distance(char1Entity.visPosition, char2Entity.visPosition);
+            if (LevelCode.levelType == LevelType.Normal && char1Entity!=null && char2Entity !=null)
+            {
+                fCharacterDistance = Vector2.Distance(char1Entity.visPosition, char2Entity.visPosition);
+            }
         }
     }
 
@@ -398,6 +401,7 @@ public class WorldManager : MonoBehaviour
             Char1Object.SetActive(false);
             Char2Object.SetActive(false);
             CharCombinedObject.SetActive(true);
+            charCombinedEntity.instantMove = true;
             charCombinedEntity.Location = PositionFlip(Char1Pos);
         }
         else

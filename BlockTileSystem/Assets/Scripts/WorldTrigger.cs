@@ -52,7 +52,10 @@ public class WorldTrigger : MonoBehaviour
     {
         if (isSpriteSet)
         {
-            Destroy(_visuals.gameObject);
+            if (_visuals != null)
+            {
+                Destroy(_visuals.gameObject);
+            }
             isSpriteSet = false;
         }
     }

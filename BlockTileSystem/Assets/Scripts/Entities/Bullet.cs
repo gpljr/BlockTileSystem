@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
     private float _fBulletMoveInterval = 0.5f;
     //time between moves
     [SerializeField]
-    private int _iRange = 5;
+    private int _iRange = 20;
 
     private bool _needMove;
     private float _fTimeBetweenMoves;
@@ -51,7 +51,7 @@ public class Bullet : MonoBehaviour
     }
     void LateUpdate()
     {
-        if (!_worldEntity.isSpriteSet)
+        if (!_worldEntity.isSpriteSet && _worldEntity.Location!=new IntVector(0,0))
         {
             _worldEntity.SetVisual(GetSpriteByDirection());
             _worldEntity.SetOrderLayer(11);
