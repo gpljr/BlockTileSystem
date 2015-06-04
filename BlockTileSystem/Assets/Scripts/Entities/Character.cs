@@ -44,19 +44,23 @@ public class Character : MonoBehaviour
         _worldEntity.CollidingType = EntityCollidingType.Pushable;
         _worldEntity.entityType = EntityType.Character;
         _worldEntity.characterID = _iCharacterID;
-
     }
-
+    void RefreshOnLevelLoaded(LevelLoadedEvent e)
+    {
+        onMergingStar=false;
+    }
     void OnEnable()
     {
         _worldEntity.Simulators += Simulate;
         Events.g.AddListener<MergingStarEvent>(StepOnMergingStar);
+        Events.g.AddListener<LevelLoadedEvent>(RefreshOnLevelLoaded);
     }
 
     void OnDisable()
     {
         _worldEntity.Simulators -= Simulate;
         Events.g.RemoveListener<MergingStarEvent>(StepOnMergingStar);
+        Events.g.RemoveListener<LevelLoadedEvent>(RefreshOnLevelLoaded);
     }
 
 
