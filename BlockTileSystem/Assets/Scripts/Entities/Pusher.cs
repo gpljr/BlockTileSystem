@@ -31,6 +31,7 @@ public class Pusher : MonoBehaviour
     private Sprite _spriteVertical3;
     [SerializeField]
     private Sprite _spriteHorizontal3;
+
     
     public void Cache()
     {
@@ -229,6 +230,9 @@ public class Pusher : MonoBehaviour
                     case 3:
                         sprite = _spriteVertical3;
                         break;
+                    case 4:
+                        sprite = _spriteVertical1;
+                        break;
                 }
                 break;
             case Direction.South:
@@ -237,7 +241,7 @@ public class Pusher : MonoBehaviour
                     case 0:
                         sprite = _spriteVertical1;
                         break;
-                        case 1:
+                    case 1:
                         sprite = _spriteVertical1;
                         break;
                     case 2:
@@ -245,6 +249,9 @@ public class Pusher : MonoBehaviour
                         break;
                     case 3:
                         sprite = _spriteVertical3;
+                        break;
+                    case 4:
+                        sprite = _spriteVertical1;
                         break;
                 }
                 break;
@@ -254,7 +261,7 @@ public class Pusher : MonoBehaviour
                     case 0:
                         sprite = _spriteHorizontal1;
                         break;
-                        case 1:
+                    case 1:
                         sprite = _spriteHorizontal1;
                         break;
                     case 2:
@@ -262,6 +269,9 @@ public class Pusher : MonoBehaviour
                         break;
                     case 3:
                         sprite = _spriteHorizontal3;
+                        break;
+                    case 4:
+                        sprite = _spriteHorizontal1;
                         break;
                 }
                 break;
@@ -272,7 +282,7 @@ public class Pusher : MonoBehaviour
                     case 0:
                         sprite = _spriteHorizontal1;
                         break;
-                        case 1:
+                    case 1:
                         sprite = _spriteHorizontal1;
                         break;
                     case 2:
@@ -280,6 +290,9 @@ public class Pusher : MonoBehaviour
                         break;
                     case 3:
                         sprite = _spriteHorizontal3;
+                        break;
+                    case 4:
+                        sprite = _spriteHorizontal1;
                         break;
                 }
                 break;

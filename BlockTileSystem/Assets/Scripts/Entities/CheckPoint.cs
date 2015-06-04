@@ -54,7 +54,6 @@ public class CheckPoint : MonoBehaviour
             }
             else
             {
-                print("step out");
                 switch (_worldTrigger.iStepCharacterID)
                 {
 

@@ -68,6 +68,9 @@ public class StayTrigger : MonoBehaviour
             case 3:
                 sprite = _sprite3;
                 break;
+                case 4:
+                sprite = _sprite1;
+                break;
         }
         return sprite;
     }

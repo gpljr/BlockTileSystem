@@ -31,6 +31,8 @@ public class Character : MonoBehaviour
     [SerializeField]
     private Sprite _char3CombinedSprite;
 
+    private bool onMergingStar;
+
     public void Cache()
     {
         _worldEntity = GetComponent<WorldEntity>();
@@ -68,7 +70,9 @@ public class Character : MonoBehaviour
         }
 
         //print("WorldEntity.StateInformation.inMoving "+WorldEntity.StateInformation.inMoving);
-        if (!WorldEntity.StateInformation.characterInMoving && LevelCode.gameState == GameState.InLevel)
+        if (!WorldEntity.StateInformation.characterInMoving 
+            && LevelCode.gameState == GameState.InLevel
+            && !onMergingStar)
         {
             //_input = new IntVector(Vector2.zero);
             if (Input.GetKeyDown(_leftKey))
@@ -172,13 +176,16 @@ public class Character : MonoBehaviour
     {
         if (e.CharacterID == _iCharacterID)
         {
+
             if (e.isEntered)
             {
+                onMergingStar=true;
                 _worldEntity.CollidingType = EntityCollidingType.Empty;
                 SetSprite(isInMerging: true);
             }
             else
             {
+                onMergingStar=false;
                 _worldEntity.CollidingType = EntityCollidingType.Colliding;
                 SetSprite(isInMerging: false);
             }

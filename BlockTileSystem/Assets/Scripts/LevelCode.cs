@@ -34,11 +34,13 @@ public class LevelCode : MonoBehaviour
     [SerializeField]
     Text levelProgression;
 
+    private bool _isMergingShaderComplete;
+
     public static GameState gameState;
     public static LevelType levelType;
 
-    public static float musicVolume=1f;
-    public static float audioVolume=0.3f;
+    public static float musicVolume = 1f;
+    public static float audioVolume = 0.3f;
 
 
     void Start()
@@ -62,7 +64,7 @@ public class LevelCode : MonoBehaviour
                 break;
             case GameState.InLevel:
             
-                levelProgression.text = "Level: "+_iCurrentLevel+ "/12";
+                levelProgression.text = "Level: " + _iCurrentLevel + "/12";
                 if (Input.GetKeyDown(KeyCode.Return))
                 {            
                     Restart();
@@ -73,8 +75,18 @@ public class LevelCode : MonoBehaviour
                 }
                 if (_bPlayer1Entered && _bPlayer2Entered)
                 {
-            
-                    LoadNextLevel();
+                    if (levelType == LevelType.Merging)
+                    {
+                        if (_isMergingShaderComplete)
+                        {
+                            LoadNextLevel();
+                            _isMergingShaderComplete=false;
+                        }
+                    }
+                    else
+                    {
+                        LoadNextLevel();
+                    }
                 }
                 break;
         }
@@ -106,6 +118,8 @@ public class LevelCode : MonoBehaviour
         Events.g.AddListener<LevelLoadedEvent>(LevelLoaded);
         Events.g.AddListener<LevelStarEvent>(LevelPass);
         Events.g.AddListener<BulletHitEvent>(BulletHit);
+        Events.g.AddListener<MergingShaderCompleteEvent>(MergingShaderComplete);
+
     }
     
     void OnDisable()
@@ -113,6 +127,7 @@ public class LevelCode : MonoBehaviour
         Events.g.RemoveListener<LevelLoadedEvent>(LevelLoaded);
         Events.g.RemoveListener<LevelStarEvent>(LevelPass);
         Events.g.RemoveListener<BulletHitEvent>(BulletHit);
+        Events.g.RemoveListener<MergingShaderCompleteEvent>(MergingShaderComplete);
     }
     void LevelPass(LevelStarEvent e)
     {
@@ -149,6 +164,12 @@ public class LevelCode : MonoBehaviour
             }
         }
     }
+
+    void MergingShaderComplete(MergingShaderCompleteEvent e)
+    {
+        _isMergingShaderComplete=true;
+    }
+
     void Restart()
     {
         _timeToFadeIn = 0.5f;
@@ -191,7 +212,7 @@ public class LevelCode : MonoBehaviour
     {
         _timeToFadeIn = 1f;
         _timeToFadeOut = 1f;
-        if (levelType==LevelType.Combined)
+        if (levelType == LevelType.Combined)
         {
             EnterEndingScreen();
         }

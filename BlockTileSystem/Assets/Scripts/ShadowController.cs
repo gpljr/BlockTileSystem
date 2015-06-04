@@ -14,6 +14,15 @@ public class ShadowController : MonoBehaviour
     private AnimationCurve _fadeCurve;
     [SerializeField]
     private AnimationCurve _fadeCurve2;
+    //for different resolution
+
+    [SerializeField]
+    private AnimationCurve _emrgingRadiusIncreaseCurve;
+    private float timer=0f;
+    [SerializeField]
+    private float timerDuration;
+    private bool _isMergingShaderComplete;
+    private bool char1OnMergingStar,char2OnMergingStar;
 
     [SerializeField]
     private float separationRadius = 0.3f;
@@ -70,7 +79,8 @@ public class ShadowController : MonoBehaviour
         {
             radius = _fadeCurve2.Evaluate(fPhysicalDistance);
         }
-        else{
+        else
+        {
             radius = _fadeCurve.Evaluate(fPhysicalDistance);
         }
         //print("aspectRatio " + aspectRatio + " distance " + fPhysicalDistance + " radius " + radius);
@@ -91,7 +101,21 @@ public class ShadowController : MonoBehaviour
         Vector2 vPos2 = new Vector2(0.75f, 0.5f);
         vPos1.y *= 1 / fixedAspectRatio;
         vPos2.y *= 1 / fixedAspectRatio;
-        SetShader(separationRadius, vPos1, vPos2);
+        float radius = separationRadius;
+        if (char1OnMergingStar && char2OnMergingStar && !_isMergingShaderComplete)
+        {
+            print("merging shader");
+            timer += Time.deltaTime;
+            radius = _emrgingRadiusIncreaseCurve.Evaluate(timer / timerDuration);
+            if(timer>=timerDuration)
+            {
+                print("merging shader complete");
+                timer=0f;
+                Events.g.Raise(new MergingShaderCompleteEvent());
+                _isMergingShaderComplete=true;
+            }
+        }
+        SetShader(radius, vPos1, vPos2);
     }
     void SetShader(float radius, Vector2 vPos1, Vector2 vPos2)
     {
@@ -101,5 +125,40 @@ public class ShadowController : MonoBehaviour
         _shadowRenderer.material.SetFloat("_Radius", radius);
 
         _shadowRenderer.material.SetColor("_Color", _bgColor);
+    }
+    void OnEnable()
+    {
+        Events.g.AddListener<MergingStarEvent>(OnMergingStar);
+    }
+
+    void OnDisable()
+    {
+        Events.g.RemoveListener<MergingStarEvent>(OnMergingStar);
+    }
+    void OnMergingStar(MergingStarEvent e)
+    {
+        if(e.isEntered)
+        {
+            if(e.CharacterID==1)
+            {
+                char1OnMergingStar=true;
+            }
+            else if(e.CharacterID==2)
+            {
+                char2OnMergingStar=true;
+            }
+        }
+        else
+        {
+            if(e.CharacterID==1)
+            {
+                char1OnMergingStar=false;
+            }
+            else if(e.CharacterID==2)
+            {
+                char2OnMergingStar=false;
+            }
+        }
+
     }
 }

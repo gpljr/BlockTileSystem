@@ -68,6 +68,10 @@ public class MapEditor : MonoBehaviour
         if (toLoad.pPushers != null)
         {
             PusherInXML[] pushers = toLoad.pPushers;
+            if(pushers.Length>4)
+            {
+                print("pusher more than 4");
+            }
             for (int i = 0; i < pushers.Length; i++)
             {
                 if (pushers[i].vPosition != new IntVector(0, 0))
@@ -112,6 +116,10 @@ public class MapEditor : MonoBehaviour
         if (toLoad.dDoors != null)
         {
             DoorInXML[] doors = toLoad.dDoors;
+            if(doors.Length>3)
+            {
+                print("door more than 3");
+            }
             for (int i = 0; i < doors.Length; i++)
             {          
                 if (doors[i].vPosition != new IntVector(0, 0))
