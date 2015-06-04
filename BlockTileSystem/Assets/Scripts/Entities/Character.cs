@@ -47,6 +47,7 @@ public class Character : MonoBehaviour
     }
     void RefreshOnLevelLoaded(LevelLoadedEvent e)
     {
+        _worldEntity.CollidingType = EntityCollidingType.Pushable;
         onMergingStar=false;
     }
     void OnEnable()
