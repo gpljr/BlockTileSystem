@@ -42,17 +42,17 @@ public class MapEditor : MonoBehaviour
         switch (toLoad.iLevelType)
         {
             case 1:
-            LevelCode.levelType=LevelType.Normal;
-            break;
+                LevelCode.levelType = LevelType.Normal;
+                break;
             case 2:
-            LevelCode.levelType=LevelType.Separation;
-            break;
+                LevelCode.levelType = LevelType.Separation;
+                break;
             case 3:
-            LevelCode.levelType=LevelType.Merging;
-            break;
+                LevelCode.levelType = LevelType.Merging;
+                break;
             case 4:
-            LevelCode.levelType=LevelType.Combined;
-            break;
+                LevelCode.levelType = LevelType.Combined;
+                break;
         }
     }
     // public int GetLevelType()
@@ -202,17 +202,21 @@ public class MapEditor : MonoBehaviour
 
         if (toLoad.cCheckPoints != null)
         {
+
             CheckPointInXML[] checkPoints = toLoad.cCheckPoints;
             if (checkPoints[0].vCheckPoint1Position != new IntVector(0, 0))
             {
                 WorldManager.g.InstantiateCheckPoint1(checkPoints[0].vCheckPoint1Position);
-                WorldManager.g.InstantiateCheckPoint2(checkPoints[0].vCheckPoint2Position); 
+                if (toLoad.iLevelType != 4)
+                {
+                    WorldManager.g.InstantiateCheckPoint2(checkPoints[0].vCheckPoint2Position); 
+                }
             }
             WorldManager.g.CheckPoint1Locations = new IntVector [checkPoints.Length];
             WorldManager.g.CheckPoint2Locations = new IntVector [checkPoints.Length];
             for (int i = 0; i < checkPoints.Length; i++)
             {
-                if (checkPoints[i].vCheckPoint1Position != new IntVector(0, 0))
+                //if (checkPoints[i].vCheckPoint1Position != new IntVector(0, 0))
                 {
                     WorldManager.g.CheckPoint1Locations[i] = checkPoints[i].vCheckPoint1Position;
                     WorldManager.g.CheckPoint2Locations[i] = checkPoints[i].vCheckPoint2Position;

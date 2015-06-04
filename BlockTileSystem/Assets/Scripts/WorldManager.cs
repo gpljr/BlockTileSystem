@@ -65,8 +65,6 @@ public class WorldManager : MonoBehaviour
     [SerializeField]
     private GameObject _checkPoint1PreFab;
     [SerializeField]
-    private GameObject _checkPoint2PreFab;
-    [SerializeField]
     private GameObject _tutorialKeyPrefab;
     
 
@@ -110,7 +108,9 @@ public class WorldManager : MonoBehaviour
     public IntVector[] CheckPoint1Locations;
     [HideInInspector]
     public IntVector[] CheckPoint2Locations;
-    public int iCheckPointLocationID;
+    private int iCheckPointLocationID;
+    public bool checkPointsMoved;
+    private int iChar1InCheckPoint, iChar2InCheckPoint;
 
     [SerializeField]
     private Transform _floor;
@@ -210,19 +210,19 @@ public class WorldManager : MonoBehaviour
         mapEditor.SetStepTriggers();
         mapEditor.SetStayTriggers();
         mapEditor.SetShooters();
-        //mapEditor.SetCheckPoints();
-        //iCheckPointLocationID = 0;
+        mapEditor.SetCheckPoints();
+        iCheckPointLocationID = 0;
         // int levelType = mapEditor.GetLevelType();
-        if(iLevel==1)//a temporary way to make tutorial key icons in the first level
+        if (iLevel == 1)//a temporary way to make tutorial key icons in the first level
         {
-            InstantiateTutorialKeys(new IntVector(2,1), 1);
-            InstantiateTutorialKeys(new IntVector(1,2), 2);
-            InstantiateTutorialKeys(new IntVector(2,3), 3);
-            InstantiateTutorialKeys(new IntVector(3,2), 4);
-            InstantiateTutorialKeys(new IntVector(6,7), 5);
-            InstantiateTutorialKeys(new IntVector(6,9), 6);
-            InstantiateTutorialKeys(new IntVector(5,8), 7);
-            InstantiateTutorialKeys(new IntVector(7,8), 8);
+            InstantiateTutorialKeys(new IntVector(2, 1), 1);
+            InstantiateTutorialKeys(new IntVector(1, 2), 2);
+            InstantiateTutorialKeys(new IntVector(2, 3), 3);
+            InstantiateTutorialKeys(new IntVector(3, 2), 4);
+            InstantiateTutorialKeys(new IntVector(6, 7), 5);
+            InstantiateTutorialKeys(new IntVector(6, 9), 6);
+            InstantiateTutorialKeys(new IntVector(5, 8), 7);
+            InstantiateTutorialKeys(new IntVector(7, 8), 8);
         }
 
         Events.g.Raise(new LevelLoadedEvent(iLevel));
@@ -277,7 +277,7 @@ public class WorldManager : MonoBehaviour
                     }
                 }
             }
-            //CheckPointsCheck();
+            CheckPointsCheck();
         }
     }
 
@@ -377,6 +377,7 @@ public class WorldManager : MonoBehaviour
         {
             _triggers.Remove(e);
         }
+        checkPointsMoved = false;
     }
     private IntVector PositionFlip(IntVector Position)
     {
@@ -401,7 +402,9 @@ public class WorldManager : MonoBehaviour
             Char1Object.SetActive(true);
             Char2Object.SetActive(true);
             CharCombinedObject.SetActive(false);
+            char1Entity.instantMove = true;
             char1Entity.Location = PositionFlip(Char1Pos);
+            char2Entity.instantMove = true;
             char2Entity.Location = PositionFlip(Char2Pos);
         }
         
@@ -522,6 +525,7 @@ public class WorldManager : MonoBehaviour
         }
         var gameObject = Instantiate(_pusherPreFab);
         var entity = gameObject.GetComponent<WorldEntity>();
+        entity.instantMove = true;
         entity.Location = PositionFlip(location);
         var pusher = gameObject.GetComponent<Pusher>();
         pusher.direction = direction;
@@ -549,6 +553,7 @@ public class WorldManager : MonoBehaviour
         }
         var gameObject = Instantiate(_doorPreFab);
         var entity = gameObject.GetComponent<WorldEntity>();
+        entity.instantMove = true;
         entity.Location = PositionFlip(location);
         var door = gameObject.GetComponent<Door>();
         door.iID = ID;
@@ -588,6 +593,7 @@ public class WorldManager : MonoBehaviour
         }
         var gameObject = Instantiate(_shooterPreFab);
         var entity = gameObject.GetComponent<WorldEntity>();
+        entity.instantMove = true;
         entity.Location = PositionFlip(location);
         var shooter = gameObject.GetComponent<Shooter>();
         shooter.fShootingTimeInterval = fShootingTimeInterval;
@@ -606,6 +612,7 @@ public class WorldManager : MonoBehaviour
         checkPoint1Object = Instantiate(_checkPoint1PreFab);
         var trigger = checkPoint1Object.GetComponent<WorldTrigger>();
         trigger.Location = PositionFlip(location);
+        checkPoint1Object.GetComponent<CheckPoint>().iID = 1;
     }
     public void InstantiateCheckPoint2(IntVector location)
     {
@@ -613,9 +620,10 @@ public class WorldManager : MonoBehaviour
         {
             print("error! check point on the wall!");
         }
-        var checkPoint2Object = Instantiate(_checkPoint2PreFab);
+        checkPoint2Object = Instantiate(_checkPoint1PreFab);
         var trigger = checkPoint2Object.GetComponent<WorldTrigger>();
         trigger.Location = PositionFlip(location);
+        checkPoint2Object.GetComponent<CheckPoint>().iID = 2;
     }
     private void CheckPointsCheck()
     {
@@ -629,20 +637,42 @@ public class WorldManager : MonoBehaviour
     private void MoveCheckPoints()
     {
         iCheckPointLocationID++;
-        print("iCheckPointLocationID " + iCheckPointLocationID);
-        print("CheckPoint1Locations[iCheckPointLocationID] " + CheckPoint1Locations[iCheckPointLocationID]);
-        print("CheckPoint2Locations[iCheckPointLocationID] " + CheckPoint2Locations[iCheckPointLocationID]);
-        if (CheckPoint1Locations[iCheckPointLocationID] != null &&
-            CheckPoint2Locations[iCheckPointLocationID] != null)
+        IntVector zero = new IntVector(0, 0);
+        if (LevelCode.levelType != LevelType.Combined)
         {
-            checkPoint1Object.GetComponent<WorldTrigger>().Location = CheckPoint1Locations[iCheckPointLocationID];
-            var trigger = checkPoint2Object.GetComponent<WorldTrigger>();
-            trigger.Location = CheckPoint2Locations[iCheckPointLocationID];
+            if (CheckPoint1Locations[iCheckPointLocationID] != null &&
+                CheckPoint2Locations[iCheckPointLocationID] != null &&
+                CheckPoint1Locations[iCheckPointLocationID] != zero &&
+                CheckPoint2Locations[iCheckPointLocationID] != zero)
+            {
+            
+                checkPoint1Object.GetComponent<WorldTrigger>().Location 
+                = PositionFlip(CheckPoint1Locations[iCheckPointLocationID]);
+                checkPoint2Object.GetComponent<WorldTrigger>().Location 
+                = PositionFlip(CheckPoint2Locations[iCheckPointLocationID]);
+            }
+            else
+            {
+                Destroy(checkPoint1Object);
+                Destroy(checkPoint2Object);
+                iCheckPointLocationID--;
+                checkPointsMoved = true;
+            }
         }
         else
         {
-            //destroy
-            iCheckPointLocationID--;
+            if (CheckPoint1Locations[iCheckPointLocationID] != null &&
+                CheckPoint1Locations[iCheckPointLocationID] != zero )
+            {
+                checkPoint1Object.GetComponent<WorldTrigger>().Location 
+                = PositionFlip(CheckPoint1Locations[iCheckPointLocationID]);
+            }
+            else
+            {
+                Destroy(checkPoint1Object);
+                iCheckPointLocationID--;
+                checkPointsMoved = true;
+            }
         }
     }
     void CheckPointPass(CheckPointEvent e)
@@ -654,8 +684,15 @@ public class WorldManager : MonoBehaviour
             {
                 case 1:
                     _bPlayer1Entered = true;
+                    iChar1InCheckPoint = e.iCheckPointID;
+        
                     break;
                 case 2:
+                    _bPlayer2Entered = true;
+                    iChar2InCheckPoint = e.iCheckPointID;
+                    break;
+                case 3:
+                    _bPlayer1Entered = true;
                     _bPlayer2Entered = true;
                     break;
             }
@@ -666,12 +703,49 @@ public class WorldManager : MonoBehaviour
             {
                 case 1:
                     _bPlayer1Entered = false;
+                    iChar1InCheckPoint = 0;
                     break;
                 case 2:
                     _bPlayer2Entered = false;
+                    iChar2InCheckPoint = 0;
                     break;
             }
         }
+    }
+    public void RestartToCheckPoints()
+    {
+        if (LevelCode.levelType != LevelType.Combined)
+        {
+            switch (iChar1InCheckPoint)
+            {
+                case 1:
+                    char1Entity.instantMove = true;
+                    char1Entity.Location = PositionFlip(CheckPoint1Locations[iCheckPointLocationID]);
+                    break;
+                case 2:
+                    char1Entity.instantMove = true;
+                    char1Entity.Location = PositionFlip(CheckPoint2Locations[iCheckPointLocationID]);
+                    break;
+            }
+            switch (iChar2InCheckPoint)
+            {
+                case 1:
+                    char2Entity.instantMove = true;
+                    char2Entity.Location = PositionFlip(CheckPoint1Locations[iCheckPointLocationID]);
+                    break;
+                case 2:
+                    char2Entity.instantMove = true;
+                    char2Entity.Location = PositionFlip(CheckPoint2Locations[iCheckPointLocationID]);
+                    break;
+            }
+        }
+        else
+        {
+            charCombinedEntity.instantMove = true;
+            charCombinedEntity.Location = PositionFlip(CheckPoint1Locations[iCheckPointLocationID]);
+                    
+        }
+        
     }
 
 

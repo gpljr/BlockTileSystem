@@ -153,9 +153,11 @@ public class LevelCode : MonoBehaviour
     {
         _timeToFadeIn = 0.5f;
         _timeToFadeOut = 0.5f;
-        if (WorldManager.g.iCheckPointLocationID > 0)
+        if (WorldManager.g.checkPointsMoved)
         {
             //restart to checkpoint
+            StartLevel();
+            WorldManager.g.RestartToCheckPoints();
         }
         else
         {

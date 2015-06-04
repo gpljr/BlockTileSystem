@@ -22,7 +22,6 @@ public class BgMusic : MonoBehaviour
 
     void LevelEntered(LevelLoadedEvent e)
     {
-        print("level entered");
         switch (LevelCode.gameState)
         {
             case GameState.Starting:

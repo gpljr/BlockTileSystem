@@ -64,6 +64,7 @@ public class WorldEntity : MonoBehaviour
             _visuals.position = value;
         }
     }
+    public bool instantMove;
 
     public AnimationCurve visMovingCurve;
     public float movingDuration;
@@ -95,7 +96,8 @@ public class WorldEntity : MonoBehaviour
             float distance = Vector2.Distance(_location.ToVector2(), _currStateInfo.lastLoc.ToVector2());
         
 //print("_location "+ _location.ToVector2()+" last loc "+_currStateInfo.lastLoc.ToVector2()+ " distance "+ distance);
-            if (distance < 1.1f && distance > 0f)
+            //if (distance < 1.1f && distance > 0f)
+            if (!instantMove && distance > 0f)
             {
                 
                 Vector2 v = Vector2.zero;
@@ -133,6 +135,7 @@ public class WorldEntity : MonoBehaviour
                 Vector2 v = _currStateInfo.lastLoc.ToVector2() + fixedOffset;
                 _visuals.position = v * WorldManager.g.TileSize;
                 _currStateInfo.lastLoc = _location;
+                instantMove=false;
             }
         }
     }

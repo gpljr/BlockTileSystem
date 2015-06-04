@@ -26,6 +26,17 @@ public class WorldTrigger : MonoBehaviour
     [SerializeField]
     private GameObject _visualPrefab;
     private Transform _visuals;
+    public Vector2 visPosition
+    {
+        get
+        {
+            return _visuals.position;
+        }
+        set
+        {
+            _visuals.position = value;
+        }
+    }
 
     private bool _registered = false;
 

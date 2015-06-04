@@ -99,6 +99,7 @@ public class Shooter : MonoBehaviour
         GameObject bulletObject = (GameObject)Instantiate(_bullet);
         var bullet = bulletObject.GetComponent<Bullet>();
         var bulletEntity = bulletObject.GetComponent<WorldEntity>();
+        bulletEntity.instantMove=true;
         bulletEntity.Location = _worldEntity.Location;
         var bulletTrigger = bulletObject.GetComponent<WorldEntity>();
         bulletTrigger.Location = _worldEntity.Location;
