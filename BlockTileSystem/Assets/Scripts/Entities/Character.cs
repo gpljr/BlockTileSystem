@@ -30,6 +30,12 @@ public class Character : MonoBehaviour
     private Sprite _char2GreenSprite;
     [SerializeField]
     private Sprite _char3CombinedSprite;
+    [SerializeField]
+    private Sprite _char1MergingYellowSprite;
+    [SerializeField]
+    private Sprite _char2MergingGreenSprite;
+
+    public static bool oneEnteredMergingStar;
 
     private bool onMergingStar;
 
@@ -48,9 +54,9 @@ public class Character : MonoBehaviour
     void RefreshOnLevelLoaded(LevelLoadedEvent e)
     {
         _worldEntity.CollidingType = EntityCollidingType.Pushable;
-        onMergingStar=false;
+        onMergingStar = false;
         _worldEntity.DestroyVisual();
-        _worldEntity.isSpriteSet=false;
+        _worldEntity.isSpriteSet = false;
     }
     void OnEnable()
     {
@@ -78,7 +84,7 @@ public class Character : MonoBehaviour
 
         //print("WorldEntity.StateInformation.inMoving "+WorldEntity.StateInformation.inMoving);
         if (!_worldEntity.StateInfo.characterInMoving
-            &&LevelCode.gameState == GameState.InLevel
+            && LevelCode.gameState == GameState.InLevel
             && !onMergingStar)
         {
             //_input = new IntVector(Vector2.zero);
@@ -184,22 +190,24 @@ public class Character : MonoBehaviour
 
             if (e.isEntered)
             {
-                onMergingStar=true;
+                onMergingStar = true;
                 _worldEntity.CollidingType = EntityCollidingType.Empty;
                 SetSprite(isInMerging: true);
+                oneEnteredMergingStar = true;
             }
             else
             {
-                onMergingStar=false;
-                _worldEntity.CollidingType = EntityCollidingType.Colliding;
+                onMergingStar = false;
+                _worldEntity.CollidingType = EntityCollidingType.Pushable;
                 SetSprite(isInMerging: false);
+                oneEnteredMergingStar = false;
             }
         }
     }
     void SetSprite(bool isInMerging)
     {
         _worldEntity.ChangeVisual(GetSpriteByID(isInMerging));
-        if (!isInMerging)
+        if (!isInMerging || oneEnteredMergingStar)
         {
             
             _worldEntity.SetOrderLayer(10);
@@ -228,22 +236,26 @@ public class Character : MonoBehaviour
                     break;
             }
         }
-        else
+        else//on merging star
         {
-            switch (_iCharacterID)
+            if (oneEnteredMergingStar)
             {
-                case 1:
-                    sprite = _char1YellowSprite;
-                    break;
-                case 2:
-                    sprite = _char2GreenSprite;
-                    break;
-                case 3:
-                    sprite = _char3CombinedSprite;
-                    break;
+                sprite = _char3CombinedSprite;
+            }
+            else
+            {
+                switch (_iCharacterID)
+                {
+                    case 1:
+                        sprite = _char1MergingYellowSprite;
+                        break;
+                    case 2:
+                        sprite = _char2MergingGreenSprite;
+                        break;
+                }
             }
         }
-        if( sprite == null)
+        if (sprite == null)
         {
             print("sprite unset");
         }

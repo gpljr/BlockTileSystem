@@ -8,13 +8,18 @@ public class WorldEntity : MonoBehaviour
     public EntityType entityType;
     public int characterID;
 
+    [SerializeField]
     private EntityCollidingType _collidingType;
     EntityCollidingType _tempCollisionType;
     bool tempCollisionTypeSet;
     public EntityCollidingType CollidingType
     {
         get { return _collidingType; }
-        set { _collidingType = value; }
+        set
+        {
+            _collidingType = value; 
+            _tempCollisionType = value;
+        }
     }
     [HideInInspector]
     public bool isPushed;
@@ -97,11 +102,11 @@ public class WorldEntity : MonoBehaviour
 
     private void Update()
     {
-        if (!tempCollisionTypeSet)
-        {
-            _tempCollisionType = _collidingType;
-            tempCollisionTypeSet = true;
-        }
+        // if (!tempCollisionTypeSet)
+        // {
+        //     _tempCollisionType = _collidingType;
+        //     tempCollisionTypeSet = true;
+        // }
         
         if (isSpriteSet)
         {
@@ -109,16 +114,12 @@ public class WorldEntity : MonoBehaviour
             
             float distance = Vector2.Distance(_location.ToVector2(), _currStateInfo.lastLoc);
             
-//print("_location "+ _location.ToVector2()+" last loc "+_currStateInfo.lastLoc.ToVector2()+ " distance "+ distance);
-            //if (distance < 1.1f && distance > 0f)
-
             if (!instantMove && distance > 0f)
             {
-                print("move");
                 _collidingType = EntityCollidingType.Colliding;
                 Vector2 v = Vector2.zero;
                 Vector2 visualOffset = (_location.ToVector2() - _currStateInfo.lastLoc)
-                                           * (_currStateInfo.fractionComplete);
+                                       * (_currStateInfo.fractionComplete);
 
                 v = _currStateInfo.lastLoc + visualOffset + fixedOffset;
                 _visuals.position = v * WorldManager.g.TileSize;

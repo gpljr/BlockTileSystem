@@ -104,12 +104,12 @@ public class ShadowController : MonoBehaviour
         float radius = separationRadius;
         if (char1OnMergingStar && char2OnMergingStar && !_isMergingShaderComplete)
         {
-            print("merging shader");
+            //print("merging shader");
             timer += Time.deltaTime;
             radius = _emrgingRadiusIncreaseCurve.Evaluate(timer / timerDuration);
             if(timer>=timerDuration)
             {
-                print("merging shader complete");
+                //print("merging shader complete");
                 timer=0f;
                 Events.g.Raise(new MergingShaderCompleteEvent());
                 _isMergingShaderComplete=true;
