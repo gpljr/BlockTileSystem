@@ -51,12 +51,13 @@ public class Bullet : MonoBehaviour
     }
     void LateUpdate()
     {
+        
         if (!_worldEntity.isSpriteSet && _worldEntity.Location!=new IntVector(0,0))
         {
             _worldEntity.SetVisual(GetSpriteByDirection());
             _worldEntity.SetOrderLayer(11);
         }
-
+        _worldEntity.movingDuration = _fTimeBetweenMoves;
         if (!_needMove)
         {
             _fTimeBetweenMoves += Time.deltaTime;

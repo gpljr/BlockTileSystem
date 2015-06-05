@@ -79,8 +79,8 @@ public class WorldEntity : MonoBehaviour
     public bool instantMove;
 
     public AnimationCurve visMovingCurve;
-    public float oneStepDuration = 0.5f;
-    private float movingDuration;
+
+    public float movingDuration= 0.35f;
     float timer;
 
     public bool isSpriteSet;
@@ -116,7 +116,6 @@ public class WorldEntity : MonoBehaviour
             
             if (!instantMove && distance > 0f)
             {
-                _collidingType = EntityCollidingType.Colliding;
                 Vector2 v = Vector2.zero;
                 Vector2 visualOffset = (_location.ToVector2() - _currStateInfo.lastLoc)
                                        * (_currStateInfo.fractionComplete);
@@ -126,6 +125,7 @@ public class WorldEntity : MonoBehaviour
                     
                 if (entityType == EntityType.Character)
                 {
+                    _collidingType = EntityCollidingType.Colliding;
                     _currStateInfo.characterInMoving = true;
                 }
                 // if (tempLocation != _location && timer>0)
@@ -154,7 +154,6 @@ public class WorldEntity : MonoBehaviour
                     }
                     timer = 0f;
                     _collidingType = _tempCollisionType;
-                    movingDuration = oneStepDuration;
                 }
                     
             }
@@ -192,8 +191,6 @@ public class WorldEntity : MonoBehaviour
 
     void Awake()
     {
-        tempLocation = new IntVector(0, 0);
-        movingDuration = oneStepDuration;
     }
     void Start()
     {

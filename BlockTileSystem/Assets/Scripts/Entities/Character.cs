@@ -81,6 +81,24 @@ public class Character : MonoBehaviour
             _worldEntity.SetOrderLayer(10);
 
         }
+        if(LevelCode.gameState == GameState.InLevel)
+        {
+            switch(LevelCode.levelType)
+            {
+                case LevelType.Normal: 
+                _worldEntity.movingDuration=0.35f;
+                break;
+                case LevelType.Separation: 
+                _worldEntity.movingDuration=0.6f;
+                break;
+                case LevelType.Merging: 
+                _worldEntity.movingDuration=0.6f;
+                break;
+                case LevelType.Combined: 
+                _worldEntity.movingDuration=0.25f;
+                break;
+            }
+        }
 
         //print("WorldEntity.StateInformation.inMoving "+WorldEntity.StateInformation.inMoving);
         if (!_worldEntity.StateInfo.characterInMoving

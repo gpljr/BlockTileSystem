@@ -75,6 +75,7 @@ public class Pusher : MonoBehaviour
                 _fTimeBetweenMoves = 0f;
             }
         }
+        _worldEntity.movingDuration = _fTimeBetweenMoves;
     }
     private void Simulate()
     {
