@@ -35,7 +35,7 @@ public class CameraControl : MonoBehaviour
         _doubleCameraObject1.SetActive(false);
         _doubleCameraObject2.SetActive(false);
     }
-    void Update()
+    void LateUpdate()
     {
         if (LevelCode.gameState == GameState.InLevel)
         {

@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
     private float _fBulletMoveInterval = 0.5f;
     //time between moves
     [SerializeField]
-    private int _iRange = 20;
+    private int _iRange;
 
     private bool _needMove;
     private float _fTimeBetweenMoves;
@@ -52,7 +52,7 @@ public class Bullet : MonoBehaviour
     void LateUpdate()
     {
         
-        if (!_worldEntity.isSpriteSet && _worldEntity.Location!=new IntVector(0,0))
+        if (!_worldEntity.isSpriteSet && _worldEntity.Location != new IntVector(0, 0))
         {
             _worldEntity.SetVisual(GetSpriteByDirection());
             _worldEntity.SetOrderLayer(11);
@@ -79,7 +79,7 @@ public class Bullet : MonoBehaviour
     }
     void BulletHit()
     {
-        AudioSource.PlayClipAtPoint (audio, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
+        AudioSource.PlayClipAtPoint(audio, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
         BulletDestroySelf();
         Events.g.Raise(new BulletHitEvent());
         
@@ -91,10 +91,7 @@ public class Bullet : MonoBehaviour
     }
     private void Simulate()
     {
-        if (_iStep >= _iRange)
-        {
-            BulletDestroySelf();
-        }
+        
         if (_needMove)
         {
             MoveOneStep(direction);            
@@ -102,6 +99,11 @@ public class Bullet : MonoBehaviour
     }
     private void MoveOneStep(Direction stepDirection)
     {
+        _iStep++;
+        if (_iStep >= _iRange)
+        {
+            BulletDestroySelf();
+        }
         IntVector vec = _worldEntity.Location;
         switch (stepDirection)
         {
@@ -123,7 +125,7 @@ public class Bullet : MonoBehaviour
         _worldEntity.Location = vec;
         _worldTrigger.Location = vec;
         _needMove = false;
-        _iStep++;
+        
     }
     private Sprite GetSpriteByDirection()
     {

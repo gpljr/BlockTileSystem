@@ -204,6 +204,7 @@ public class WorldManager : MonoBehaviour
                 _triggerMap[x, y] = new List<WorldTrigger>();
             }
         }
+        
         mapEditor.SetMap();
         mapEditor.SetCharacters();
         mapEditor.SetPushers();

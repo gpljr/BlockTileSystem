@@ -84,7 +84,7 @@ public class LevelCode : MonoBehaviour
                         if (_isMergingShaderComplete)
                         {
                             LoadNextLevel();
-                            _isMergingShaderComplete=false;
+                            _isMergingShaderComplete = false;
                         }
                     }
                     else
@@ -168,7 +168,7 @@ public class LevelCode : MonoBehaviour
 
     void MergingShaderComplete(MergingShaderCompleteEvent e)
     {
-        _isMergingShaderComplete=true;
+        _isMergingShaderComplete = true;
     }
 
     void Restart()
@@ -199,7 +199,6 @@ public class LevelCode : MonoBehaviour
         startingScreen.SetActive(false);
         endingScreen.SetActive(false);
         _iCurrentLevel = e.iLevel;
-
     }
 
     public void LoadLevel(int iLevel)
@@ -215,6 +214,7 @@ public class LevelCode : MonoBehaviour
         _timeToFadeOut = 1f;
         if (levelType == LevelType.Combined)
         {
+            //EndLevel(0);
             EnterEndingScreen();
         }
         else
@@ -225,6 +225,7 @@ public class LevelCode : MonoBehaviour
     }
     void EnterEndingScreen()
     {
+        StartCoroutine(Fade(_timeToFadeIn, _fadeCurve, fadeIn: true));
         gameState = GameState.Ending;
         startingScreen.SetActive(false);
         endingScreen.SetActive(true);
@@ -233,6 +234,7 @@ public class LevelCode : MonoBehaviour
     }
     void EnterStartingScreen()
     {
+        StartCoroutine(Fade(_timeToFadeIn, _fadeCurve, fadeIn: true));
         gameState = GameState.Starting;
         startingScreen.SetActive(true);
         endingScreen.SetActive(false);
@@ -259,6 +261,7 @@ public class LevelCode : MonoBehaviour
         while (timer < timerDuration)
         {
             timer += Time.deltaTime;
+            print("timer "+timer+fadeIn);
             if (fadeIn)
             {
                 alpha = 1f - curve.Evaluate(timer / timerDuration);
@@ -287,7 +290,11 @@ public class LevelCode : MonoBehaviour
     IEnumerator FadeOut(float timerDuration, AnimationCurve curve, int iLevelToLoad)
     {
         yield return StartCoroutine(Fade(timerDuration, curve, fadeIn: false));
-        Events.g.Raise(new LoadLevelEvent(iLevel: iLevelToLoad));
+        if (iLevelToLoad != 0)
+        {
+            Events.g.Raise(new LoadLevelEvent(iLevel: iLevelToLoad));
+        }
+
     }
     
 

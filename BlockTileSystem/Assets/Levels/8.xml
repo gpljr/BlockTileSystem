@@ -18,13 +18,13 @@
 		<StarInXML>
 			<vPosition>
 				<x>18</x>
-				<y>2</y>
+				<y>4</y>
 			</vPosition>
 		</StarInXML>
 		<StarInXML>
 			<vPosition>
 				<x>18</x>
-				<y>4</y>
+				<y>5</y>
 			</vPosition>
 		</StarInXML>
 	</sStars>
@@ -78,7 +78,7 @@
 				<x>4</x>
 				<y>7</y>
 			</vPosition>
-			<shootingTimeInterval>4</shootingTimeInterval>
+			<shootingTimeInterval>3</shootingTimeInterval>
 			<sShootingDirection>North</sShootingDirection>
 			<isMoving>0</isMoving>
 		</ShooterInXML>
@@ -2603,7 +2603,7 @@
 				<x>17</x>
 				<y>13</y>
 			</vTilePosition>
-			<iTileType>0</iTileType>
+			<iTileType>2</iTileType>
 		</Tile>
 		<Tile>
 			<vTilePosition>
@@ -2743,14 +2743,14 @@
 				<x>18</x>
 				<y>13</y>
 			</vTilePosition>
-			<iTileType>0</iTileType>
+			<iTileType>2</iTileType>
 		</Tile>
 		<Tile>
 			<vTilePosition>
 				<x>18</x>
 				<y>14</y>
 			</vTilePosition>
-			<iTileType>2</iTileType>
+			<iTileType>1</iTileType>
 		</Tile>
 		<Tile>
 			<vTilePosition>
@@ -2883,7 +2883,7 @@
 				<x>19</x>
 				<y>13</y>
 			</vTilePosition>
-			<iTileType>0</iTileType>
+			<iTileType>2</iTileType>
 		</Tile>
 		<Tile>
 			<vTilePosition>

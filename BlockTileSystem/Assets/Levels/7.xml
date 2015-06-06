@@ -67,7 +67,7 @@
 				<x>5</x>
 				<y>11</y>
 			</vPosition>
-			<shootingTimeInterval>5</shootingTimeInterval>
+			<shootingTimeInterval>4</shootingTimeInterval>
 			<sShootingDirection>West</sShootingDirection>
 			<isMoving>0</isMoving>
 		</ShooterInXML>
@@ -76,22 +76,12 @@
 				<x>1</x>
 				<y>14</y>
 			</vPosition>
-			<shootingTimeInterval>5</shootingTimeInterval>
+			<shootingTimeInterval>4</shootingTimeInterval>
 			<sShootingDirection>East</sShootingDirection>
 			<isMoving>0</isMoving>
 		</ShooterInXML>
 	</sShooters>
 	<cCheckPoints>
-		<CheckPointInXML>
-			<vCheckPoint1Position>
-				<x>4</x>
-				<y>4</y>
-			</vCheckPoint1Position>
-			<vCheckPoint2Position>
-				<x>4</x>
-				<y>5</y>
-			</vCheckPoint2Position>
-		</CheckPointInXML>
 		<CheckPointInXML>
 			<vCheckPoint1Position>
 				<x>3</x>
@@ -101,6 +91,10 @@
 				<x>3</x>
 				<y>10</y>
 			</vCheckPoint2Position>
+		</CheckPointInXML>
+		<CheckPointInXML>
+			<vCheckPoint1Position/>
+			<vCheckPoint2Position/>
 		</CheckPointInXML>
 	</cCheckPoints>
 	<pPushers>

@@ -81,7 +81,7 @@ public class ShadowController : MonoBehaviour
         }
         else
         {
-            radius = _fadeCurve.Evaluate(fPhysicalDistance);
+            radius = _fadeCurve2.Evaluate(fPhysicalDistance);
         }
         //print("aspectRatio " + aspectRatio + " distance " + fPhysicalDistance + " radius " + radius);
         SetShader(radius, vPos1, vPos2);
