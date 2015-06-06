@@ -218,14 +218,14 @@ public class WorldManager : MonoBehaviour
         // int levelType = mapEditor.GetLevelType();
         if (iLevel == 1)//a temporary way to make tutorial key icons in the first level
         {
-            InstantiateTutorialKeys(new IntVector(2, 1), 1);
-            InstantiateTutorialKeys(new IntVector(1, 2), 2);
-            InstantiateTutorialKeys(new IntVector(2, 3), 3);
-            InstantiateTutorialKeys(new IntVector(3, 2), 4);
-            InstantiateTutorialKeys(new IntVector(6, 7), 5);
-            InstantiateTutorialKeys(new IntVector(6, 9), 6);
-            InstantiateTutorialKeys(new IntVector(5, 8), 7);
-            InstantiateTutorialKeys(new IntVector(7, 8), 8);
+            InstantiateTutorialKeys(PositionFlip(char1Entity.Location + new IntVector(0, 1)), 1);
+            InstantiateTutorialKeys(PositionFlip(char1Entity.Location + new IntVector(-1, 0)), 2);
+            InstantiateTutorialKeys(PositionFlip(char1Entity.Location + new IntVector(0, -1)), 3);
+            InstantiateTutorialKeys(PositionFlip(char1Entity.Location + new IntVector(1, 0)), 4);
+            InstantiateTutorialKeys(PositionFlip(char2Entity.Location + new IntVector(0, 1)), 5);
+            InstantiateTutorialKeys(PositionFlip(char2Entity.Location + new IntVector(0, -1)), 6);
+            InstantiateTutorialKeys(PositionFlip(char2Entity.Location + new IntVector(-1, 0)), 7);
+            InstantiateTutorialKeys(PositionFlip(char2Entity.Location + new IntVector(1, 0)), 8);
         }
 
         Events.g.Raise(new LevelLoadedEvent(iLevel));
@@ -281,7 +281,7 @@ public class WorldManager : MonoBehaviour
                 }
             }
             CheckPointsCheck();
-            if (LevelCode.levelType == LevelType.Normal && char1Entity!=null && char2Entity !=null)
+            if (LevelCode.levelType == LevelType.Normal && char1Entity != null && char2Entity != null)
             {
                 fCharacterDistance = Vector2.Distance(char1Entity.visPosition, char2Entity.visPosition);
             }
@@ -648,8 +648,7 @@ public class WorldManager : MonoBehaviour
         IntVector zero = new IntVector(0, 0);
         if (LevelCode.levelType != LevelType.Combined)
         {
-            if (CheckPoint1Locations[iCheckPointLocationID] != null &&
-                CheckPoint2Locations[iCheckPointLocationID] != null &&
+            if (iCheckPointLocationID < CheckPoint1Locations.Length &&
                 CheckPoint1Locations[iCheckPointLocationID] != zero &&
                 CheckPoint2Locations[iCheckPointLocationID] != zero)
             {
@@ -669,7 +668,7 @@ public class WorldManager : MonoBehaviour
         }
         else
         {
-            if (CheckPoint1Locations[iCheckPointLocationID] != null &&
+            if (iCheckPointLocationID < CheckPoint1Locations.Length &&
                 CheckPoint1Locations[iCheckPointLocationID] != zero)
             {
                 checkPoint1Object.GetComponent<WorldTrigger>().Location 

@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     public Direction direction;
 
     [SerializeField]
-    AudioClip audio;
+    AudioClip _audio;
 
     //for all the bullets
     [SerializeField]
@@ -79,13 +79,14 @@ public class Bullet : MonoBehaviour
     }
     void BulletHit()
     {
-        AudioSource.PlayClipAtPoint(audio, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
+        AudioSource.PlayClipAtPoint(_audio, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
         BulletDestroySelf();
         Events.g.Raise(new BulletHitEvent());
         
     }
     private void BulletDestroySelf()
     {
+        _worldEntity.DeregisterMe();
         _worldTrigger.DeregisterMe();
         Destroy(gameObject);
     }

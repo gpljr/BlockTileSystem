@@ -17,7 +17,7 @@ public class StepTrigger : MonoBehaviour
     private Sprite _sprite3;
 
     [SerializeField]
-    AudioClip audio;
+    AudioClip _audio;
 
     private WorldTrigger _worldTrigger;
     public void Cache()
@@ -49,7 +49,7 @@ public class StepTrigger : MonoBehaviour
     {
         //texture change, sound
         isTriggered = true;
-        AudioSource.PlayClipAtPoint(audio, _worldTrigger.Location.ToVector2(), LevelCode.audioVolume);
+        AudioSource.PlayClipAtPoint(_audio, _worldTrigger.Location.ToVector2(), LevelCode.audioVolume);
         Events.g.Raise(new StepTriggerEvent(triggerID: iID));
         _worldTrigger.DestroyVisual();
         //Destroy(this);

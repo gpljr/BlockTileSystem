@@ -80,7 +80,7 @@ public class WorldEntity : MonoBehaviour
 
     public AnimationCurve visMovingCurve;
 
-    public float movingDuration= 0.35f;
+    public float movingDuration = 0.35f;
     float timer;
 
     public bool isSpriteSet;
@@ -99,7 +99,13 @@ public class WorldEntity : MonoBehaviour
     {
         _visuals.gameObject.GetComponent<SpriteRenderer>().sortingOrder = layer;
     }
-
+    public void Refresh()
+    {
+        timer = 0f;
+        _currStateInfo.lastLoc = _location.ToVector2();
+        _currStateInfo.fractionComplete = 0f;
+        _currStateInfo.characterInMoving=false;
+    }
     private void Update()
     {
         // if (!tempCollisionTypeSet)

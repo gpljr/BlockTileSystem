@@ -16,7 +16,7 @@ public class StayTrigger : MonoBehaviour
     private Sprite _sprite3;
 
     [SerializeField]
-    AudioClip audio;
+    AudioClip _audio;
 
     private WorldTrigger _worldTrigger;
     public void Cache()
@@ -40,7 +40,7 @@ public class StayTrigger : MonoBehaviour
             if (_worldTrigger.isSteppedOn)
             {
                 TriggerStayed(true);
-                AudioSource.PlayClipAtPoint(audio, _worldTrigger.Location.ToVector2(), LevelCode.audioVolume);
+                AudioSource.PlayClipAtPoint(_audio, _worldTrigger.Location.ToVector2(), LevelCode.audioVolume);
             }
             else
             {

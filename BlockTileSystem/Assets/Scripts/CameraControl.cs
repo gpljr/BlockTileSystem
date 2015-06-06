@@ -3,10 +3,7 @@ using System.Collections;
 
 public class CameraControl : MonoBehaviour
 {
-
-    bool isSingleCamera = true;
     bool isCombined;
-
     [SerializeField]
     GameObject _singleCameraObject;
     [SerializeField]

@@ -65,16 +65,26 @@ public class Character : MonoBehaviour
     }
     void RefreshOnLevelLoaded(LevelLoadedEvent e)
     {
+        Refresh();
+    }
+     void RefreshOnBulletHit(BulletHitEvent e)
+    {
+        Refresh();
+    }
+    void Refresh()
+    {
         _worldEntity.CollidingType = EntityCollidingType.Pushable;
         onMergingStar = false;
         _worldEntity.DestroyVisual();
         _worldEntity.isSpriteSet = false;
+        _worldEntity.Refresh();
     }
     void OnEnable()
     {
         _worldEntity.Simulators += Simulate;
         Events.g.AddListener<MergingStarEvent>(StepOnMergingStar);
         Events.g.AddListener<LevelLoadedEvent>(RefreshOnLevelLoaded);
+        Events.g.AddListener<BulletHitEvent>(RefreshOnBulletHit);
     }
 
     void OnDisable()
@@ -82,6 +92,7 @@ public class Character : MonoBehaviour
         _worldEntity.Simulators -= Simulate;
         Events.g.RemoveListener<MergingStarEvent>(StepOnMergingStar);
         Events.g.RemoveListener<LevelLoadedEvent>(RefreshOnLevelLoaded);
+        Events.g.AddListener<BulletHitEvent>(RefreshOnBulletHit);
     }
 
 

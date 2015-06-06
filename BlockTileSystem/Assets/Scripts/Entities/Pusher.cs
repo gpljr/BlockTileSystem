@@ -191,24 +191,23 @@ public class Pusher : MonoBehaviour
     }
     private Direction DirectionFlip(Direction direction)
     {
+        Direction flippedDirection=Direction.North;
         switch (direction)
         {
             case Direction.East:
-                return Direction.West;
+                flippedDirection=Direction.West;
                 break;
             case Direction.West:
-                return Direction.East;
+                flippedDirection=Direction.East;
                 break;
             case Direction.North:
-                return Direction.South;
+                flippedDirection=Direction.South;
                 break;
             case Direction.South:
-                return Direction.North;
-                break;
-            default:
-                return Direction.North;//error
+                flippedDirection=Direction.North;
                 break;
         }
+        return flippedDirection;
     }
     private Sprite GetSpriteByID()
     {
