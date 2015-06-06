@@ -5,7 +5,6 @@ using InControl;
 
 public class Character : MonoBehaviour
 {
-
     [SerializeField]
     KeyCode _leftKey;
     [SerializeField]
@@ -34,6 +33,19 @@ public class Character : MonoBehaviour
     private Sprite _char1MergingYellowSprite;
     [SerializeField]
     private Sprite _char2MergingGreenSprite;
+
+    [SerializeField]
+    private Sprite _char1Face1Sprite;
+    [SerializeField]
+    private Sprite _char1Face2Sprite;
+    [SerializeField]
+    private Sprite _char1Face3Sprite;
+    [SerializeField]
+    private Sprite _char2Face1Sprite;
+    [SerializeField]
+    private Sprite _char2Face2Sprite;
+    [SerializeField]
+    private Sprite _char2Face3Sprite;
 
     public static bool oneEnteredMergingStar;
 
@@ -81,26 +93,29 @@ public class Character : MonoBehaviour
             _worldEntity.SetOrderLayer(10);
 
         }
-        if(LevelCode.gameState == GameState.InLevel)
+        else
         {
-            switch(LevelCode.levelType)
+            SetSprite(false);
+        }
+        
+        if (LevelCode.gameState == GameState.InLevel)
+        {
+            switch (LevelCode.levelType)
             {
                 case LevelType.Normal: 
-                _worldEntity.movingDuration=0.35f;
-                break;
+                    _worldEntity.movingDuration = 0.35f;
+                    break;
                 case LevelType.Separation: 
-                _worldEntity.movingDuration=0.6f;
-                break;
+                    _worldEntity.movingDuration = 0.6f;
+                    break;
                 case LevelType.Merging: 
-                _worldEntity.movingDuration=0.6f;
-                break;
+                    _worldEntity.movingDuration = 0.6f;
+                    break;
                 case LevelType.Combined: 
-                _worldEntity.movingDuration=0.25f;
-                break;
+                    _worldEntity.movingDuration = 0.25f;
+                    break;
             }
         }
-
-        //print("WorldEntity.StateInformation.inMoving "+WorldEntity.StateInformation.inMoving);
         if (!_worldEntity.StateInfo.characterInMoving
             && LevelCode.gameState == GameState.InLevel
             && !onMergingStar)
@@ -241,18 +256,7 @@ public class Character : MonoBehaviour
         Sprite sprite = new Sprite();
         if (!isInMerging)
         {
-            switch (_iCharacterID)
-            {
-                case 1:
-                    sprite = _char1YellowSprite;
-                    break;
-                case 2:
-                    sprite = _char2GreenSprite;
-                    break;
-                case 3:
-                    sprite = _char3CombinedSprite;
-                    break;
-            }
+            sprite=GetSpriteByDistance();
         }
         else//on merging star
         {
@@ -278,5 +282,53 @@ public class Character : MonoBehaviour
             print("sprite unset");
         }
         return sprite;
+    }
+    private Sprite GetSpriteByDistance()
+    {
+        Sprite sprite = new Sprite();
+        switch (_iCharacterID)
+        {
+            case 1:
+                if (WorldManager.g.fCharacterDistance >3.1f || LevelCode.levelType==LevelType.Separation || LevelCode.levelType==LevelType.Merging )
+                {
+                    sprite = _char1Face1Sprite;
+                }
+                else if (WorldManager.g.fCharacterDistance >= 1.1f && WorldManager.g.fCharacterDistance < 2.1f)
+                {
+                    sprite = _char1Face3Sprite;
+                }
+                else if (WorldManager.g.fCharacterDistance >= 2.1f && WorldManager.g.fCharacterDistance < 3.1f)
+                {
+                    sprite = _char1Face2Sprite;
+                }
+                else
+                {
+                    sprite = _char1YellowSprite;
+                }
+                break;
+            case 2:
+                if (WorldManager.g.fCharacterDistance < 1.1f)
+                {
+                    sprite = _char2GreenSprite;
+                }
+                else if (WorldManager.g.fCharacterDistance >= 1.1f && WorldManager.g.fCharacterDistance < 2.1f)
+                {
+                    sprite = _char2Face3Sprite;
+                }
+                else if (WorldManager.g.fCharacterDistance >= 2.1f && WorldManager.g.fCharacterDistance < 3.1f)
+                {
+                    sprite = _char2Face2Sprite;
+                }
+                else
+                {
+                    sprite = _char2Face1Sprite;
+                }
+                break;
+            case 3:
+                sprite = _char3CombinedSprite;
+                break;
+        }
+        return sprite;
+            
     }
 }

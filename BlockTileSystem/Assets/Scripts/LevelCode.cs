@@ -261,7 +261,6 @@ public class LevelCode : MonoBehaviour
         while (timer < timerDuration)
         {
             timer += Time.deltaTime;
-            print("timer "+timer+fadeIn);
             if (fadeIn)
             {
                 alpha = 1f - curve.Evaluate(timer / timerDuration);
