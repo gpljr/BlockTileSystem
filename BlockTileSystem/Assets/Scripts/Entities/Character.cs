@@ -117,10 +117,10 @@ public class Character : MonoBehaviour
                     _worldEntity.movingDuration = 0.35f;
                     break;
                 case LevelType.Separation: 
-                    _worldEntity.movingDuration = 0.6f;
+                    _worldEntity.movingDuration = 0.5f;
                     break;
                 case LevelType.Merging: 
-                    _worldEntity.movingDuration = 0.6f;
+                    _worldEntity.movingDuration = 0.5f;
                     break;
                 case LevelType.Combined: 
                     _worldEntity.movingDuration = 0.25f;
@@ -318,9 +318,9 @@ public class Character : MonoBehaviour
                 }
                 break;
             case 2:
-                if (WorldManager.g.fCharacterDistance < 1.1f)
+                if (WorldManager.g.fCharacterDistance >3.1f || LevelCode.levelType==LevelType.Separation || LevelCode.levelType==LevelType.Merging )
                 {
-                    sprite = _char2GreenSprite;
+                    sprite = _char2Face1Sprite;
                 }
                 else if (WorldManager.g.fCharacterDistance >= 1.1f && WorldManager.g.fCharacterDistance < 2.1f)
                 {
@@ -332,7 +332,7 @@ public class Character : MonoBehaviour
                 }
                 else
                 {
-                    sprite = _char2Face1Sprite;
+                    sprite = _char2GreenSprite;
                 }
                 break;
             case 3:
