@@ -63,7 +63,7 @@ public class Shooter : MonoBehaviour
         {
             _worldEntity.SetVisual(GetSpriteByID());
         }
-        _worldEntity.movingDuration = _fTimeBetweenMoves;
+        _worldEntity.movingDuration = fMovingTimeInterval;
         if (!_needMove)
         {
             _fTimeBetweenMoves += Time.deltaTime;

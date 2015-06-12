@@ -49,7 +49,7 @@ public class Bullet : MonoBehaviour
     {
         _worldEntity.Simulators -= Simulate;
     }
-    void LateUpdate()
+    void Update()
     {
         
         if (!_worldEntity.isSpriteSet && _worldEntity.Location != new IntVector(0, 0))
@@ -57,7 +57,7 @@ public class Bullet : MonoBehaviour
             _worldEntity.SetVisual(GetSpriteByDirection());
             _worldEntity.SetOrderLayer(11);
         }
-        _worldEntity.movingDuration = _fTimeBetweenMoves;
+        _worldEntity.movingDuration = _fBulletMoveInterval;
         if (!_needMove)
         {
             _fTimeBetweenMoves += Time.deltaTime;

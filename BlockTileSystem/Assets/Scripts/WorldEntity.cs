@@ -90,6 +90,10 @@ public class WorldEntity : MonoBehaviour
         _visuals.gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
         _currStateInfo.lastLoc = _location.ToVector2();
         isSpriteSet = true;
+        if(entityType== EntityType.Bullet)
+        {
+            print("bullet visual loc"+_currStateInfo.lastLoc);
+        }
     }
     public void ChangeVisual(Sprite sprite)
     {
@@ -104,7 +108,7 @@ public class WorldEntity : MonoBehaviour
         timer = 0f;
         _currStateInfo.lastLoc = _location.ToVector2();
         _currStateInfo.fractionComplete = 0f;
-        _currStateInfo.characterInMoving=false;
+        _currStateInfo.characterInMoving = false;
     }
     private void Update()
     {
@@ -128,7 +132,7 @@ public class WorldEntity : MonoBehaviour
 
                 v = _currStateInfo.lastLoc + visualOffset + fixedOffset;
                 _visuals.position = v * WorldManager.g.TileSize;
-                    
+                
                 if (entityType == EntityType.Character)
                 {
                     _collidingType = EntityCollidingType.Colliding;
