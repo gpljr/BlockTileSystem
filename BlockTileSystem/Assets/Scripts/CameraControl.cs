@@ -36,10 +36,10 @@ public class CameraControl : MonoBehaviour
     {
         if (LevelCode.gameState == GameState.InLevel)
         {
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                isBirdView = !isBirdView;
-            }
+            // if (Input.GetKeyDown(KeyCode.B))
+            // {
+            //     isBirdView = !isBirdView;
+            // }
             if (isBirdView)
             {
                 _dims = WorldManager.g.Dims;
