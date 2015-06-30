@@ -52,7 +52,8 @@ public class StepTrigger : MonoBehaviour
         AudioSource.PlayClipAtPoint(_audio, _worldTrigger.Location.ToVector2(), LevelCode.audioVolume);
         Events.g.Raise(new StepTriggerEvent(triggerID: iID));
         _worldTrigger.DestroyVisual();
-        //Destroy(this);
+        _worldTrigger.DeregisterMe();
+        Destroy(this);
     }
 
 

@@ -271,12 +271,15 @@ public class Character : MonoBehaviour
         }
         else//on merging star
         {
+            print("on merging star");
             if (oneEnteredMergingStar)
             {
                 sprite = _char3CombinedSprite;
+                print("one entered");
             }
             else
             {
+                print("first entered");
                 switch (_iCharacterID)
                 {
                     case 1:

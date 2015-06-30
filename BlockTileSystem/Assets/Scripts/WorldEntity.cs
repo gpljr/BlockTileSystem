@@ -90,10 +90,10 @@ public class WorldEntity : MonoBehaviour
         _visuals.gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
         _currStateInfo.lastLoc = _location.ToVector2();
         isSpriteSet = true;
-        if(entityType== EntityType.Bullet)
-        {
-            print("bullet visual loc"+_currStateInfo.lastLoc);
-        }
+        // if(entityType== EntityType.Bullet)
+        // {
+        //     print("bullet visual loc"+_currStateInfo.lastLoc);
+        // }
     }
     public void ChangeVisual(Sprite sprite)
     {
