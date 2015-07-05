@@ -75,6 +75,7 @@ public class Character : MonoBehaviour
     {
         _worldEntity.CollidingType = EntityCollidingType.Pushable;
         onMergingStar = false;
+        oneEnteredMergingStar=false;
         _worldEntity.DestroyVisual();
         _worldEntity.isSpriteSet = false;
         _worldEntity.Refresh();
@@ -104,7 +105,7 @@ public class Character : MonoBehaviour
             _worldEntity.SetOrderLayer(10);
 
         }
-        else
+        else if(!onMergingStar)
         {
             SetSprite(false);
         }
