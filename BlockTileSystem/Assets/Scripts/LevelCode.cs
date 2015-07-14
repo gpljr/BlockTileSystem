@@ -97,7 +97,7 @@ public class LevelCode : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
-            EnterStartingScreen();
+            Application.LoadLevel(Application.loadedLevel);
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
