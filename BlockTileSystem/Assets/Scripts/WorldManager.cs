@@ -36,13 +36,6 @@ public class WorldManager : MonoBehaviour
     [SerializeField]
     GameObject CharCombinedObject;
 
-    // [HideInInspector]
-    // public Character Char1;
-    // [HideInInspector]
-    // public Character Char2;
-    // [HideInInspector]
-    // public Character CharCombined;
-
     [HideInInspector]
     public WorldEntity char1Entity;
     [HideInInspector]
@@ -52,67 +45,7 @@ public class WorldManager : MonoBehaviour
     [HideInInspector]
     public float fCharacterDistance;
 
-    [SerializeField]
-    private GameObject _pusherPreFab;
-    [SerializeField]
-    private GameObject _starPreFab;
-    [SerializeField]
-    private GameObject _doorPreFab;
-    [SerializeField]
-    private GameObject _stepTriggerPreFab;
-    [SerializeField]
-    private GameObject _stayTriggerPreFab;
-    [SerializeField]
-    private GameObject _shooterPreFab;
-    [SerializeField]
-    private GameObject _checkPoint1PreFab;
-    [SerializeField]
-    private GameObject _tutorialKeyPrefab;
-    
-
-    // [SerializeField]
-    // private GameObject _mainCamera;
-    // private Camera _camera;
-
-    
-    // [SerializeField]
-    // private Texture _floorTexture;
-    // [SerializeField]
-    // private Texture _wallTexture;
-    // [SerializeField]
-    // private Texture _character1Texture;
-    // [SerializeField]
-    // private Texture _character2Texture;
-    // [SerializeField]
-    // private Texture _characterCombinedTexture;
-    // [SerializeField]
-    // private Texture _pusherTexture;
-    // [SerializeField]
-    // private Texture _starTexture;
-    // [SerializeField]
-    // private Texture _doorTexture;
-    // [SerializeField]
-    // private Texture _doorHalfOpenTexture;
-    // [SerializeField]
-    // private Texture _stepTriggerTexture;
-    // [SerializeField]
-    // private Texture _stayTriggerTexture;
-    // [SerializeField]
-    // private Texture _shooterTexture;
-    // [SerializeField]
-    // private Texture _bulletTexture;
-    // [SerializeField]
-    // private Texture _checkPointTexture;
-
-    private GameObject checkPoint1Object, checkPoint2Object;
-    private bool _bPlayer1Entered, _bPlayer2Entered;
-    [HideInInspector]
-    public IntVector[] CheckPoint1Locations;
-    [HideInInspector]
-    public IntVector[] CheckPoint2Locations;
-    private int iCheckPointLocationID;
     public bool checkPointsMoved;
-    private int iChar1InCheckPoint, iChar2InCheckPoint;
 
     [SerializeField]
     private Transform _floor;
@@ -122,6 +55,8 @@ public class WorldManager : MonoBehaviour
     GameObject[] Walls;
 
     private MapEditor mapEditor;
+        private CheckPointsManager checkPointsManager;
+
     public static WorldManager g;
 
     public void RegisterEntity(WorldEntity e)
@@ -164,6 +99,7 @@ public class WorldManager : MonoBehaviour
         _world = new TileType[_dims.x, _dims.y];
         _entityMap = new List<WorldEntity>[_dims.x, _dims.y];
         mapEditor = gameObject.GetComponent<MapEditor>();
+        checkPointsManager = gameObject.GetComponent<CheckPointsManager>();
         // Char1 = Char1Object.GetComponent<Character>();
         // Char2 = Char2Object.GetComponent<Character>();
         // CharCombined = CharCombinedObject.GetComponent<Character>();
@@ -214,19 +150,12 @@ public class WorldManager : MonoBehaviour
         mapEditor.SetStayTriggers();
         mapEditor.SetShooters();
         mapEditor.SetCheckPoints();
-        iCheckPointLocationID = 0;
-        // int levelType = mapEditor.GetLevelType();
-        if (iLevel == 1)//a temporary way to make tutorial key icons in the first level
+        if(iLevel==1)
         {
-            InstantiateTutorialKeys(PositionFlip(char1Entity.Location + new IntVector(0, 1)), 1);
-            InstantiateTutorialKeys(PositionFlip(char1Entity.Location + new IntVector(-1, 0)), 2);
-            InstantiateTutorialKeys(PositionFlip(char1Entity.Location + new IntVector(0, -1)), 3);
-            InstantiateTutorialKeys(PositionFlip(char1Entity.Location + new IntVector(1, 0)), 4);
-            InstantiateTutorialKeys(PositionFlip(char2Entity.Location + new IntVector(0, 1)), 5);
-            InstantiateTutorialKeys(PositionFlip(char2Entity.Location + new IntVector(0, -1)), 6);
-            InstantiateTutorialKeys(PositionFlip(char2Entity.Location + new IntVector(-1, 0)), 7);
-            InstantiateTutorialKeys(PositionFlip(char2Entity.Location + new IntVector(1, 0)), 8);
+            mapEditor.SetTutorialKeys();
         }
+        checkPointsManager.iCheckPointLocationID = 0;
+
 
         Events.g.Raise(new LevelLoadedEvent(iLevel));
 
@@ -240,13 +169,11 @@ public class WorldManager : MonoBehaviour
     void OnEnable()
     {
         Events.g.AddListener<LoadLevelEvent>(LoadLevel);
-        Events.g.AddListener<CheckPointEvent>(CheckPointPass);
     }
     
     void OnDisable()
     {
         Events.g.RemoveListener<LoadLevelEvent>(LoadLevel);
-        Events.g.RemoveListener<CheckPointEvent>(CheckPointPass);
     }
 
     void Update()
@@ -280,7 +207,6 @@ public class WorldManager : MonoBehaviour
                     }
                 }
             }
-            CheckPointsCheck();
             if (LevelCode.levelType == LevelType.Normal && char1Entity != null && char2Entity != null)
             {
                 fCharacterDistance = Vector2.Distance(char1Entity.visPosition, char2Entity.visPosition);
@@ -515,241 +441,38 @@ public class WorldManager : MonoBehaviour
         entity.Location = Destination(entity.Location, direction);
         entity.Pushed(direction);
     }
-    public void InstantiateTutorialKeys(IntVector location, int ID)
-    {
-        var gameObject = Instantiate(_tutorialKeyPrefab);
-        var trigger = gameObject.GetComponent<WorldTrigger>();
-        trigger.Location = PositionFlip(location);
-        var tutorialKey = gameObject.GetComponent<TutorialKey>();
-        tutorialKey.iID = ID;
-    }
 
-    public void InstantiatePusher(IntVector location, bool isControlled, Direction direction, 
-        int range, int ID, float timeInterval)
-    {
-        if (_world[PositionFlip(location).x, PositionFlip(location).y] == TileType.Wall)
-        {
-            print("error! entity on the wall!");
-        }
-        var gameObject = Instantiate(_pusherPreFab);
-        var entity = gameObject.GetComponent<WorldEntity>();
-        entity.instantMove = true;
-        entity.Location = PositionFlip(location);
-        var pusher = gameObject.GetComponent<Pusher>();
-        pusher.direction = direction;
-        pusher.isControlled = isControlled;
-        pusher.iRange = range;
-        pusher.iID = ID;
-        pusher.fTimeInterval = timeInterval;
-
-    }
-    public void InstantiateStar(IntVector location)
-    {
-        if (_world[PositionFlip(location).x, PositionFlip(location).y] == TileType.Wall)
-        {
-            print("error! trigger on the wall!");
-        }
-        var gameObject = Instantiate(_starPreFab);
-        var trigger = gameObject.GetComponent<WorldTrigger>();
-        trigger.Location = PositionFlip(location);
-    }
-    public void InstantiateDoor(IntVector location, int ID, int triggerNumber)
-    {
-        if (_world[PositionFlip(location).x, PositionFlip(location).y] == TileType.Wall)
-        {
-            print("error! door on the wall!");
-        }
-        var gameObject = Instantiate(_doorPreFab);
-        var entity = gameObject.GetComponent<WorldEntity>();
-        entity.instantMove = true;
-        entity.Location = PositionFlip(location);
-        var door = gameObject.GetComponent<Door>();
-        door.iID = ID;
-        door.iTriggerNumber = triggerNumber;
-    }
-    public void InstantiateStepTrigger(IntVector location, int ID)
-    {
-        if (_world[PositionFlip(location).x, PositionFlip(location).y] == TileType.Wall)
-        {
-            print("error! step trigger on the wall!");
-        }
-        var gameObject = Instantiate(_stepTriggerPreFab);
-        var trigger = gameObject.GetComponent<WorldTrigger>();
-        trigger.Location = PositionFlip(location);
-        var stepTrigger = gameObject.GetComponent<StepTrigger>();
-        stepTrigger.iID = ID;
-    }
-    public void InstantiateStayTrigger(IntVector location, int ID)
-    {
-        if (_world[PositionFlip(location).x, PositionFlip(location).y] == TileType.Wall)
-        {
-            print("error! stay trigger on the wall!");
-        }
-        var gameObject = Instantiate(_stayTriggerPreFab);
-        var trigger = gameObject.GetComponent<WorldTrigger>();
-        trigger.Location = PositionFlip(location);
-        var stayTrigger = gameObject.GetComponent<StayTrigger>();
-        stayTrigger.iID = ID;
-    }
-
-    public void InstantiateShooter(IntVector location, float fShootingTimeInterval, Direction shootingDirection, 
-        bool isMoving, Direction movingDirection, int iRange, float fMovingTimeInterval)
-    {
-        if (_world[PositionFlip(location).x, PositionFlip(location).y] == TileType.Wall)
-        {
-            print("error! shooter on the wall!");
-        }
-        var gameObject = Instantiate(_shooterPreFab);
-        var entity = gameObject.GetComponent<WorldEntity>();
-        entity.instantMove = true;
-        entity.Location = PositionFlip(location);
-        var shooter = gameObject.GetComponent<Shooter>();
-        shooter.fShootingTimeInterval = fShootingTimeInterval;
-        shooter.shootingDirection = shootingDirection;
-        shooter.isMoving = isMoving;
-        shooter.movingDirection = movingDirection;
-        shooter.iRange = iRange;
-        shooter.fMovingTimeInterval = fMovingTimeInterval;
-    }
-    public void InstantiateCheckPoint1(IntVector location)
-    {
-        if (_world[PositionFlip(location).x, PositionFlip(location).y] == TileType.Wall)
-        {
-            print("error! check point on the wall!");
-        }
-        checkPoint1Object = Instantiate(_checkPoint1PreFab);
-        var trigger = checkPoint1Object.GetComponent<WorldTrigger>();
-        trigger.Location = PositionFlip(location);
-        checkPoint1Object.GetComponent<CheckPoint>().iID = 1;
-    }
-    public void InstantiateCheckPoint2(IntVector location)
-    {
-        if (_world[PositionFlip(location).x, PositionFlip(location).y] == TileType.Wall)
-        {
-            print("error! check point on the wall!");
-        }
-        checkPoint2Object = Instantiate(_checkPoint1PreFab);
-        var trigger = checkPoint2Object.GetComponent<WorldTrigger>();
-        trigger.Location = PositionFlip(location);
-        checkPoint2Object.GetComponent<CheckPoint>().iID = 2;
-    }
-    private void CheckPointsCheck()
-    {
-        if (_bPlayer1Entered && _bPlayer2Entered)
-        {
-            _bPlayer1Entered = false;
-            _bPlayer2Entered = false;
-            MoveCheckPoints();
-        }
-    }
-    private void MoveCheckPoints()
-    {
-        iCheckPointLocationID++;
-        IntVector zero = new IntVector(0, 0);
-        if (LevelCode.levelType != LevelType.Combined)
-        {
-            if (iCheckPointLocationID < CheckPoint1Locations.Length &&
-                CheckPoint1Locations[iCheckPointLocationID] != zero &&
-                CheckPoint2Locations[iCheckPointLocationID] != zero)
-            {
-            
-                checkPoint1Object.GetComponent<WorldTrigger>().Location 
-                = PositionFlip(CheckPoint1Locations[iCheckPointLocationID]);
-                checkPoint2Object.GetComponent<WorldTrigger>().Location 
-                = PositionFlip(CheckPoint2Locations[iCheckPointLocationID]);
-            }
-            else
-            {
-                Destroy(checkPoint1Object);
-                Destroy(checkPoint2Object);
-                iCheckPointLocationID--;
-                checkPointsMoved = true;
-            }
-        }
-        else
-        {
-            if (iCheckPointLocationID < CheckPoint1Locations.Length &&
-                CheckPoint1Locations[iCheckPointLocationID] != zero)
-            {
-                checkPoint1Object.GetComponent<WorldTrigger>().Location 
-                = PositionFlip(CheckPoint1Locations[iCheckPointLocationID]);
-            }
-            else
-            {
-                Destroy(checkPoint1Object);
-                iCheckPointLocationID--;
-                checkPointsMoved = true;
-            }
-        }
-    }
-    void CheckPointPass(CheckPointEvent e)
-    {
-
-        if (e.isEntered)
-        {
-            switch (e.CharacterID)
-            {
-                case 1:
-                    _bPlayer1Entered = true;
-                    iChar1InCheckPoint = e.iCheckPointID;
-        
-                    break;
-                case 2:
-                    _bPlayer2Entered = true;
-                    iChar2InCheckPoint = e.iCheckPointID;
-                    break;
-                case 3:
-                    _bPlayer1Entered = true;
-                    _bPlayer2Entered = true;
-                    break;
-            }
-        }
-        else
-        {
-            switch (e.CharacterID)
-            {
-                case 1:
-                    _bPlayer1Entered = false;
-                    iChar1InCheckPoint = 0;
-                    break;
-                case 2:
-                    _bPlayer2Entered = false;
-                    iChar2InCheckPoint = 0;
-                    break;
-            }
-        }
-    }
     public void RestartToCheckPoints()
     {
         if (LevelCode.levelType != LevelType.Combined)
         {
-            switch (iChar1InCheckPoint)
+            switch (checkPointsManager.iChar1InCheckPoint)
             {
                 case 1:
                     char1Entity.instantMove = true;
-                    char1Entity.Location = PositionFlip(CheckPoint1Locations[iCheckPointLocationID]);
+                    char1Entity.Location = PositionFlip(checkPointsManager.CheckPoint1Locations[checkPointsManager.iCheckPointLocationID]);
                     break;
                 case 2:
                     char1Entity.instantMove = true;
-                    char1Entity.Location = PositionFlip(CheckPoint2Locations[iCheckPointLocationID]);
+                    char1Entity.Location = PositionFlip(checkPointsManager.CheckPoint2Locations[checkPointsManager.iCheckPointLocationID]);
                     break;
             }
-            switch (iChar2InCheckPoint)
+            switch (checkPointsManager.iChar2InCheckPoint)
             {
                 case 1:
                     char2Entity.instantMove = true;
-                    char2Entity.Location = PositionFlip(CheckPoint1Locations[iCheckPointLocationID]);
+                    char2Entity.Location = PositionFlip(checkPointsManager.CheckPoint1Locations[checkPointsManager.iCheckPointLocationID]);
                     break;
                 case 2:
                     char2Entity.instantMove = true;
-                    char2Entity.Location = PositionFlip(CheckPoint2Locations[iCheckPointLocationID]);
+                    char2Entity.Location = PositionFlip(checkPointsManager.CheckPoint2Locations[checkPointsManager.iCheckPointLocationID]);
                     break;
             }
         }
         else
         {
             charCombinedEntity.instantMove = true;
-            charCombinedEntity.Location = PositionFlip(CheckPoint1Locations[iCheckPointLocationID]);
+            charCombinedEntity.Location = PositionFlip(checkPointsManager.CheckPoint1Locations[checkPointsManager.iCheckPointLocationID]);
                     
         }
         
