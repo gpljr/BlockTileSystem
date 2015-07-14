@@ -48,7 +48,7 @@ public class LevelCode : MonoBehaviour
         image.SetActive(true);
         _image = image.GetComponent<Image>();
         EnterStartingScreen();
-
+Cursor.visible=false;
     }
 
     void Update()
