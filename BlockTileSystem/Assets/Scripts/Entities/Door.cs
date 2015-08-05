@@ -13,26 +13,46 @@ public class Door : MonoBehaviour
     public bool isOpen;
     public bool isHalfOpen;
 
+    public bool isVertical;//up and down passing
+
     private WorldEntity _worldEntity;
 
     [SerializeField]
-    private Sprite _closedDoor1;
+    private Sprite _closedDoor1vertical;
     [SerializeField]
-    private Sprite _halfOpenDoor1;
+    private Sprite _halfOpenDoor1vertical;
     [SerializeField]
-    private Sprite _openDoor1;
+    private Sprite _openDoor1vertical;
     [SerializeField]
-    private Sprite _closedDoor2;
+    private Sprite _closedDoor1horizontal;
     [SerializeField]
-    private Sprite _halfOpenDoor2;
+    private Sprite _halfOpenDoor1horizontal;
     [SerializeField]
-    private Sprite _openDoor2;
+    private Sprite _openDoor1horizontal;
+
+
     [SerializeField]
-    private Sprite _closedDoor3;
+    private Sprite _closedDoor2vertical;
     [SerializeField]
-    private Sprite _halfOpenDoor3;
+    private Sprite _halfOpenDoor2vertical;
+    
     [SerializeField]
-    private Sprite _openDoor3;
+    private Sprite _closedDoor2horizontal;
+    [SerializeField]
+    private Sprite _halfOpenDoor2horizontal;
+    
+
+
+    [SerializeField]
+    private Sprite _closedDoor3vertical;
+    [SerializeField]
+    private Sprite _halfOpenDoor3vertical;
+    
+    [SerializeField]
+    private Sprite _closedDoor3horizontal;
+    [SerializeField]
+    private Sprite _halfOpenDoor3horizontal;
+    
 
 
 
@@ -51,7 +71,7 @@ public class Door : MonoBehaviour
     }
     void Update()
     {
-        if (!_worldEntity.isSpriteSet && !isOpen)
+        if (!_worldEntity.isSpriteSet)
         {
             _worldEntity.SetVisual(GetSpriteByID());
         }
@@ -94,15 +114,16 @@ public class Door : MonoBehaviour
     void OpenDoor()
     {
         isOpen = true;
+        isHalfOpen = false;
         _worldEntity.CollidingType = EntityCollidingType.Empty;
-        _worldEntity.DestroyVisual();
-        //Destroy(this);
-        //_worldEntity.ChangeVisual(GetSpriteByID());
-        //play animation;
+        //_worldEntity.DestroyVisual();
+        
+        _worldEntity.ChangeVisual(GetSpriteByID());
     }
     void HalfOpenDoor()
     {
         isHalfOpen = true;
+        isOpen = false;
         _worldEntity.ChangeVisual(GetSpriteByID());
         //play animation;
     }
@@ -130,52 +151,82 @@ public class Door : MonoBehaviour
     private Sprite GetSpriteByID()
     {
         Sprite sprite = new Sprite();
-
+        if(isVertical)
+        {
         if (isHalfOpen)
         {
             switch (iID%3)
             {
                 case 1:
-                    sprite = _halfOpenDoor1;
+                    sprite = _halfOpenDoor1vertical;
                     break;
                 case 2:
-                    sprite = _halfOpenDoor2;
+                    sprite = _halfOpenDoor2vertical;
                     break;
                 case 0:
-                    sprite = _halfOpenDoor3;
+                    sprite = _halfOpenDoor3vertical;
                     break;
             }
         }
-        // else if (isOpen)
-        // {
-        //     switch (iID)
-        //     {
-        //         case 1:
-        //             sprite = _openDoor1;
-        //             break;
-        //         case 2:
-        //             sprite = _openDoor2;
-        //             break;
-        //         case 3:
-        //             sprite = _openDoor3;
-        //             break;
-        //     }
-        // }
+        else if (isOpen)
+        {
+            sprite = _openDoor1vertical;
+                   
+        }
         else
         {
             switch (iID%3)
             {
                 case 1:
-                    sprite = _closedDoor1;
+                    sprite = _closedDoor1vertical;
                     break;
                 case 2:
-                    sprite = _closedDoor2;
+                    sprite = _closedDoor2vertical;
                     break;
                 case 0:
-                    sprite = _closedDoor3;
+                    sprite = _closedDoor3vertical;
                     break;
             }
         }
+        }else
+            {
+                if (isHalfOpen)
+        {
+            switch (iID%3)
+            {
+                case 1:
+                    sprite = _halfOpenDoor1horizontal;
+                    break;
+                case 2:
+                    sprite = _halfOpenDoor2horizontal;
+                    break;
+                case 0:
+                    sprite = _halfOpenDoor3horizontal;
+                    break;
+            }
+        }
+        else if (isOpen)
+        {
+            
+                    sprite = _openDoor1horizontal;
+                
+        }
+        else
+        {
+            switch (iID%3)
+            {
+                case 1:
+                    sprite = _closedDoor1horizontal;
+                    break;
+                case 2:
+                    sprite = _closedDoor2horizontal;
+                    break;
+                case 0:
+                    sprite = _closedDoor3horizontal;
+                    break;
+            }
+        }
+            }
         
         if( sprite == null)
         {

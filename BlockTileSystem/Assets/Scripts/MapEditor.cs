@@ -163,7 +163,8 @@ public class MapEditor : MonoBehaviour
             {          
                 if (doors[i].vPosition != new IntVector(0, 0))
                 {
-                    InstantiateDoor(doors[i].vPosition, ID: doors[i].iID, triggerNumber: doors[i].triggerNumber);         
+                    InstantiateDoor(doors[i].vPosition, ID: doors[i].iID, triggerNumber: doors[i].triggerNumber); 
+                            
                 }
             }
         }
@@ -268,6 +269,23 @@ public class MapEditor : MonoBehaviour
         var door = gameObject.GetComponent<Door>();
         door.iID = ID;
         door.iTriggerNumber = triggerNumber;
+
+        int x=entity.Location.x;
+                    int y=entity.Location.y;
+                    if(WorldManager.g.World(x-1,y)==TileType.Floor && WorldManager.g.World(x+1,y)==TileType.Floor)
+                    {
+                        door.isVertical=false;
+                        }
+                    else if(WorldManager.g.World(x,y-1)==TileType.Floor && WorldManager.g.World(x,y+1)==TileType.Floor)
+                    {
+                       door.isVertical=true;
+                       }
+                    else
+                    {
+                        print("door error, wrong trail");
+                    }
+
+        
     }
     public void InstantiateStepTrigger(IntVector location, int ID)
     {

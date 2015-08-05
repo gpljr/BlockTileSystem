@@ -20,6 +20,10 @@ public class WorldManager : MonoBehaviour
         //set { _tileSize = value; }
     }
     TileType[,] _world;
+    public TileType World(int x, int y)
+    {
+        return _world[x,y];
+    }
     List<WorldEntity>[,] _entityMap;
 
     List<WorldEntity> _entities = new List<WorldEntity>();
