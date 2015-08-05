@@ -306,7 +306,7 @@ public class Character : MonoBehaviour
             case 1:
                 if (WorldManager.g.fCharacterDistance >3.1f || LevelCode.levelType==LevelType.Separation || LevelCode.levelType==LevelType.Merging )
                 {
-                    sprite = _char1Face1Sprite;
+                    sprite = _char1Face1Sprite;//sad
                 }
                 else if (WorldManager.g.fCharacterDistance >= 1.1f && WorldManager.g.fCharacterDistance < 2.1f)
                 {
@@ -324,7 +324,7 @@ public class Character : MonoBehaviour
             case 2:
                 if (WorldManager.g.fCharacterDistance >3.1f || LevelCode.levelType==LevelType.Separation || LevelCode.levelType==LevelType.Merging )
                 {
-                    sprite = _char2Face1Sprite;
+                    sprite = _char2Face1Sprite;//sad
                 }
                 else if (WorldManager.g.fCharacterDistance >= 1.1f && WorldManager.g.fCharacterDistance < 2.1f)
                 {
