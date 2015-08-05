@@ -233,16 +233,29 @@ public class WorldManager : MonoBehaviour
                 {
                     Floors[floorIndex] = (GameObject)Instantiate(_floor.gameObject, new Vector2(x + 0.5F, y - 0.5F), new Quaternion());
                     floorIndex++;
-                }
-                else if (_world[x, y] == TileType.Wall)
-                {
-                    Walls[wallIndex] = (GameObject)Instantiate(_wall.gameObject, new Vector2(x + 0.5F, y - 0.5F), new Quaternion());
-                    wallIndex++;
-                }
-                
+                }   
             }
-            //_world[x, _dims.y-y-1] = tMap[i].tileType;//make levels in excel from top left
         }
+        for (int i = 0; i < tMap.Length; i++)
+        {
+
+            int x = tMap[i].vTilePosition.x;
+            int y = tMap[i].vTilePosition.y;
+            if (x < _dims.x && y < _dims.y)
+            {
+                _world[x, y] = tMap[i].tileType;
+                if (_world[x, y] == TileType.Wall)
+                {
+                    Walls[wallIndex] = (GameObject)Instantiate(_wall.gameObject, new Vector2(x + 0.5F, y - 0.5F), new Quaternion());   
+                    // if(y+1<_dims.y && _world[x, y+1] == TileType.Floor)
+                    // {
+                    //     Walls[wallIndex].GetComponent<SpriteRenderer>().sortingOrder = 20;
+                    // }
+                    wallIndex++;
+                }   
+            }
+        }
+
 
     }
     private void ClearMap()
