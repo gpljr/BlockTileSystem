@@ -48,6 +48,10 @@ public class WorldTrigger : MonoBehaviour
         _visuals.gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
         isSpriteSet = true;
     }
+    public void ChangeVisual(Sprite sprite)
+    {
+        _visuals.gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+    }
     public void DestroyVisual()
     {
         if (isSpriteSet)
