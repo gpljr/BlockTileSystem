@@ -92,7 +92,6 @@ public class ShadowController : MonoBehaviour
         {
             radius = _fadeCurve2.Evaluate(fPhysicalDistance);
         }
-        print("radius normal "+radius);
         //print("aspectRatio " + aspectRatio + " distance " + fPhysicalDistance + " radius " + radius);
         SetShader(radius, vPos1, vPos2);
     }
@@ -153,13 +152,11 @@ public class ShadowController : MonoBehaviour
     {
         float timer = 0f;
         float r;
-        print("radius "+radius);
         
         do{
             timer += Time.deltaTime;
             
             r = radius * (timer / waitTime);
-            print("r "+r+" timer "+timer);
             _shadowRenderer.material.SetFloat("_Radius", r);
             
             yield return null;
