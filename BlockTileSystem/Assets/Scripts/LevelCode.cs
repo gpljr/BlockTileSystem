@@ -10,6 +10,7 @@ public class LevelCode : MonoBehaviour
     [SerializeField]
     float
         _timeToFadeIn;
+        
     [SerializeField]
     float
         _timeToFadeOut;
@@ -261,7 +262,7 @@ Cursor.visible=false;
         if ((timer < timerDuration * 0.75f && fadeIn) || (timer < timerDuration && !fadeIn))
         {
             inFading = true;
-            Events.g.Raise(new FadingEvent(true));
+            Events.g.Raise(new FadingEvent(isFading: inFading, fadeIn:fadeIn));
         }
         while (timer < timerDuration)
         {
@@ -279,7 +280,7 @@ Cursor.visible=false;
             yield return null;
         }
         inFading = false;
-        Events.g.Raise(new FadingEvent(false));
+        Events.g.Raise(new FadingEvent(isFading: inFading, fadeIn:fadeIn));
         if (fadeIn)
         {
             alpha = 1f - curve.Evaluate(1f);

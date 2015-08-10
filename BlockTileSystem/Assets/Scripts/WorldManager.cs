@@ -64,6 +64,9 @@ public class WorldManager : MonoBehaviour
     GameObject[] Floors;
     GameObject[] Walls;
 
+    [HideInInspector]
+    public bool isDistanceSet;
+
     private MapEditor mapEditor;
         private CheckPointsManager checkPointsManager;
 
@@ -130,6 +133,7 @@ public class WorldManager : MonoBehaviour
 
     private void LoadLevel(int iLevel)
     {
+        isDistanceSet=false;
         ClearMap();        
         mapEditor.LoadFile(iLevel);
 
@@ -188,6 +192,7 @@ public class WorldManager : MonoBehaviour
 
     void Update()
     {
+        
         if (LevelCode.gameState == GameState.InLevel)
         {
             foreach (WorldEntity e in _entities)
@@ -217,11 +222,13 @@ public class WorldManager : MonoBehaviour
                     }
                 }
             }
-            if (LevelCode.levelType == LevelType.Normal && char1Entity != null && char2Entity != null)
+            if (LevelCode.levelType == LevelType.Normal && char1Entity != null && char2Entity != null && char1Entity.isSpriteSet && char2Entity.isSpriteSet)
             {
                 fCharacterDistance = Vector2.Distance(char1Entity.visPosition, char2Entity.visPosition);
+                isDistanceSet=true;
             }
         }
+    
     }
 
     

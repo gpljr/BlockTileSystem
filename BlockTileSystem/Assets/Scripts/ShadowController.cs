@@ -31,6 +31,11 @@ public class ShadowController : MonoBehaviour
 
     private float fixedAspectRatio;
 
+    private bool _beginExpanding;
+    private bool _inExpanding;
+    [SerializeField]
+    private float _expandingDuration=5f;
+
     void Start()
     {
         fixedAspectRatio = Camera.main.aspect;
@@ -39,6 +44,7 @@ public class ShadowController : MonoBehaviour
     
     void LateUpdate()
     {
+        
         if (LevelCode.gameState == GameState.Starting)
         {
             _shadowRenderer.gameObject.SetActive(false);
@@ -62,6 +68,7 @@ public class ShadowController : MonoBehaviour
                     break;
             }
         }
+    
     }
     void Normal()
     {
@@ -73,6 +80,8 @@ public class ShadowController : MonoBehaviour
         vPos2.y *= 1 / aspectRatio;
     
         //float fScreenDistance = Vector2.Distance(vPos1, vPos2);
+        if(WorldManager.g.isDistanceSet)
+        {
         float fPhysicalDistance = WorldManager.g.fCharacterDistance;
         float radius;
         if (aspectRatio < 1.5f)
@@ -83,8 +92,10 @@ public class ShadowController : MonoBehaviour
         {
             radius = _fadeCurve2.Evaluate(fPhysicalDistance);
         }
+        print("radius normal "+radius);
         //print("aspectRatio " + aspectRatio + " distance " + fPhysicalDistance + " radius " + radius);
         SetShader(radius, vPos1, vPos2);
+    }
     }
     void Combined()
     {
@@ -121,20 +132,63 @@ public class ShadowController : MonoBehaviour
     {
         _shadowRenderer.material.SetVector("_Position1", vPos1);
         _shadowRenderer.material.SetVector("_Position2", vPos2);
-        
-        _shadowRenderer.material.SetFloat("_Radius", radius);
 
         _shadowRenderer.material.SetColor("_Color", _bgColor);
+
+        if(_beginExpanding){
+            if(!_inExpanding)
+            {
+                _inExpanding=true;
+                StartCoroutine(ShaderExpanding(_expandingDuration,radius));
+            }
+        }
+        else
+        {
+
+            _shadowRenderer.material.SetFloat("_Radius", radius);
+        } 
+
     }
+    IEnumerator ShaderExpanding(float waitTime,float radius)
+    {
+        float timer = 0f;
+        float r;
+        print("radius "+radius);
+        
+        do{
+            timer += Time.deltaTime;
+            
+            r = radius * (timer / waitTime);
+            print("r "+r+" timer "+timer);
+            _shadowRenderer.material.SetFloat("_Radius", r);
+            
+            yield return null;
+        }
+        while (timer < waitTime);        
+        _beginExpanding=false;
+        _inExpanding=false;
+    }
+
     void OnEnable()
     {
         Events.g.AddListener<MergingStarEvent>(OnMergingStar);
+        Events.g.AddListener<FadingEvent>(BeginShaderExpanding);
     }
 
     void OnDisable()
     {
         Events.g.RemoveListener<MergingStarEvent>(OnMergingStar);
+        Events.g.RemoveListener<FadingEvent>(BeginShaderExpanding);
     }
+    void BeginShaderExpanding(FadingEvent e)
+    {
+        if(e.isFading && e.fadeIn)
+        {
+        _beginExpanding=true;
+    }
+
+    }
+
     void OnMergingStar(MergingStarEvent e)
     {
         if(e.isEntered)
