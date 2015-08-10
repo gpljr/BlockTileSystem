@@ -14,6 +14,9 @@ public class CheckPointsManager : MonoBehaviour {
     [HideInInspector]
     public int iChar1InCheckPoint, iChar2InCheckPoint;
 
+    [SerializeField]
+    AudioClip _audio;
+
         private MapEditor mapEditor;
     void Awake()
     {
@@ -36,6 +39,7 @@ public class CheckPointsManager : MonoBehaviour {
     {
         if (_bPlayer1Entered && _bPlayer2Entered)
         {
+            AudioSource.PlayClipAtPoint(_audio, Vector3.zero, LevelCode.audioVolume);
             _bPlayer1Entered = false;
             _bPlayer2Entered = false;
             MoveCheckPoints();

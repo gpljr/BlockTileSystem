@@ -31,6 +31,52 @@ public class Pusher : MonoBehaviour
     private Sprite _spriteVertical3;
     [SerializeField]
     private Sprite _spriteHorizontal3;
+    [SerializeField]
+    private Sprite _spriteVertical4;
+    [SerializeField]
+    private Sprite _spriteHorizontal4;
+    [SerializeField]
+    private Sprite _spriteVertical5;
+    [SerializeField]
+    private Sprite _spriteHorizontal5;
+    [SerializeField]
+    private Sprite _spriteVertical6;
+    [SerializeField]
+    private Sprite _spriteHorizontal6;
+
+    [SerializeField]
+    private Sprite _spriteVertical1Pushing;
+    [SerializeField]
+    private Sprite _spriteHorizontal1Pushing;
+    [SerializeField]
+    private Sprite _spriteVertical2Pushing;
+    [SerializeField]
+    private Sprite _spriteHorizontal2Pushing;
+    [SerializeField]
+    private Sprite _spriteVertical3Pushing;
+    [SerializeField]
+    private Sprite _spriteHorizontal3Pushing;
+    [SerializeField]
+    private Sprite _spriteVertical4Pushing;
+    [SerializeField]
+    private Sprite _spriteHorizontal4Pushing;
+    [SerializeField]
+    private Sprite _spriteVertical5Pushing;
+    [SerializeField]
+    private Sprite _spriteHorizontal5Pushing;
+    [SerializeField]
+    private Sprite _spriteVertical6Pushing;
+    [SerializeField]
+    private Sprite _spriteHorizontal6Pushing;
+
+        [SerializeField]
+    AudioClip _audioMove;
+    [SerializeField]
+    AudioClip _audioPush;
+
+    [SerializeField]
+    private float _pushingDuration=0.5f;
+    private bool _isPushing;
 
     
     public void Cache()
@@ -144,6 +190,8 @@ public class Pusher : MonoBehaviour
         {
             case MoveResult.Move:
                 MoveOneStep(tryDirection);
+                AudioSource.PlayClipAtPoint(_audioMove, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
+                
                     //print("move");
                 break;
             case MoveResult.Stuck:
@@ -151,11 +199,21 @@ public class Pusher : MonoBehaviour
                 break;
             case MoveResult.Push:
                 MoveOneStep(tryDirection);
+                AudioSource.PlayClipAtPoint(_audioPush, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
+                _isPushing=true;
+                _worldEntity.ChangeVisual(GetSpriteByID());
+                StartCoroutine(Pushing(_pushingDuration));
                     //print("push");
                 break;
             default:
                 break;
         }
+    }
+    IEnumerator Pushing(float waitTime)
+    {
+        yield return new WaitForSeconds (waitTime);
+        _isPushing=false;
+        _worldEntity.ChangeVisual(GetSpriteByID());
     }
     private void MoveOneStep(Direction stepDirection)
     {
@@ -212,26 +270,112 @@ public class Pusher : MonoBehaviour
     private Sprite GetSpriteByID()
     {
         Sprite sprite = new Sprite();
-
-        switch (direction)
+        if(_isPushing)
+        {
+            switch (direction)
         {
             case Direction.North:
-                switch (iID%3)
+                switch (iID%6)
                 {
                     case 1:
-                        sprite = _spriteVertical1;
+                        sprite = _spriteVertical1Pushing;
                         break;
                     case 2:
-                        sprite = _spriteVertical2;
+                        sprite = _spriteVertical2Pushing;
+                        break;
+                    case 3:
+                        sprite = _spriteVertical3Pushing;
+                        break;
+                    case 4:
+                        sprite = _spriteVertical4Pushing;
+                        break;
+                    case 5:
+                        sprite = _spriteVertical5Pushing;
                         break;
                     case 0:
-                        sprite = _spriteVertical3;
+                        sprite = _spriteVertical6Pushing;
                         break;
                 }
 
                 break;
             case Direction.South:
-                switch (iID%3)
+                switch (iID%6)
+                {
+                    case 1:
+                        sprite = _spriteVertical1Pushing;
+                        break;
+                    case 2:
+                        sprite = _spriteVertical2Pushing;
+                        break;
+                    case 3:
+                        sprite = _spriteVertical3Pushing;
+                        break;
+                    case 4:
+                        sprite = _spriteVertical4Pushing;
+                        break;
+                    case 5:
+                        sprite = _spriteVertical5Pushing;
+                        break;
+                    case 0:
+                        sprite = _spriteVertical6Pushing;
+                        break;
+
+                }
+                break;
+            case Direction.West:
+                switch (iID%6)
+                {
+                    case 1:
+                        sprite = _spriteHorizontal1Pushing;
+                        break;
+                    case 2:
+                        sprite = _spriteHorizontal2Pushing;
+                        break;
+                    case 3:
+                        sprite = _spriteHorizontal3Pushing;
+                        break;
+                    case 4:
+                        sprite = _spriteHorizontal4Pushing;
+                        break;
+                    case 5:
+                        sprite = _spriteHorizontal5Pushing;
+                        break;
+                    case 0:
+                        sprite = _spriteHorizontal6Pushing;
+                        break;
+                }
+                break;
+            case Direction.East:
+                switch (iID%6)
+                {
+                    case 1:
+                        sprite = _spriteHorizontal1Pushing;
+                        break;
+                    case 2:
+                        sprite = _spriteHorizontal2Pushing;
+                        break;
+                    case 3:
+                        sprite = _spriteHorizontal3Pushing;
+                        break;
+                    case 4:
+                        sprite = _spriteHorizontal4Pushing;
+                        break;
+                    case 5:
+                        sprite = _spriteHorizontal5Pushing;
+                        break;
+                    case 0:
+                        sprite = _spriteHorizontal6Pushing;
+                        break;
+                }
+                break;
+        }
+        }
+        else
+        {
+        switch (direction)
+        {
+            case Direction.North:
+                switch (iID%6)
                 {
                     case 1:
                         sprite = _spriteVertical1;
@@ -239,13 +383,47 @@ public class Pusher : MonoBehaviour
                     case 2:
                         sprite = _spriteVertical2;
                         break;
-                    case 0:
+                    case 3:
                         sprite = _spriteVertical3;
                         break;
+                    case 4:
+                        sprite = _spriteVertical4;
+                        break;
+                    case 5:
+                        sprite = _spriteVertical5;
+                        break;
+                    case 0:
+                        sprite = _spriteVertical6;
+                        break;
+                }
+
+                break;
+            case Direction.South:
+                switch (iID%6)
+                {
+                    case 1:
+                        sprite = _spriteVertical1;
+                        break;
+                    case 2:
+                        sprite = _spriteVertical2;
+                        break;
+                    case 3:
+                        sprite = _spriteVertical3;
+                        break;
+                    case 4:
+                        sprite = _spriteVertical4;
+                        break;
+                    case 5:
+                        sprite = _spriteVertical5;
+                        break;
+                    case 0:
+                        sprite = _spriteVertical6;
+                        break;
+
                 }
                 break;
             case Direction.West:
-                switch (iID%3)
+                switch (iID%6)
                 {
                     case 1:
                         sprite = _spriteHorizontal1;
@@ -253,13 +431,22 @@ public class Pusher : MonoBehaviour
                     case 2:
                         sprite = _spriteHorizontal2;
                         break;
-                    case 0:
+                    case 3:
                         sprite = _spriteHorizontal3;
+                        break;
+                    case 4:
+                        sprite = _spriteHorizontal4;
+                        break;
+                    case 5:
+                        sprite = _spriteHorizontal5;
+                        break;
+                    case 0:
+                        sprite = _spriteHorizontal6;
                         break;
                 }
                 break;
             case Direction.East:
-                switch (iID%3)
+                switch (iID%6)
                 {
                     case 1:
                         sprite = _spriteHorizontal1;
@@ -267,12 +454,22 @@ public class Pusher : MonoBehaviour
                     case 2:
                         sprite = _spriteHorizontal2;
                         break;
-                    case 0:
+                    case 3:
                         sprite = _spriteHorizontal3;
+                        break;
+                    case 4:
+                        sprite = _spriteHorizontal4;
+                        break;
+                    case 5:
+                        sprite = _spriteHorizontal5;
+                        break;
+                    case 0:
+                        sprite = _spriteHorizontal6;
                         break;
                 }
                 break;
         }
+    }
         if( sprite == null)
         {
             print("sprite unset");

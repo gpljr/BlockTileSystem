@@ -21,9 +21,13 @@ public class Bullet : MonoBehaviour
     private int _iStep;
 
     [SerializeField]
-    private Sprite _spriteVertical;
+    private Sprite _spriteUp;
     [SerializeField]
-    private Sprite _spriteHorizontal;
+    private Sprite _spriteDown;
+    [SerializeField]
+    private Sprite _spriteLeft;
+    [SerializeField]
+    private Sprite _spriteRight;
     
     private WorldTrigger _worldTrigger;
     private WorldEntity _worldEntity;
@@ -135,16 +139,16 @@ public class Bullet : MonoBehaviour
         switch (direction)
         {
             case Direction.North:
-                sprite = _spriteVertical;
+                sprite = _spriteUp;
                 break;
             case Direction.South:
-                sprite = _spriteVertical;
+                sprite = _spriteDown;
                 break;
             case Direction.West:
-                sprite = _spriteHorizontal;
+                sprite = _spriteLeft;
                 break;
             case Direction.East:
-                sprite = _spriteHorizontal;
+                sprite = _spriteRight;
                 break;
         }
         

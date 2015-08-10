@@ -21,6 +21,13 @@ public class Character : MonoBehaviour
     private bool _bMove;
 
     [SerializeField]
+    AudioClip _audioMove;
+    [SerializeField]
+    AudioClip _audioPush;
+    [SerializeField]
+    AudioClip _audioStuck;
+
+    [SerializeField]
     int _iCharacterID;
 
     [SerializeField]
@@ -190,6 +197,9 @@ public class Character : MonoBehaviour
     private void Push()
     {
         //play push animation
+
+        AudioSource.PlayClipAtPoint(_audioPush, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
+
         IntVector vec = _worldEntity.Location;
         if (_input.x != 0)
         {
@@ -206,6 +216,9 @@ public class Character : MonoBehaviour
     private void Stuck()
     {
         //play stuck animation
+
+        AudioSource.PlayClipAtPoint(_audioStuck, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
+
         _input.x = 0;
         _input.y = 0; 
         
@@ -213,6 +226,8 @@ public class Character : MonoBehaviour
     private void Move()
     {
         //play move animaition
+
+        AudioSource.PlayClipAtPoint(_audioMove, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
 
         IntVector vec = _worldEntity.Location;
         if (_input.x != 0)

@@ -34,6 +34,20 @@ public class Shooter : MonoBehaviour
     [SerializeField]
     private Sprite _spriteRight;
 
+    [SerializeField]
+    private Sprite _spriteUpShooting;
+    [SerializeField]
+    private Sprite _spriteDownShooting;
+    [SerializeField]
+    private Sprite _spriteLeftShooting;
+    [SerializeField]
+    private Sprite _spriteRightShooting;
+
+    private bool _isShooting;
+
+    [SerializeField]
+    private float _shootingDuration=0.5f;
+
    
     public void Cache()
     {
@@ -96,6 +110,7 @@ public class Shooter : MonoBehaviour
     }
     private void Shoot()
     {
+
         GameObject bulletObject = (GameObject)Instantiate(_bullet);
         var bullet = bulletObject.GetComponent<Bullet>();
         var bulletEntity = bulletObject.GetComponent<WorldEntity>();
@@ -105,6 +120,18 @@ public class Shooter : MonoBehaviour
         bulletTrigger.Location = _worldEntity.Location;
         bullet.direction = shootingDirection;
         _needShoot = false;
+
+        _isShooting=true;
+        _worldEntity.ChangeVisual(GetSpriteByID());
+        StartCoroutine(WaitForShooting(_shootingDuration));
+
+
+    }
+    IEnumerator WaitForShooting(float waitTime)
+    {
+        yield return new WaitForSeconds (waitTime);
+        _isShooting=false;
+        _worldEntity.ChangeVisual(GetSpriteByID());
     }
 
     private void AutoMove()
@@ -135,10 +162,11 @@ public class Shooter : MonoBehaviour
                     //print("move");
                 break;
             case MoveResult.Stuck:
-                print("error! pusher stuck!");
+                print("error! shooter stuck!");
                 break;
             case MoveResult.Push:
                 MoveOneStep(tryDirection);
+                
                     //print("push");
                 break;
             default:
@@ -200,7 +228,26 @@ public class Shooter : MonoBehaviour
     private Sprite GetSpriteByID()
     {
         Sprite sprite = new Sprite();
-
+        if(_isShooting)
+        {
+            switch (shootingDirection)
+        {
+            case Direction.North:
+                sprite = _spriteUpShooting;
+                break;
+            case Direction.South:
+                sprite = _spriteDownShooting;
+                break;
+            case Direction.West:
+                sprite = _spriteLeftShooting;
+                break;
+            case Direction.East:
+                sprite = _spriteRightShooting;
+                break;
+        }
+    }
+        else
+        {
         switch (shootingDirection)
         {
             case Direction.North:
@@ -216,6 +263,7 @@ public class Shooter : MonoBehaviour
                 sprite = _spriteRight;
                 break;
         }
+    }
         if( sprite == null)
         {
             print("sprite unset");

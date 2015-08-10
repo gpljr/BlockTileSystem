@@ -52,6 +52,36 @@ public class Door : MonoBehaviour
     private Sprite _closedDoor3horizontal;
     [SerializeField]
     private Sprite _halfOpenDoor3horizontal;
+
+    [SerializeField]
+    private Sprite _closedDoor4vertical;
+    [SerializeField]
+    private Sprite _halfOpenDoor4vertical;
+    
+    [SerializeField]
+    private Sprite _closedDoor4horizontal;
+    [SerializeField]
+    private Sprite _halfOpenDoor4horizontal;
+
+    [SerializeField]
+    private Sprite _closedDoor5vertical;
+    [SerializeField]
+    private Sprite _halfOpenDoor5vertical;
+    
+    [SerializeField]
+    private Sprite _closedDoor5horizontal;
+    [SerializeField]
+    private Sprite _halfOpenDoor5horizontal;
+
+    [SerializeField]
+    private Sprite _closedDoor6vertical;
+    [SerializeField]
+    private Sprite _halfOpenDoor6vertical;
+    
+    [SerializeField]
+    private Sprite _closedDoor6horizontal;
+    [SerializeField]
+    private Sprite _halfOpenDoor6horizontal;
     
 
 
@@ -155,7 +185,7 @@ public class Door : MonoBehaviour
         {
         if (isHalfOpen)
         {
-            switch (iID%3)
+            switch (iID%6)
             {
                 case 1:
                     sprite = _halfOpenDoor1vertical;
@@ -163,8 +193,17 @@ public class Door : MonoBehaviour
                 case 2:
                     sprite = _halfOpenDoor2vertical;
                     break;
-                case 0:
+                case 3:
                     sprite = _halfOpenDoor3vertical;
+                    break;
+                    case 4:
+                    sprite = _halfOpenDoor4vertical;
+                    break;
+                    case 5:
+                    sprite = _halfOpenDoor5vertical;
+                    break;
+                    case 0:
+                    sprite = _halfOpenDoor6vertical;
                     break;
             }
         }
@@ -175,7 +214,7 @@ public class Door : MonoBehaviour
         }
         else
         {
-            switch (iID%3)
+            switch (iID%6)
             {
                 case 1:
                     sprite = _closedDoor1vertical;
@@ -183,8 +222,17 @@ public class Door : MonoBehaviour
                 case 2:
                     sprite = _closedDoor2vertical;
                     break;
-                case 0:
+                case 3:
                     sprite = _closedDoor3vertical;
+                    break;
+                case 4:
+                    sprite = _closedDoor4vertical;
+                    break;
+                case 5:
+                    sprite = _closedDoor5vertical;
+                    break;
+                case 0:
+                    sprite = _closedDoor6vertical;
                     break;
             }
         }
@@ -192,7 +240,7 @@ public class Door : MonoBehaviour
             {
                 if (isHalfOpen)
         {
-            switch (iID%3)
+            switch (iID%6)
             {
                 case 1:
                     sprite = _halfOpenDoor1horizontal;
@@ -200,8 +248,17 @@ public class Door : MonoBehaviour
                 case 2:
                     sprite = _halfOpenDoor2horizontal;
                     break;
-                case 0:
+                case 3:
                     sprite = _halfOpenDoor3horizontal;
+                    break;
+                case 4:
+                    sprite = _halfOpenDoor4horizontal;
+                    break;
+                case 5:
+                    sprite = _halfOpenDoor5horizontal;
+                    break;
+                case 0:
+                    sprite = _halfOpenDoor6horizontal;
                     break;
             }
         }
@@ -213,7 +270,7 @@ public class Door : MonoBehaviour
         }
         else
         {
-            switch (iID%3)
+            switch (iID%6)
             {
                 case 1:
                     sprite = _closedDoor1horizontal;
@@ -221,8 +278,17 @@ public class Door : MonoBehaviour
                 case 2:
                     sprite = _closedDoor2horizontal;
                     break;
-                case 0:
+                case 3:
                     sprite = _closedDoor3horizontal;
+                    break;
+                case 4:
+                    sprite = _closedDoor4horizontal;
+                    break;
+                case 5:
+                    sprite = _closedDoor5horizontal;
+                    break;
+                case 0:
+                    sprite = _closedDoor6horizontal;
                     break;
             }
         }

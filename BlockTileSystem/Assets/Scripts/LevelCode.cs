@@ -34,6 +34,9 @@ public class LevelCode : MonoBehaviour
     [SerializeField]
     Text levelProgression;
 
+    [SerializeField]
+    AudioClip _audioNextLevel;
+
     private bool _isMergingShaderComplete;
 
     public static GameState gameState;
@@ -210,6 +213,8 @@ Cursor.visible=false;
     }
     public void LoadNextLevel()
     {
+        AudioSource.PlayClipAtPoint(_audioNextLevel, Vector3.zero, LevelCode.audioVolume);
+
         _timeToFadeIn = 1f;
         _timeToFadeOut = 1f;
         if (levelType == LevelType.Combined)
