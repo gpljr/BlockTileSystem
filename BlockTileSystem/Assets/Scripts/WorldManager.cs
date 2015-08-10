@@ -54,7 +54,13 @@ public class WorldManager : MonoBehaviour
     [SerializeField]
     private Transform _floor;
     [SerializeField]
+    private Transform _floor2;
+    [SerializeField]
     private Transform _wall;
+    [SerializeField]
+    private Transform _wall2;
+    [SerializeField]
+    private Transform _wall3;
     GameObject[] Floors;
     GameObject[] Walls;
 
@@ -235,7 +241,16 @@ public class WorldManager : MonoBehaviour
                 _world[x, y] = tMap[i].tileType;
                 if (_world[x, y] == TileType.Floor)
                 {
+                    switch ((x+y*_dims.y)%2)
+                    {
+                    case 0:
                     Floors[floorIndex] = (GameObject)Instantiate(_floor.gameObject, new Vector2(x + 0.5F, y - 0.5F), new Quaternion());
+                    break;
+                    case 1:
+                    Floors[floorIndex] = (GameObject)Instantiate(_floor2.gameObject, new Vector2(x + 0.5F, y - 0.5F), new Quaternion());
+                    break;
+                    }
+
                     floorIndex++;
                 }   
             }
@@ -250,11 +265,21 @@ public class WorldManager : MonoBehaviour
                 _world[x, y] = tMap[i].tileType;
                 if (_world[x, y] == TileType.Wall)
                 {
+                    switch ((x+y*_dims.y)%4)
+                    {
+                    case 0:
                     Walls[wallIndex] = (GameObject)Instantiate(_wall.gameObject, new Vector2(x + 0.5F, y - 0.5F), new Quaternion());   
-                    // if(y+1<_dims.y && _world[x, y+1] == TileType.Floor)
-                    // {
-                    //     Walls[wallIndex].GetComponent<SpriteRenderer>().sortingOrder = 20;
-                    // }
+                    break;
+                    case 1:
+                    Walls[wallIndex] = (GameObject)Instantiate(_wall.gameObject, new Vector2(x + 0.5F, y - 0.5F), new Quaternion());   
+                    break;
+                    case 2:
+                    Walls[wallIndex] = (GameObject)Instantiate(_wall2.gameObject, new Vector2(x + 0.5F, y - 0.5F), new Quaternion());   
+                    break;
+                    case 3:
+                    Walls[wallIndex] = (GameObject)Instantiate(_wall3.gameObject, new Vector2(x + 0.5F, y - 0.5F), new Quaternion());   
+                    break;
+                    }
                     wallIndex++;
                 }   
             }
