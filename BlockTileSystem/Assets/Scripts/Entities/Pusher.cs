@@ -22,61 +22,94 @@ public class Pusher : MonoBehaviour
     [SerializeField]
     private Sprite _spriteVertical1;
     [SerializeField]
+    private Sprite _spriteVertical1Contract;
+    [SerializeField]
+    private Sprite _spriteVertical1Stretch;
+    [SerializeField]
     private Sprite _spriteHorizontal1;
+    [SerializeField]
+    private Sprite _spriteHorizontal1Contract;
+    [SerializeField]
+    private Sprite _spriteHorizontal1Stretch;
+
     [SerializeField]
     private Sprite _spriteVertical2;
     [SerializeField]
+    private Sprite _spriteVertical2Contract;
+    [SerializeField]
+    private Sprite _spriteVertical2Stretch;
+    [SerializeField]
     private Sprite _spriteHorizontal2;
+    [SerializeField]
+    private Sprite _spriteHorizontal2Contract;
+    [SerializeField]
+    private Sprite _spriteHorizontal2Stretch;
+
     [SerializeField]
     private Sprite _spriteVertical3;
     [SerializeField]
+    private Sprite _spriteVertical3Contract;
+    [SerializeField]
+    private Sprite _spriteVertical3Stretch;
+    [SerializeField]
     private Sprite _spriteHorizontal3;
+    [SerializeField]
+    private Sprite _spriteHorizontal3Contract;
+    [SerializeField]
+    private Sprite _spriteHorizontal3Stretch;
+
     [SerializeField]
     private Sprite _spriteVertical4;
     [SerializeField]
+    private Sprite _spriteVertical4Contract;
+    [SerializeField]
+    private Sprite _spriteVertical4Stretch;
+    [SerializeField]
     private Sprite _spriteHorizontal4;
+    [SerializeField]
+    private Sprite _spriteHorizontal4Contract;
+    [SerializeField]
+    private Sprite _spriteHorizontal4Stretch;
+
     [SerializeField]
     private Sprite _spriteVertical5;
     [SerializeField]
+    private Sprite _spriteVertical5Contract;
+    [SerializeField]
+    private Sprite _spriteVertical5Stretch;
+    [SerializeField]
     private Sprite _spriteHorizontal5;
+    [SerializeField]
+    private Sprite _spriteHorizontal5Contract;
+    [SerializeField]
+    private Sprite _spriteHorizontal5Stretch;
+
+
     [SerializeField]
     private Sprite _spriteVertical6;
     [SerializeField]
-    private Sprite _spriteHorizontal6;
+    private Sprite _spriteVertical6Contract;
+    [SerializeField]
+    private Sprite _spriteVertical6Stretch;
+    [SerializeField]
+    private Sprite _spriteHorizontal6;   
+    [SerializeField]
+    private Sprite _spriteHorizontal6Contract;
+    [SerializeField]
+    private Sprite _spriteHorizontal6Stretch;
+    
 
-    [SerializeField]
-    private Sprite _spriteVertical1Pushing;
-    [SerializeField]
-    private Sprite _spriteHorizontal1Pushing;
-    [SerializeField]
-    private Sprite _spriteVertical2Pushing;
-    [SerializeField]
-    private Sprite _spriteHorizontal2Pushing;
-    [SerializeField]
-    private Sprite _spriteVertical3Pushing;
-    [SerializeField]
-    private Sprite _spriteHorizontal3Pushing;
-    [SerializeField]
-    private Sprite _spriteVertical4Pushing;
-    [SerializeField]
-    private Sprite _spriteHorizontal4Pushing;
-    [SerializeField]
-    private Sprite _spriteVertical5Pushing;
-    [SerializeField]
-    private Sprite _spriteHorizontal5Pushing;
-    [SerializeField]
-    private Sprite _spriteVertical6Pushing;
-    [SerializeField]
-    private Sprite _spriteHorizontal6Pushing;
-
-        [SerializeField]
-    AudioClip _audioMove;
+    //     [SerializeField]
+    // AudioClip _audioMove;
     [SerializeField]
     AudioClip _audioPush;
 
     [SerializeField]
-    private float _pushingDuration=0.5f;
-    private bool _isPushing;
+    private float _pushingContractDuration=0.3f;
+    [SerializeField]
+    private float _pushingStrechDuration=0.6f;
+
+    private PushingState _pushingState;
 
     
     public void Cache()
@@ -190,7 +223,7 @@ public class Pusher : MonoBehaviour
         {
             case MoveResult.Move:
                 MoveOneStep(tryDirection);
-                AudioSource.PlayClipAtPoint(_audioMove, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
+                //AudioSource.PlayClipAtPoint(_audioMove, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
                 
                     //print("move");
                 break;
@@ -199,20 +232,30 @@ public class Pusher : MonoBehaviour
                 break;
             case MoveResult.Push:
                 MoveOneStep(tryDirection);
-                AudioSource.PlayClipAtPoint(_audioPush, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
-                _isPushing=true;
+                //AudioSource.PlayClipAtPoint(_audioPush, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
+                _pushingState=PushingState.Contract;
                 _worldEntity.ChangeVisual(GetSpriteByID());
-                StartCoroutine(Pushing(_pushingDuration));
+                StartCoroutine(PushingContract(_pushingContractDuration));
+                StartCoroutine(PushingStretch(_pushingStrechDuration));
+                
                     //print("push");
                 break;
             default:
                 break;
         }
     }
-    IEnumerator Pushing(float waitTime)
+    IEnumerator PushingContract(float waitTime)
     {
         yield return new WaitForSeconds (waitTime);
-        _isPushing=false;
+        //ends
+        _pushingState=PushingState.Stretch;
+        _worldEntity.ChangeVisual(GetSpriteByID());
+    }
+    IEnumerator PushingStretch(float waitTime)
+    {
+        yield return new WaitForSeconds (waitTime);
+        //ends
+        _pushingState=PushingState.Normal;
         _worldEntity.ChangeVisual(GetSpriteByID());
     }
     private void MoveOneStep(Direction stepDirection)
@@ -270,30 +313,31 @@ public class Pusher : MonoBehaviour
     private Sprite GetSpriteByID()
     {
         Sprite sprite = new Sprite();
-        if(_isPushing)
+        switch (_pushingState)
         {
+            case PushingState.Contract:
             switch (direction)
         {
             case Direction.North:
                 switch (iID%6)
                 {
                     case 1:
-                        sprite = _spriteVertical1Pushing;
+                        sprite = _spriteVertical1Contract;
                         break;
                     case 2:
-                        sprite = _spriteVertical2Pushing;
+                        sprite = _spriteVertical2Contract;
                         break;
                     case 3:
-                        sprite = _spriteVertical3Pushing;
+                        sprite = _spriteVertical3Contract;
                         break;
                     case 4:
-                        sprite = _spriteVertical4Pushing;
+                        sprite = _spriteVertical4Contract;
                         break;
                     case 5:
-                        sprite = _spriteVertical5Pushing;
+                        sprite = _spriteVertical5Contract;
                         break;
                     case 0:
-                        sprite = _spriteVertical6Pushing;
+                        sprite = _spriteVertical6Contract;
                         break;
                 }
 
@@ -302,22 +346,22 @@ public class Pusher : MonoBehaviour
                 switch (iID%6)
                 {
                     case 1:
-                        sprite = _spriteVertical1Pushing;
+                        sprite = _spriteVertical1Contract;
                         break;
                     case 2:
-                        sprite = _spriteVertical2Pushing;
+                        sprite = _spriteVertical2Contract;
                         break;
                     case 3:
-                        sprite = _spriteVertical3Pushing;
+                        sprite = _spriteVertical3Contract;
                         break;
                     case 4:
-                        sprite = _spriteVertical4Pushing;
+                        sprite = _spriteVertical4Contract;
                         break;
                     case 5:
-                        sprite = _spriteVertical5Pushing;
+                        sprite = _spriteVertical5Contract;
                         break;
                     case 0:
-                        sprite = _spriteVertical6Pushing;
+                        sprite = _spriteVertical6Contract;
                         break;
 
                 }
@@ -326,22 +370,22 @@ public class Pusher : MonoBehaviour
                 switch (iID%6)
                 {
                     case 1:
-                        sprite = _spriteHorizontal1Pushing;
+                        sprite = _spriteHorizontal1Contract;
                         break;
                     case 2:
-                        sprite = _spriteHorizontal2Pushing;
+                        sprite = _spriteHorizontal2Contract;
                         break;
                     case 3:
-                        sprite = _spriteHorizontal3Pushing;
+                        sprite = _spriteHorizontal3Contract;
                         break;
                     case 4:
-                        sprite = _spriteHorizontal4Pushing;
+                        sprite = _spriteHorizontal4Contract;
                         break;
                     case 5:
-                        sprite = _spriteHorizontal5Pushing;
+                        sprite = _spriteHorizontal5Contract;
                         break;
                     case 0:
-                        sprite = _spriteHorizontal6Pushing;
+                        sprite = _spriteHorizontal6Contract;
                         break;
                 }
                 break;
@@ -349,29 +393,29 @@ public class Pusher : MonoBehaviour
                 switch (iID%6)
                 {
                     case 1:
-                        sprite = _spriteHorizontal1Pushing;
+                        sprite = _spriteHorizontal1Contract;
                         break;
                     case 2:
-                        sprite = _spriteHorizontal2Pushing;
+                        sprite = _spriteHorizontal2Contract;
                         break;
                     case 3:
-                        sprite = _spriteHorizontal3Pushing;
+                        sprite = _spriteHorizontal3Contract;
                         break;
                     case 4:
-                        sprite = _spriteHorizontal4Pushing;
+                        sprite = _spriteHorizontal4Contract;
                         break;
                     case 5:
-                        sprite = _spriteHorizontal5Pushing;
+                        sprite = _spriteHorizontal5Contract;
                         break;
                     case 0:
-                        sprite = _spriteHorizontal6Pushing;
+                        sprite = _spriteHorizontal6Contract;
                         break;
                 }
                 break;
         }
-        }
-        else
-        {
+        break;
+
+        case PushingState.Normal:
         switch (direction)
         {
             case Direction.North:
@@ -469,7 +513,109 @@ public class Pusher : MonoBehaviour
                 }
                 break;
         }
+        break;
+
+        case PushingState.Stretch:
+        switch (direction)
+        {
+            case Direction.North:
+                switch (iID%6)
+                {
+                    case 1:
+                        sprite = _spriteVertical1Stretch;
+                        break;
+                    case 2:
+                        sprite = _spriteVertical2Stretch;
+                        break;
+                    case 3:
+                        sprite = _spriteVertical3Stretch;
+                        break;
+                    case 4:
+                        sprite = _spriteVertical4Stretch;
+                        break;
+                    case 5:
+                        sprite = _spriteVertical5Stretch;
+                        break;
+                    case 0:
+                        sprite = _spriteVertical6Stretch;
+                        break;
+                }
+
+                break;
+            case Direction.South:
+                switch (iID%6)
+                {
+                    case 1:
+                        sprite = _spriteVertical1Stretch;
+                        break;
+                    case 2:
+                        sprite = _spriteVertical2Stretch;
+                        break;
+                    case 3:
+                        sprite = _spriteVertical3Stretch;
+                        break;
+                    case 4:
+                        sprite = _spriteVertical4Stretch;
+                        break;
+                    case 5:
+                        sprite = _spriteVertical5Stretch;
+                        break;
+                    case 0:
+                        sprite = _spriteVertical6Stretch;
+                        break;
+
+                }
+                break;
+            case Direction.West:
+                switch (iID%6)
+                {
+                    case 1:
+                        sprite = _spriteHorizontal1Stretch;
+                        break;
+                    case 2:
+                        sprite = _spriteHorizontal2Stretch;
+                        break;
+                    case 3:
+                        sprite = _spriteHorizontal3Stretch;
+                        break;
+                    case 4:
+                        sprite = _spriteHorizontal4Stretch;
+                        break;
+                    case 5:
+                        sprite = _spriteHorizontal5Stretch;
+                        break;
+                    case 0:
+                        sprite = _spriteHorizontal6Stretch;
+                        break;
+                }
+                break;
+            case Direction.East:
+                switch (iID%6)
+                {
+                    case 1:
+                        sprite = _spriteHorizontal1Stretch;
+                        break;
+                    case 2:
+                        sprite = _spriteHorizontal2Stretch;
+                        break;
+                    case 3:
+                        sprite = _spriteHorizontal3Stretch;
+                        break;
+                    case 4:
+                        sprite = _spriteHorizontal4Stretch;
+                        break;
+                    case 5:
+                        sprite = _spriteHorizontal5Stretch;
+                        break;
+                    case 0:
+                        sprite = _spriteHorizontal6Stretch;
+                        break;
+                }
+                break;
+        }
+        break;
     }
+    
         if( sprite == null)
         {
             print("sprite unset");

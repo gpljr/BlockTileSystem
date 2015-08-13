@@ -132,6 +132,13 @@ public struct SavableLevel
         ,Combined
     }
 
+    public enum PushingState
+    {
+        Normal,
+        Contract,
+        Stretch
+    }
+
 public class Structs : MonoBehaviour {
 	
 }
