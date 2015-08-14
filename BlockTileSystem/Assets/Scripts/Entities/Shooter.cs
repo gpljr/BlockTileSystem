@@ -48,6 +48,11 @@ public class Shooter : MonoBehaviour
     [SerializeField]
     private float _shootingDuration=0.5f;
 
+    [SerializeField]
+    AudioClip _audioShoot;
+
+    private bool _bPlayer1Entered,_bPlayer2Entered;
+
    
     public void Cache()
     {
@@ -65,11 +70,48 @@ public class Shooter : MonoBehaviour
     void OnEnable()
     {
         _worldEntity.Simulators += Simulate;
+        Events.g.AddListener<LevelStarEvent>(OnLevelStar);
     }
 
     void OnDisable()
     {
         _worldEntity.Simulators -= Simulate;
+        Events.g.RemoveListener<LevelStarEvent>(OnLevelStar);
+    }
+    void OnLevelStar(LevelStarEvent e)
+    {
+        if (e.isEntered)
+        {
+            switch (e.CharacterID)
+            {
+                case 1:
+                    _bPlayer1Entered = true;
+                    break;
+                case 2:
+                    _bPlayer2Entered = true;
+                    break;
+                case 3:
+                    _bPlayer1Entered = true;
+                    _bPlayer2Entered = true;
+                    break;
+            }
+        }
+        else
+        {
+            switch (e.CharacterID)
+            {
+                case 1:
+                    _bPlayer1Entered = false;
+                    break;
+                case 2:
+                    _bPlayer2Entered = false;
+                    break;
+                case 3:
+                    _bPlayer1Entered = false;
+                    _bPlayer2Entered = false;
+                    break;
+            }
+        }
     }
     void Update()
     {
@@ -122,11 +164,91 @@ public class Shooter : MonoBehaviour
         _needShoot = false;
 
         _isShooting=true;
+
+        PlayShootSound();
+
         _worldEntity.ChangeVisual(GetSpriteByID());
         StartCoroutine(WaitForShooting(_shootingDuration));
 
 
     }
+    private void PlayShootSound()
+    {
+        float soundDistanceRange;
+    switch (LevelCode.levelType)
+    {
+        case LevelType.Normal:
+        if(WorldManager.g.fCharacterDistance<2.2f)
+        {
+            soundDistanceRange=8f;
+            PlayShootSoundByDistance(soundDistanceRange);
+        }else if (WorldManager.g.fCharacterDistance>=2.2f && WorldManager.g.fCharacterDistance<4f)
+        {
+            soundDistanceRange=5.5f;
+            PlayShootSoundByDistance(soundDistanceRange);
+        }else
+        {
+            soundDistanceRange=4.8f;
+            PlayShootSoundByDistance(soundDistanceRange);
+        }
+        break;
+
+        case LevelType.Separation:
+            soundDistanceRange=4.8f;
+            PlayShootSoundByDistance(soundDistanceRange);
+        break;
+
+        case LevelType.Merging:
+            soundDistanceRange=4.8f;
+            PlayShootSoundByDistance(soundDistanceRange);
+        break;
+
+        case LevelType.Combined:
+            soundDistanceRange=10f;
+            float volume=LevelCode.audioVolume;
+        Vector2 currentLocation = _worldEntity.Location.ToVector2();
+        float distanceCombined=Vector2.Distance(WorldManager.g.charCombinedEntity.Location.ToVector2(),currentLocation);
+        
+            if(distanceCombined<soundDistanceRange)
+            {
+                volume*=Mathf.Pow((1.0f-distanceCombined/soundDistanceRange),2);
+                AudioSource.PlayClipAtPoint(_audioShoot, currentLocation, volume);
+            }
+        break;
+    }
+}
+    private void PlayShootSoundByDistance(float soundDistanceRange)
+    {
+        float volume=LevelCode.audioVolume;
+        Vector2 currentLocation = _worldEntity.Location.ToVector2();
+        float distance1=Vector2.Distance(WorldManager.g.char1Entity.Location.ToVector2(),currentLocation);
+        float distance2=Vector2.Distance(WorldManager.g.char2Entity.Location.ToVector2(),currentLocation);
+        
+        if(_bPlayer1Entered)//dont play when a character is on the star
+        {
+            if(distance2<soundDistanceRange )
+            {
+                volume*=Mathf.Pow(1.0f-distance2/soundDistanceRange,2);
+                AudioSource.PlayClipAtPoint(_audioShoot, currentLocation, volume);
+            }
+        }else if(_bPlayer2Entered)
+        {
+            if(distance1<soundDistanceRange)
+            {
+                volume*=Mathf.Pow(1.0f-distance1/soundDistanceRange,2);
+                AudioSource.PlayClipAtPoint(_audioShoot, currentLocation, volume);
+            }
+        }else
+        {
+            if(Mathf.Min(distance1,distance2)<soundDistanceRange )
+            {
+                volume*=Mathf.Pow(1.0f-Mathf.Min(distance1,distance2)/soundDistanceRange,2);
+                AudioSource.PlayClipAtPoint(_audioShoot, currentLocation, volume);
+            }
+        }
+    }
+
+    
     IEnumerator WaitForShooting(float waitTime)
     {
         yield return new WaitForSeconds (waitTime);
