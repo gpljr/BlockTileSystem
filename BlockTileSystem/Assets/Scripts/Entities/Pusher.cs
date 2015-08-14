@@ -232,7 +232,7 @@ public class Pusher : MonoBehaviour
                 break;
             case MoveResult.Push:
                 MoveOneStep(tryDirection);
-                //AudioSource.PlayClipAtPoint(_audioPush, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
+                AudioSource.PlayClipAtPoint(_audioPush, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
                 _pushingState=PushingState.Contract;
                 _worldEntity.ChangeVisual(GetSpriteByID());
                 StartCoroutine(PushingContract(_pushingContractDuration));

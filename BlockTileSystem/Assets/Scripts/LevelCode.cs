@@ -44,7 +44,7 @@ public class LevelCode : MonoBehaviour
     public static LevelType levelType;
 
     public static float musicVolume = 1f;
-    public static float audioVolume = 0.3f;
+    public static float audioVolume = 1f;
 
 
     void Start()
