@@ -105,15 +105,21 @@ public class WorldTrigger : MonoBehaviour
     public void SteppedOn(WorldEntity e)
     {
         isSteppedOn = true;
-        steppingEntityType = e.entityType;
-        iStepCharacterID = e.characterID;
+        if(e != null)
+        {
+            steppingEntityType = e.entityType;
+            iStepCharacterID = e.characterID;
+        }
         isMessageSent = false;
     }
     public void SteppedOut(WorldEntity e)
     {
         isSteppedOn = false;
-        steppingEntityType = e.entityType;
-        iStepCharacterID = e.characterID;
+        if(e != null)
+        {
+            steppingEntityType = e.entityType;
+            iStepCharacterID = e.characterID;
+        }
         isMessageSent = false;
     }
 

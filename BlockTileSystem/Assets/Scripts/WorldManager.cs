@@ -206,22 +206,32 @@ public class WorldManager : MonoBehaviour
                     _entityMap[l.x, l.y].Add(e);
                 }
             }
-            foreach (WorldEntity e in _entities)//check for bullet hit
+            foreach (WorldTrigger t in _triggers)//check for bullet hit
             {
-                if (e != null && e.entityType != EntityType.Bullet)
+                if(t.triggerType == TriggerType.Bullet)
                 {
-                    IntVector eLocation = e.Location;
-                    foreach (WorldTrigger t in _triggers)
+                IntVector tLocation = t.Location;
+                if(_world[tLocation.x,tLocation.y]==TileType.Wall)
+                {
+                    StepOnTrigger(t, null);
+                }
+                else{
+                    foreach (WorldEntity e in _entities)
                     {
-                        IntVector tLocation = t.Location;
-                        if (eLocation == tLocation && t.triggerType == TriggerType.Bullet)
+                        IntVector eLocation = e.Location;
+                        if (e != null && e.entityType != EntityType.Bullet && e.entityType != EntityType.Shooter)
                         {
-                            
-                            StepOnTrigger(t, e);
+                            if (eLocation == tLocation)
+                            {
+                                StepOnTrigger(t, e);
+                            }
                         }
                     }
                 }
+                }
+                
             }
+
             if (LevelCode.levelType == LevelType.Normal && char1Entity != null && char2Entity != null && char1Entity.isSpriteSet && char2Entity.isSpriteSet)
             {
                 fCharacterDistance = Vector2.Distance(char1Entity.visPosition, char2Entity.visPosition);

@@ -13,8 +13,9 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private float _fBulletMoveInterval = 0.5f;
     //time between moves
-    [SerializeField]
-    private int _iRange;
+    
+    // [SerializeField]
+    // private int _iRange;
 
     private bool _needMove;
     private float _fTimeBetweenMoves;
@@ -73,19 +74,22 @@ public class Bullet : MonoBehaviour
         }
         if (!_worldTrigger.isMessageSent)
         {
-            if (_worldTrigger.isSteppedOn &&
-                (_worldTrigger.steppingEntityType == EntityType.Character))
+            if (_worldTrigger.isSteppedOn)
             {
-                BulletHit();
+                BulletHitAnything();
                 _worldTrigger.isMessageSent = true;                
             }            
         }
     }
-    void BulletHit()
+    void BulletHitAnything()
     {
-        AudioSource.PlayClipAtPoint(_audio, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
+        if(_worldTrigger.steppingEntityType == EntityType.Character)
+        {
+            AudioSource.PlayClipAtPoint(_audio, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
+            Events.g.Raise(new BulletHitEvent());//bullet kill
+        }
+        if(_worldTrigger.steppingEntityType != EntityType.Shooter && _worldTrigger.steppingEntityType != EntityType.Bullet)
         BulletDestroySelf();
-        Events.g.Raise(new BulletHitEvent());
         
     }
     private void BulletDestroySelf()
@@ -105,10 +109,10 @@ public class Bullet : MonoBehaviour
     private void MoveOneStep(Direction stepDirection)
     {
         _iStep++;
-        if (_iStep >= _iRange)
-        {
-            BulletDestroySelf();
-        }
+        // if (_iStep >= _iRange)
+        // {
+        //     BulletDestroySelf();
+        // }
         IntVector vec = _worldEntity.Location;
         switch (stepDirection)
         {

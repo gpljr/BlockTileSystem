@@ -101,7 +101,8 @@ public struct SavableLevel
     }
 
     public enum EntityType{
-        Character
+        Null//default type would be null instead of character
+        ,Character
         ,Pusher
         ,Door
         ,Shooter
@@ -109,7 +110,8 @@ public struct SavableLevel
         
     }
     public enum TriggerType{
-        LevelStar
+        Null
+        ,LevelStar
         ,StepTrigger
         ,StayTrigger
         ,CheckPoint
