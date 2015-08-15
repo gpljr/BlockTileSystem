@@ -60,7 +60,7 @@ public class Bullet : MonoBehaviour
         if (!_worldEntity.isSpriteSet && _worldEntity.Location != new IntVector(0, 0))
         {
             _worldEntity.SetVisual(GetSpriteByDirection());
-            _worldEntity.SetOrderLayer(11);
+            _worldEntity.SetOrderLayer(0);
         }
         _worldEntity.movingDuration = _fBulletMoveInterval;
         if (!_needMove)
