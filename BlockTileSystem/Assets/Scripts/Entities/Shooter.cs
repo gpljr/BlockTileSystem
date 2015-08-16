@@ -47,7 +47,6 @@ public class Shooter : MonoBehaviour
 
     [SerializeField]
     private float _shootingDuration=0.5f;
-
     [SerializeField]
     AudioClip _audioShoot;
 
