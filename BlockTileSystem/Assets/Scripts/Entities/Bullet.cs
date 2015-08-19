@@ -89,11 +89,35 @@ public class Bullet : MonoBehaviour
             Events.g.Raise(new BulletHitEvent());//bullet kill
         }
         if(_worldTrigger.steppingEntityType != EntityType.Shooter && _worldTrigger.steppingEntityType != EntityType.Bullet)
-        BulletDestroySelf();
+        {
+            BulletDestroySelf();
+        }
         
     }
     private void BulletDestroySelf()
     {
+        StartCoroutine(FlyBeforeDestroy());
+        
+    }
+    IEnumerator FlyBeforeDestroy()
+    {
+        float waitTime=0.2f;
+        switch(direction)
+        {
+            case Direction.North:
+            waitTime=0.3f;
+            break;
+            case Direction.South:
+            waitTime=0.26f;
+            break;
+            case Direction.West:
+            waitTime=0.22f;
+            break;
+            case Direction.East:
+            waitTime=0.22f;
+            break;
+        }
+        yield return new WaitForSeconds (waitTime);
         _worldEntity.DeregisterMe();
         _worldTrigger.DeregisterMe();
         Destroy(gameObject);
