@@ -211,6 +211,8 @@ public class WorldManager : MonoBehaviour
                 if(t.triggerType == TriggerType.Bullet)
                 {
                 IntVector tLocation = t.Location;
+                if(tLocation.x<_dims.x && tLocation.y<_dims.y)
+                {
                 if(_world[tLocation.x,tLocation.y]==TileType.Wall)
                 {
                     StepOnTrigger(t, null);
@@ -227,6 +229,7 @@ public class WorldManager : MonoBehaviour
                             }
                         }
                     }
+                }
                 }
                 }
                 
