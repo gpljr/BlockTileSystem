@@ -46,7 +46,10 @@ public class Shooter : MonoBehaviour
     private bool _isShooting;
 
     [SerializeField]
-    private float _shootingDuration=0.5f;
+    private float _shootingDuration;
+    [SerializeField]
+    private float _beforeShootingDuration;
+    
     [SerializeField]
     AudioClip _audioShoot;
 
@@ -162,9 +165,8 @@ public class Shooter : MonoBehaviour
         bullet.direction = shootingDirection;
         _needShoot = false;
 
-        _isShooting=true;
 
-        PlayShootSound();
+        StartCoroutine(WaitBeforeShooting(_beforeShootingDuration));
 
         _worldEntity.ChangeVisual(GetSpriteByID());
         StartCoroutine(WaitForShooting(_shootingDuration));
@@ -246,7 +248,13 @@ public class Shooter : MonoBehaviour
             }
         }
     }
-
+    IEnumerator WaitBeforeShooting(float waitTime)
+    {
+        yield return new WaitForSeconds (waitTime);
+        _isShooting=true;
+        PlayShootSound();
+        _worldEntity.ChangeVisual(GetSpriteByID());
+    }
     
     IEnumerator WaitForShooting(float waitTime)
     {
