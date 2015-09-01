@@ -31,6 +31,7 @@ public class LevelCode : MonoBehaviour
     GameObject endingScreen;
     [SerializeField]
     GameObject inLevelScreen;
+    [SerializeField] GameObject startingText;
 
     [SerializeField]
     Text levelProgression;
@@ -243,8 +244,14 @@ Cursor.visible=false;
         StartCoroutine(Fade(_timeToFadeIn, _fadeCurve, fadeIn: true));
         gameState = GameState.Starting;
         startingScreen.SetActive(true);
+        StartCoroutine(ShowStartingText());
         endingScreen.SetActive(false);
         inLevelScreen.SetActive(false);
+    }
+    IEnumerator ShowStartingText()
+    {
+        yield return new WaitForSeconds(3f);
+        startingText.SetActive(true);
     }
 
     void StartLevel()
