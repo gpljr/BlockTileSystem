@@ -46,9 +46,9 @@ public class Shooter : MonoBehaviour
     private bool _isShooting;
 
     [SerializeField]
-    private float _shootingDuration;
+    private float _shootingDuration;//the lasting time for the shooter animation
     [SerializeField]
-    private float _beforeShootingDuration;
+    private float _beforeShootingDuration;//time before playing shooting animation/sound on the shooter
     
     [SerializeField]
     AudioClip _audioShoot;
