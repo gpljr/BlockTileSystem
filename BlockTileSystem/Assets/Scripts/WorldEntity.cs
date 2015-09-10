@@ -41,6 +41,8 @@ public class WorldEntity : MonoBehaviour
     private GameObject _visualPrefab;
     private Transform _visuals;
 
+    [SerializeField] Animator _anim;
+
     [System.Serializable]
     public struct StateInformation
     {
@@ -88,6 +90,7 @@ public class WorldEntity : MonoBehaviour
     {
         _visuals = ((GameObject)Instantiate(_visualPrefab, (_location.ToVector2() + new Vector2(0.5f, -0.5f)) * WorldManager.g.TileSize, new Quaternion(0, 0, 0, 0))).transform;
         _visuals.gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+        _anim=_visuals.gameObject.GetComponent<Animator>();
         _currStateInfo.lastLoc = _location.ToVector2();
         isSpriteSet = true;
         // if(entityType== EntityType.Bullet)
@@ -102,6 +105,10 @@ public class WorldEntity : MonoBehaviour
     public void SetOrderLayer(int layer)
     {
         _visuals.gameObject.GetComponent<SpriteRenderer>().sortingOrder = layer;
+    }
+    public void SetBoolAnimationParameter(string ParaName, bool ParaState)
+    {
+        _anim.SetBool(ParaName, ParaState);
     }
     public void Refresh()
     {
@@ -164,6 +171,7 @@ public class WorldEntity : MonoBehaviour
                     }
                     timer = 0f;
                     _collidingType = _tempCollisionType;
+                    AnimationStop();
                 }
                     
             }
@@ -178,7 +186,10 @@ public class WorldEntity : MonoBehaviour
             //tempLocation = _location;
         }
     }
-
+    private voif AnimationStop()
+    {
+        SetBoolAnimationParameter("MoveRight", false);
+    }
     private bool _registered = false;
 
     public void RegisterMe()

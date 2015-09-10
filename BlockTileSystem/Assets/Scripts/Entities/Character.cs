@@ -134,6 +134,8 @@ public class Character : MonoBehaviour {
                 _input.x += 1;
                 _direction = Direction.East;
                 _bMove = true;
+                _worldEntity.SetBoolAnimationParameter("MoveRight", true);
+                //Invoke("StopAnimation", 0.35f);
             }
             if (Input.GetKeyDown(_upKey)) {
                 _input.y += 1;
@@ -150,7 +152,10 @@ public class Character : MonoBehaviour {
             Pushed(_worldEntity.pushedDirection);
         }
     }
-
+    void StopAnimation()
+    {
+        _worldEntity.SetBoolAnimationParameter("MoveRight", false);
+    }
     private void Pushed (Direction direction) {
         //play pushed animation
     }
