@@ -186,7 +186,7 @@ public class WorldEntity : MonoBehaviour
             //tempLocation = _location;
         }
     }
-    private voif AnimationStop()
+    private void AnimationStop()
     {
         SetBoolAnimationParameter("MoveRight", false);
     }
