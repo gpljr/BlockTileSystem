@@ -134,7 +134,7 @@ public class Character : MonoBehaviour {
                 _input.x += 1;
                 _direction = Direction.East;
                 _bMove = true;
-                _worldEntity.SetBoolAnimationParameter("MoveRight", true);
+                
                 //Invoke("StopAnimation", 0.35f);
             }
             if (Input.GetKeyDown(_upKey)) {
@@ -152,12 +152,27 @@ public class Character : MonoBehaviour {
             Pushed(_worldEntity.pushedDirection);
         }
     }
-    void StopAnimation()
-    {
-        _worldEntity.SetBoolAnimationParameter("MoveRight", false);
-    }
+    // void StopAnimation()
+    // {
+    //     _worldEntity.SetBoolAnimationParameter("MoveRight", false);
+    // }
     private void Pushed (Direction direction) {
         //play pushed animation
+        switch (direction) {
+            case Direction.North:
+                _worldEntity.SetBoolAnimationParameter("PushedUp", true);
+                break;
+            case Direction.South:
+                _worldEntity.SetBoolAnimationParameter("PushedDown", true);
+                break;
+            case Direction.West:
+                _worldEntity.SetBoolAnimationParameter("PushedLeft", true);
+                break;
+            case Direction.East:
+                _worldEntity.SetBoolAnimationParameter("PushedRight", true);
+                break;
+        }
+        
     }
     private void Simulate () {
         if (_bMove) {
@@ -179,6 +194,21 @@ public class Character : MonoBehaviour {
         //play push animation
 
         AudioSource.PlayClipAtPoint(_audioPush, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
+
+        switch (_direction) {
+            case Direction.North:
+                _worldEntity.SetBoolAnimationParameter("PushUp", true);
+                break;
+            case Direction.South:
+                _worldEntity.SetBoolAnimationParameter("PushDown", true);
+                break;
+            case Direction.West:
+                _worldEntity.SetBoolAnimationParameter("PushLeft", true);
+                break;
+            case Direction.East:
+                _worldEntity.SetBoolAnimationParameter("PushRight", true);
+                break;
+        }
 
         IntVector vec = _worldEntity.Location;
         if (_input.x != 0) {
@@ -203,6 +233,21 @@ public class Character : MonoBehaviour {
         //play move animaition
 
         AudioSource.PlayClipAtPoint(_audioMove, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
+
+        switch (_direction) {
+            case Direction.North:
+                _worldEntity.SetBoolAnimationParameter("MoveUp", true);
+                break;
+            case Direction.South:
+                _worldEntity.SetBoolAnimationParameter("MoveDown", true);
+                break;
+            case Direction.West:
+                _worldEntity.SetBoolAnimationParameter("MoveLeft", true);
+                break;
+            case Direction.East:
+                _worldEntity.SetBoolAnimationParameter("MoveRight", true);
+                break;
+        }
 
         IntVector vec = _worldEntity.Location;
         if (_input.x != 0) {

@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WorldEntity : MonoBehaviour
-{
+public class WorldEntity : MonoBehaviour {
     //simulate priority later.
 
     public EntityType entityType;
@@ -12,11 +11,9 @@ public class WorldEntity : MonoBehaviour
     private EntityCollidingType _collidingType;
     EntityCollidingType _tempCollisionType;
     bool tempCollisionTypeSet;
-    public EntityCollidingType CollidingType
-    {
+    public EntityCollidingType CollidingType {
         get { return _collidingType; }
-        set
-        {
+        set {
             _collidingType = value; 
             _tempCollisionType = value;
         }
@@ -29,8 +26,7 @@ public class WorldEntity : MonoBehaviour
     [SerializeField]
     IntVector _location;
 
-    public IntVector Location
-    {
+    public IntVector Location {
         get { return _location; }
         set { _location = value; }
     }
@@ -41,11 +37,10 @@ public class WorldEntity : MonoBehaviour
     private GameObject _visualPrefab;
     private Transform _visuals;
 
-    [SerializeField] Animator _anim;
+    Animator _anim;
 
     [System.Serializable]
-    public struct StateInformation
-    {
+    public struct StateInformation {
         // [HideInInspector]
         // public Char2DState lastState;
         // public Char2DState state;
@@ -61,20 +56,16 @@ public class WorldEntity : MonoBehaviour
         public bool characterInMoving;
     }
     private StateInformation _currStateInfo;
-    public StateInformation StateInfo
-    {
+    public StateInformation StateInfo {
         get { return _currStateInfo; }
     }
-    public Vector2 visPosition
-    {
-        get
-        {
+    public Vector2 visPosition {
+        get {
             return _visuals.position;
 
 
         }
-        set
-        {
+        set {
             _visuals.position = value;
         }
     }
@@ -86,11 +77,10 @@ public class WorldEntity : MonoBehaviour
     float timer;
 
     public bool isSpriteSet;
-    public void SetVisual(Sprite sprite)
-    {
+    public void SetVisual (Sprite sprite) {
         _visuals = ((GameObject)Instantiate(_visualPrefab, (_location.ToVector2() + new Vector2(0.5f, -0.5f)) * WorldManager.g.TileSize, new Quaternion(0, 0, 0, 0))).transform;
         _visuals.gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
-        _anim=_visuals.gameObject.GetComponent<Animator>();
+        _anim = _visuals.gameObject.GetComponent<Animator>();
         _currStateInfo.lastLoc = _location.ToVector2();
         isSpriteSet = true;
         // if(entityType== EntityType.Bullet)
@@ -98,41 +88,34 @@ public class WorldEntity : MonoBehaviour
         //     print("bullet visual loc"+_currStateInfo.lastLoc);
         // }
     }
-    public void ChangeVisual(Sprite sprite)
-    {
+    public void ChangeVisual (Sprite sprite) {
         _visuals.gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
     }
-    public void SetOrderLayer(int layer)
-    {
+    public void SetOrderLayer (int layer) {
         _visuals.gameObject.GetComponent<SpriteRenderer>().sortingOrder = layer;
     }
-    public void SetBoolAnimationParameter(string ParaName, bool ParaState)
-    {
+    public void SetBoolAnimationParameter (string ParaName, bool ParaState) {
         _anim.SetBool(ParaName, ParaState);
     }
-    public void Refresh()
-    {
+    public void Refresh () {
         timer = 0f;
         _currStateInfo.lastLoc = _location.ToVector2();
         _currStateInfo.fractionComplete = 0f;
         _currStateInfo.characterInMoving = false;
     }
-    private void Update()
-    {
+    private void Update () {
         // if (!tempCollisionTypeSet)
         // {
         //     _tempCollisionType = _collidingType;
         //     tempCollisionTypeSet = true;
         // }
         
-        if (isSpriteSet)
-        {
+        if (isSpriteSet) {
             Vector2 fixedOffset = new Vector2(0.5f, -0.5f);
             
             float distance = Vector2.Distance(_location.ToVector2(), _currStateInfo.lastLoc);
             
-            if (!instantMove && distance > 0f)
-            {
+            if (!instantMove && distance > 0f) {
                 Vector2 v = Vector2.zero;
                 Vector2 visualOffset = (_location.ToVector2() - _currStateInfo.lastLoc)
                                        * (_currStateInfo.fractionComplete);
@@ -140,8 +123,7 @@ public class WorldEntity : MonoBehaviour
                 v = _currStateInfo.lastLoc + visualOffset + fixedOffset;
                 _visuals.position = v * WorldManager.g.TileSize;
                 
-                if (entityType == EntityType.Character)
-                {
+                if (entityType == EntityType.Character) {
                     _collidingType = EntityCollidingType.Colliding;
                     _currStateInfo.characterInMoving = true;
                 }
@@ -153,30 +135,28 @@ public class WorldEntity : MonoBehaviour
                 //         print("reset");
                 //         movingDuration+=0.05f;
                 //     }
-                if (timer < movingDuration)
-                {
+                if (timer < movingDuration) {
 
                     timer += Time.deltaTime;
                     _currStateInfo.fractionComplete = visMovingCurve.Evaluate(timer / movingDuration);
                 }
             
-
-                if (_currStateInfo.fractionComplete >= 1f)
+                if(_currStateInfo.fractionComplete >= 0.8f)
                 {
+                    AnimationStop();
+                }
+                if (_currStateInfo.fractionComplete >= 1f) {
                     _currStateInfo.lastLoc = _location.ToVector2();
                     _currStateInfo.fractionComplete = 0f;
-                    if (entityType == EntityType.Character)
-                    {
+                    if (entityType == EntityType.Character) {
                         _currStateInfo.characterInMoving = false;
                     }
                     timer = 0f;
                     _collidingType = _tempCollisionType;
-                    AnimationStop();
+                    
                 }
                     
-            }
-            else
-            {
+            } else {
                 Vector2 v = _currStateInfo.lastLoc + fixedOffset;
                 _visuals.position = v * WorldManager.g.TileSize;
                 _currStateInfo.lastLoc = _location.ToVector2();
@@ -186,35 +166,41 @@ public class WorldEntity : MonoBehaviour
             //tempLocation = _location;
         }
     }
-    private void AnimationStop()
-    {
+    private void AnimationStop () {
+        SetBoolAnimationParameter("MoveUp", false);
+        SetBoolAnimationParameter("MoveDown", false);
+        SetBoolAnimationParameter("MoveLeft", false);
         SetBoolAnimationParameter("MoveRight", false);
+
+        SetBoolAnimationParameter("PushUp", false);
+        SetBoolAnimationParameter("PushDown", false);
+        SetBoolAnimationParameter("PushLeft", false);
+        SetBoolAnimationParameter("PushRight", false);
+
+        SetBoolAnimationParameter("PushedUp", false);
+        SetBoolAnimationParameter("PushedDown", false);
+        SetBoolAnimationParameter("PushedLeft", false);
+        SetBoolAnimationParameter("PushedRight", false);
     }
     private bool _registered = false;
 
-    public void RegisterMe()
-    {
-        if (!_registered)
-        {
+    public void RegisterMe () {
+        if (!_registered) {
             WorldManager.g.RegisterEntity(this);
             _registered = true;
         }
     }
 
-    public void DeregisterMe()
-    {
-        if (_registered)
-        {
+    public void DeregisterMe () {
+        if (_registered) {
             WorldManager.g.DeregisterEntity(this);
             _registered = false;
         }
     }
 
-    void Awake()
-    {
+    void Awake () {
     }
-    void Start()
-    {
+    void Start () {
         RegisterMe();
         
     }
@@ -223,24 +209,19 @@ public class WorldEntity : MonoBehaviour
     //     RegisterMe();
     // }
 
-    void OnDisable()
-    {
+    void OnDisable () {
         DestroyVisual();
         isSpriteSet = false;
     }
-    public void DestroyVisual()
-    {
-        if (isSpriteSet)
-        {
-            if (_visuals != null)
-            {
+    public void DestroyVisual () {
+        if (isSpriteSet) {
+            if (_visuals != null) {
                 Destroy(_visuals.gameObject);
             }
             isSpriteSet = false;
         }
     }
-    public void Pushed(Direction direction)
-    {
+    public void Pushed (Direction direction) {
         //for character being pushed. play pushed animation
         isPushed = true;
         pushedDirection = direction;
@@ -249,10 +230,8 @@ public class WorldEntity : MonoBehaviour
     public delegate void SimulatorDelegates();
     public SimulatorDelegates Simulators;
 
-    public void Simulate()
-    {
-        if (Simulators != null)
-        {
+    public void Simulate () {
+        if (Simulators != null) {
             Simulators();
         }
     }
