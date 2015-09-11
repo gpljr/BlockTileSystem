@@ -150,6 +150,7 @@ public class Character : MonoBehaviour {
         }
         if (_worldEntity.isPushed) {
             Pushed(_worldEntity.pushedDirection);
+            _worldEntity.isPushed=false;
         }
     }
     // void StopAnimation()
@@ -172,6 +173,7 @@ public class Character : MonoBehaviour {
                 _worldEntity.SetBoolAnimationParameter("PushedRight", true);
                 break;
         }
+
         
     }
     private void Simulate () {
