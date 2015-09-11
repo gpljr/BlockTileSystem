@@ -268,6 +268,7 @@ public class Character : MonoBehaviour {
             if (e.isEntered) {
                 onMergingStar = true;
                 _worldEntity.CollidingType = EntityCollidingType.Empty;
+
                 SetSprite(isInMerging: true);
                 oneEnteredMergingStar = true;
             } else {
@@ -295,18 +296,20 @@ public class Character : MonoBehaviour {
         } else {//on merging star
             print("on merging star");
             if (oneEnteredMergingStar) {
-                sprite = _char3CombinedSprite;
-                print("one entered");
+                //sprite = _char3CombinedSprite;
+                _worldEntity.SetBoolAnimationParameter("Merging2", true);
+                _worldEntity.SetBoolAnimationParameter("Merging", true);
             } else {
-                print("first entered");
-                switch (_iCharacterID) {
-                    case 1:
-                        sprite = _char1MergingYellowSprite;
-                        break;
-                    case 2:
-                        sprite = _char2MergingGreenSprite;
-                        break;
-                }
+                _worldEntity.SetBoolAnimationParameter("Merging2", false);
+                _worldEntity.SetBoolAnimationParameter("Merging", true);
+                // switch (_iCharacterID) {
+                //     case 1:
+                //         sprite = _char1MergingYellowSprite;
+                //         break;
+                //     case 2:
+                //         sprite = _char2MergingGreenSprite;
+                //         break;
+                // }
             }
         }
         if (sprite == null) {

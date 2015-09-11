@@ -95,7 +95,9 @@ public class WorldEntity : MonoBehaviour {
         _visuals.gameObject.GetComponent<SpriteRenderer>().sortingOrder = layer;
     }
     public void SetBoolAnimationParameter (string ParaName, bool ParaState) {
-        _anim.SetBool(ParaName, ParaState);
+        if (_anim != null) {
+            _anim.SetBool(ParaName, ParaState);
+        }
     }
     public void Refresh () {
         timer = 0f;
@@ -141,8 +143,7 @@ public class WorldEntity : MonoBehaviour {
                     _currStateInfo.fractionComplete = visMovingCurve.Evaluate(timer / movingDuration);
                 }
             
-                if(_currStateInfo.fractionComplete >= 0.8f)
-                {
+                if (_currStateInfo.fractionComplete >= 0.8f) {
                     AnimationStop();
                 }
                 if (_currStateInfo.fractionComplete >= 1f) {
