@@ -111,10 +111,10 @@ public class Character : MonoBehaviour {
                     _worldEntity.movingDuration = 0.5f;
                     break;
                 case LevelType.Separation: 
-                    _worldEntity.movingDuration = 1f;
+                    _worldEntity.movingDuration = 0.75f;
                     break;
                 case LevelType.Merging: 
-                    _worldEntity.movingDuration = 1f;
+                    _worldEntity.movingDuration = 0.75f;
                     break;
                 case LevelType.Combined: 
                     _worldEntity.movingDuration = 0.35f;
@@ -150,7 +150,7 @@ public class Character : MonoBehaviour {
         }
         if (_worldEntity.isPushed) {
             Pushed(_worldEntity.pushedDirection);
-            _worldEntity.isPushed=false;
+            _worldEntity.isPushed = false;
         }
     }
     // void StopAnimation()
@@ -235,20 +235,36 @@ public class Character : MonoBehaviour {
         //play move animaition
 
         AudioSource.PlayClipAtPoint(_audioMove, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
-
-        switch (_direction) {
-            case Direction.North:
-                _worldEntity.SetBoolAnimationParameter("MoveUp", true);
-                break;
-            case Direction.South:
-                _worldEntity.SetBoolAnimationParameter("MoveDown", true);
-                break;
-            case Direction.West:
-                _worldEntity.SetBoolAnimationParameter("MoveLeft", true);
-                break;
-            case Direction.East:
-                _worldEntity.SetBoolAnimationParameter("MoveRight", true);
-                break;
+        if (LevelCode.levelType == LevelType.Separation || LevelCode.levelType == LevelType.Merging) {
+            switch (_direction) {
+                case Direction.North:
+                    _worldEntity.SetBoolAnimationParameter("MoveUpSlow", true);
+                    break;
+                case Direction.South:
+                    _worldEntity.SetBoolAnimationParameter("MoveDownSlow", true);
+                    break;
+                case Direction.West:
+                    _worldEntity.SetBoolAnimationParameter("MoveLeftSlow", true);
+                    break;
+                case Direction.East:
+                    _worldEntity.SetBoolAnimationParameter("MoveRightSlow", true);
+                    break;
+            }
+        } else {
+            switch (_direction) {
+                case Direction.North:
+                    _worldEntity.SetBoolAnimationParameter("MoveUp", true);
+                    break;
+                case Direction.South:
+                    _worldEntity.SetBoolAnimationParameter("MoveDown", true);
+                    break;
+                case Direction.West:
+                    _worldEntity.SetBoolAnimationParameter("MoveLeft", true);
+                    break;
+                case Direction.East:
+                    _worldEntity.SetBoolAnimationParameter("MoveRight", true);
+                    break;
+            }
         }
 
         IntVector vec = _worldEntity.Location;

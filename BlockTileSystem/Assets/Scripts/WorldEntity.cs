@@ -173,6 +173,11 @@ public class WorldEntity : MonoBehaviour {
         SetBoolAnimationParameter("MoveLeft", false);
         SetBoolAnimationParameter("MoveRight", false);
 
+        SetBoolAnimationParameter("MoveUpSlow", false);
+        SetBoolAnimationParameter("MoveDownSlow", false);
+        SetBoolAnimationParameter("MoveLeftSlow", false);
+        SetBoolAnimationParameter("MoveRightSlow", false);
+
         SetBoolAnimationParameter("PushUp", false);
         SetBoolAnimationParameter("PushDown", false);
         SetBoolAnimationParameter("PushLeft", false);
