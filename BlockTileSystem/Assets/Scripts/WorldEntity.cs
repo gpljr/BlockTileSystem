@@ -143,7 +143,7 @@ public class WorldEntity : MonoBehaviour {
                     _currStateInfo.fractionComplete = visMovingCurve.Evaluate(timer / movingDuration);
                 }
             
-                if (_currStateInfo.fractionComplete >= 0.8f) {
+                if (_currStateInfo.fractionComplete >= 1f) {
                     AnimationStop();
                 }
                 if (_currStateInfo.fractionComplete >= 1f) {
