@@ -108,16 +108,16 @@ public class Character : MonoBehaviour {
         if (LevelCode.gameState == GameState.InLevel) {
             switch (LevelCode.levelType) {
                 case LevelType.Normal: 
-                    _worldEntity.movingDuration = 0.35f;
+                    _worldEntity.movingDuration = 0.5f;
                     break;
                 case LevelType.Separation: 
-                    _worldEntity.movingDuration = 0.5f;
+                    _worldEntity.movingDuration = 1f;
                     break;
                 case LevelType.Merging: 
-                    _worldEntity.movingDuration = 0.5f;
+                    _worldEntity.movingDuration = 1f;
                     break;
                 case LevelType.Combined: 
-                    _worldEntity.movingDuration = 0.25f;
+                    _worldEntity.movingDuration = 0.35f;
                     break;
             }
         }
