@@ -69,7 +69,7 @@ public class LevelCode : MonoBehaviour {
             case GameState.InLevel:
             
                 levelProgression.text = "Level: " + _iCurrentLevel + "/11";
-                if (Input.GetKeyDown(KeyCode.Return)) {            
+                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Backspace)) {            
                     Restart();
                 }
                 if (Input.GetKeyDown(KeyCode.N)) {
@@ -90,9 +90,6 @@ public class LevelCode : MonoBehaviour {
         
         if (Input.GetKeyDown(KeyCode.Backspace)) {
             Application.LoadLevel(Application.loadedLevel);
-        }
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            Application.Quit();
         }
 
         if (_bNewLevelLoaded) {

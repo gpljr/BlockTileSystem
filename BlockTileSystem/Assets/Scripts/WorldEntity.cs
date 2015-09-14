@@ -72,7 +72,8 @@ public class WorldEntity : MonoBehaviour {
     public bool instantMove;
 
     public AnimationCurve visMovingCurve;
-    public AnimationCurve visMovingCurvePushDown;
+    public AnimationCurve visPushDownCurve;
+    public AnimationCurve visPushedDownCurve;
 
     [HideInInspector] public float movingDuration = 0.5f;
     float timer;
@@ -130,27 +131,24 @@ public class WorldEntity : MonoBehaviour {
                     _collidingType = EntityCollidingType.Colliding;
                     _currStateInfo.characterInMoving = true;
                 }
-                // if (tempLocation != _location && timer>0)
-                //     {
-                //         //an input when the move is not finished
-                //         timer = 0f;
-                //         _currStateInfo.lastLoc += visualOffset;
-                //         print("reset");
-                //         movingDuration+=0.05f;
-                //     }
+                
                 if (timer < movingDuration) {
 
                     timer += Time.deltaTime;
-                    if (entityType == EntityType.Character && characterID == 1
-                        && gameObject.GetComponent<Character>().isPushingDown) {
+                    if (entityType == EntityType.Character && gameObject.GetComponent<Character>().isPushingDown) {
 
-                        _currStateInfo.fractionComplete = visMovingCurvePushDown.Evaluate(timer / movingDuration);
+
+                        _currStateInfo.fractionComplete = visPushDownCurve.Evaluate(timer / movingDuration);
+                    } else if (entityType == EntityType.Character && gameObject.GetComponent<Character>().isPushedDown) {
+                        _currStateInfo.fractionComplete = visPushedDownCurve.Evaluate(timer / movingDuration);
+ 
+                        
                     } else {
                         _currStateInfo.fractionComplete = visMovingCurve.Evaluate(timer / movingDuration);
                     }
                 }
-
-                if (_currStateInfo.fractionComplete >= 1f) {
+                //if (_currStateInfo.fractionComplete >= 1f)
+                if (timer >= movingDuration) {
                     AnimationStop();
                     _currStateInfo.lastLoc = _location.ToVector2();
                     _currStateInfo.fractionComplete = 0f;
@@ -159,8 +157,9 @@ public class WorldEntity : MonoBehaviour {
                     }
                     timer = 0f;
                     _collidingType = _tempCollisionType;
-                    if (entityType == EntityType.Character && characterID == 1 && gameObject.GetComponent<Character>().isPushingDown) {
+                    if (entityType == EntityType.Character) {
                         gameObject.GetComponent<Character>().isPushingDown = false;
+                        gameObject.GetComponent<Character>().isPushedDown = false;
                     }
                     
                 }

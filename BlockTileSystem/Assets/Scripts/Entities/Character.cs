@@ -58,6 +58,7 @@ public class Character : MonoBehaviour {
     private bool onMergingStar;
 
     [HideInInspector] public bool isPushingDown;
+    [HideInInspector] public bool isPushedDown;
 
     public void Cache () {
         _worldEntity = GetComponent<WorldEntity>();
@@ -167,6 +168,7 @@ public class Character : MonoBehaviour {
                 break;
             case Direction.South:
                 _worldEntity.SetBoolAnimationParameter("PushedDown", true);
+                isPushedDown=true;
                 break;
             case Direction.West:
                 _worldEntity.SetBoolAnimationParameter("PushedLeft", true);
