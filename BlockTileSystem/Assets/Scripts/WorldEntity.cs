@@ -39,7 +39,7 @@ public class WorldEntity : MonoBehaviour {
 
     Animator _anim;
 
-    [System.Serializable]
+    //[System.Serializable] //what does this mean?
     public struct StateInformation {
         // [HideInInspector]
         // public Char2DState lastState;
@@ -72,8 +72,9 @@ public class WorldEntity : MonoBehaviour {
     public bool instantMove;
 
     public AnimationCurve visMovingCurve;
+    public AnimationCurve visMovingCurvePushDown;
 
-    public float movingDuration = 0.35f;
+    [HideInInspector] public float movingDuration = 0.5f;
     float timer;
 
     public bool isSpriteSet;
@@ -121,7 +122,7 @@ public class WorldEntity : MonoBehaviour {
                 Vector2 v = Vector2.zero;
                 Vector2 visualOffset = (_location.ToVector2() - _currStateInfo.lastLoc)
                                        * (_currStateInfo.fractionComplete);
-
+                
                 v = _currStateInfo.lastLoc + visualOffset + fixedOffset;
                 _visuals.position = v * WorldManager.g.TileSize;
                 
@@ -140,13 +141,17 @@ public class WorldEntity : MonoBehaviour {
                 if (timer < movingDuration) {
 
                     timer += Time.deltaTime;
-                    _currStateInfo.fractionComplete = visMovingCurve.Evaluate(timer / movingDuration);
+                    if (entityType == EntityType.Character && characterID == 1
+                        && gameObject.GetComponent<Character>().isPushingDown) {
+
+                        _currStateInfo.fractionComplete = visMovingCurvePushDown.Evaluate(timer / movingDuration);
+                    } else {
+                        _currStateInfo.fractionComplete = visMovingCurve.Evaluate(timer / movingDuration);
+                    }
                 }
-            
+
                 if (_currStateInfo.fractionComplete >= 1f) {
                     AnimationStop();
-                }
-                if (_currStateInfo.fractionComplete >= 1f) {
                     _currStateInfo.lastLoc = _location.ToVector2();
                     _currStateInfo.fractionComplete = 0f;
                     if (entityType == EntityType.Character) {
@@ -154,6 +159,9 @@ public class WorldEntity : MonoBehaviour {
                     }
                     timer = 0f;
                     _collidingType = _tempCollisionType;
+                    if (entityType == EntityType.Character && characterID == 1 && gameObject.GetComponent<Character>().isPushingDown) {
+                        gameObject.GetComponent<Character>().isPushingDown = false;
+                    }
                     
                 }
                     
