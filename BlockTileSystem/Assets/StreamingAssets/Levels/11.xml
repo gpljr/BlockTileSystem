@@ -97,7 +97,7 @@
 				<x>22</x>
 				<y>16</y>
 			</vPosition>
-			<shootingTimeInterval>3</shootingTimeInterval>
+			<shootingTimeInterval>4.5</shootingTimeInterval>
 			<sShootingDirection>North</sShootingDirection>
 			<isMoving>0</isMoving>
 		</ShooterInXML>
@@ -106,7 +106,7 @@
 				<x>20</x>
 				<y>12</y>
 			</vPosition>
-			<shootingTimeInterval>3</shootingTimeInterval>
+			<shootingTimeInterval>4</shootingTimeInterval>
 			<sShootingDirection>South</sShootingDirection>
 			<isMoving>0</isMoving>
 		</ShooterInXML>
@@ -115,7 +115,7 @@
 				<x>6</x>
 				<y>11</y>
 			</vPosition>
-			<shootingTimeInterval>3</shootingTimeInterval>
+			<shootingTimeInterval>4.5</shootingTimeInterval>
 			<sShootingDirection>West</sShootingDirection>
 			<isMoving>0</isMoving>
 		</ShooterInXML>
@@ -124,7 +124,7 @@
 				<x>2</x>
 				<y>13</y>
 			</vPosition>
-			<shootingTimeInterval>3</shootingTimeInterval>
+			<shootingTimeInterval>4</shootingTimeInterval>
 			<sShootingDirection>East</sShootingDirection>
 			<isMoving>0</isMoving>
 		</ShooterInXML>

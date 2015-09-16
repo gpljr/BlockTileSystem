@@ -12,6 +12,7 @@ public class CameraControl : MonoBehaviour
     GameObject _doubleCameraObject2;
 
     [SerializeField]
+    bool isDevMode;
     public static bool isBirdView;
     [SerializeField]
     private float _fSingleCameraSize = 5f;
@@ -37,7 +38,7 @@ public class CameraControl : MonoBehaviour
     {
         if (LevelCode.gameState == GameState.InLevel)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (isDevMode && Input.GetKeyDown(KeyCode.Space))
             {
                 isBirdView = !isBirdView;
             }
