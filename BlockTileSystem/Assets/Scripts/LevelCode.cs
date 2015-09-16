@@ -68,7 +68,7 @@ public class LevelCode : MonoBehaviour {
                 break;
             case GameState.InLevel:
             
-                levelProgression.text = "Level: " + _iCurrentLevel + "/11";
+                levelProgression.text = "Level: " + _iCurrentLevel + "/13";
                 if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Backspace)) {            
                     Restart();
                 }
