@@ -512,29 +512,29 @@ public class WorldManager : MonoBehaviour
             {
                 case 1:
                     char1Entity.instantMove = true;
-                    char1Entity.Location = PositionFlip(checkPointsManager.CheckPoint1Locations[checkPointsManager.iCheckPointLocationID]);
+                    char1Entity.Location = PositionFlip(checkPointsManager.CheckPoint1Locations[checkPointsManager.iCheckPointLocationID-1]);
                     break;
                 case 2:
                     char1Entity.instantMove = true;
-                    char1Entity.Location = PositionFlip(checkPointsManager.CheckPoint2Locations[checkPointsManager.iCheckPointLocationID]);
+                    char1Entity.Location = PositionFlip(checkPointsManager.CheckPoint2Locations[checkPointsManager.iCheckPointLocationID-1]);
                     break;
             }
             switch (checkPointsManager.iChar2InCheckPoint)
             {
                 case 1:
                     char2Entity.instantMove = true;
-                    char2Entity.Location = PositionFlip(checkPointsManager.CheckPoint1Locations[checkPointsManager.iCheckPointLocationID]);
+                    char2Entity.Location = PositionFlip(checkPointsManager.CheckPoint1Locations[checkPointsManager.iCheckPointLocationID-1]);
                     break;
                 case 2:
                     char2Entity.instantMove = true;
-                    char2Entity.Location = PositionFlip(checkPointsManager.CheckPoint2Locations[checkPointsManager.iCheckPointLocationID]);
+                    char2Entity.Location = PositionFlip(checkPointsManager.CheckPoint2Locations[checkPointsManager.iCheckPointLocationID-1]);
                     break;
             }
         }
         else
         {
             charCombinedEntity.instantMove = true;
-            charCombinedEntity.Location = PositionFlip(checkPointsManager.CheckPoint1Locations[checkPointsManager.iCheckPointLocationID]);
+            charCombinedEntity.Location = PositionFlip(checkPointsManager.CheckPoint1Locations[checkPointsManager.iCheckPointLocationID-1]);
                     
         }
         
