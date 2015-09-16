@@ -12,11 +12,12 @@ public class CameraControl : MonoBehaviour
     GameObject _doubleCameraObject2;
 
     [SerializeField]
-    bool isBirdView;
+    public static bool isBirdView;
     [SerializeField]
     private float _fSingleCameraSize = 5f;
     [SerializeField]
     private float _fDoubleCameraSize = 4f;
+
 
     Camera _singleCamera, _doubleCamera1, _doubleCamera2;
     IntVector _dims;
@@ -36,10 +37,10 @@ public class CameraControl : MonoBehaviour
     {
         if (LevelCode.gameState == GameState.InLevel)
         {
-            // if (Input.GetKeyDown(KeyCode.B))
-            // {
-            //     isBirdView = !isBirdView;
-            // }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                isBirdView = !isBirdView;
+            }
             if (isBirdView)
             {
                 _dims = WorldManager.g.Dims;
@@ -48,7 +49,6 @@ public class CameraControl : MonoBehaviour
             }
             else
             {
-                
                 
                 Vector2 cameraLocation;
                 switch (LevelCode.levelType)

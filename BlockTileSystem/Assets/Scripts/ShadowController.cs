@@ -51,7 +51,13 @@ public class ShadowController : MonoBehaviour
         }
         if (LevelCode.gameState == GameState.InLevel)
         {
+            if(!CameraControl.isBirdView)
+            {
             _shadowRenderer.gameObject.SetActive(true);
+        }
+        else{
+            _shadowRenderer.gameObject.SetActive(false);
+        }
             switch (LevelCode.levelType)
             {
                 case LevelType.Normal:
