@@ -31,6 +31,7 @@ public class LevelCode : MonoBehaviour {
     [SerializeField]
     GameObject inLevelScreen;
     [SerializeField] Text startingText;
+    [SerializeField] GameObject inLevelText;
 
     [SerializeField]
     Text levelProgression;
@@ -67,6 +68,13 @@ public class LevelCode : MonoBehaviour {
         // {
         //     LoadLevel(10);
         // }
+        if(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        {
+            if(Input.GetKeyDown(KeyCode.P))
+            {
+                inLevelText.SetActive(!inLevelText.active);
+            }
+        }
         switch (gameState) {
             case GameState.Starting:
                 if (Input.anyKeyDown) {
