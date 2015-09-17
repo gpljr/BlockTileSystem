@@ -46,12 +46,20 @@ public class LevelCode : MonoBehaviour {
     public static float musicVolume = 1f;
     public static float audioVolume = 1f;
 
+    [SerializeField] bool _isDevMode;
+    public static bool isDevMode;
+
+    [SerializeField] GameObject DevModeText;
 
     void Start () {
         image.SetActive(true);
         _image = image.GetComponent<Image>();
         EnterStartingScreen();
         Cursor.visible = false;
+        isDevMode = _isDevMode;
+
+        DevModeText.SetActive(isDevMode);
+
     }
 
     void Update () {
@@ -90,6 +98,40 @@ public class LevelCode : MonoBehaviour {
         
         if (Input.GetKeyDown(KeyCode.Backspace)) {
             Application.LoadLevel(Application.loadedLevel);
+        }
+        if (isDevMode) {
+
+            if (Input.GetKeyDown(KeyCode.Alpha1)) {
+                LoadLevel(1);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2)) {
+                LoadLevel(2);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3)) {
+                LoadLevel(3);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4)) {
+                LoadLevel(4);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha5)) {
+                LoadLevel(5);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha6)) {
+                LoadLevel(6);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha7)) {
+                LoadLevel(7);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha8)) {
+                LoadLevel(8);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha9)) {
+                LoadLevel(9);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha0)) {
+                LoadLevel(13);
+            }
         }
 
         if (_bNewLevelLoaded) {
@@ -215,7 +257,7 @@ public class LevelCode : MonoBehaviour {
         float timer = 0f;
         while (timer < 3f) {
             timer += Time.deltaTime;
-            startingText.color = new Color(0.67f, 0.67f, 0.67f, 0.67f*Mathf.Max(0f, (timer / 3f)));
+            startingText.color = new Color(0.67f, 0.67f, 0.67f, 0.67f * Mathf.Max(0f, (timer / 3f)));
             yield return null;
         }
     }
