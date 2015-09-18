@@ -51,6 +51,7 @@ public class LevelCode : MonoBehaviour {
     public static bool isDevMode;
 
     [SerializeField] GameObject DevModeText;
+    [SerializeField] int levelCount=11;
 
     void Start () {
         image.SetActive(true);
@@ -84,7 +85,7 @@ public class LevelCode : MonoBehaviour {
                 break;
             case GameState.InLevel:
             
-                levelProgression.text = "Level: " + _iCurrentLevel + "/13";
+                levelProgression.text = "Level: " + _iCurrentLevel + "/"+levelCount.ToString();
                 if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Backspace)) {            
                     Restart();
                 }
