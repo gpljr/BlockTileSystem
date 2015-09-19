@@ -51,7 +51,7 @@ public class LevelCode : MonoBehaviour {
     public static bool isDevMode;
 
     [SerializeField] GameObject DevModeText;
-    [SerializeField] int levelCount=11;
+    [SerializeField] int levelCount = 11;
 
     void Start () {
         image.SetActive(true);
@@ -59,8 +59,8 @@ public class LevelCode : MonoBehaviour {
         EnterStartingScreen();
         Cursor.visible = false;
         isDevMode = _isDevMode;
-
         DevModeText.SetActive(isDevMode);
+        
 
     }
 
@@ -69,11 +69,15 @@ public class LevelCode : MonoBehaviour {
         // {
         //     LoadLevel(10);
         // }
-        if(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-        {
-            if(Input.GetKeyDown(KeyCode.P))
-            {
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
+            if (Input.GetKeyDown(KeyCode.P)) {
                 inLevelText.SetActive(!inLevelText.active);
+            }
+        }
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
+            if (Input.GetKeyDown(KeyCode.D)) {
+                isDevMode = !isDevMode;
+                DevModeText.SetActive(isDevMode);
             }
         }
         switch (gameState) {
@@ -85,7 +89,7 @@ public class LevelCode : MonoBehaviour {
                 break;
             case GameState.InLevel:
             
-                levelProgression.text = "Level: " + _iCurrentLevel + "/"+levelCount.ToString();
+                levelProgression.text = "Level: " + _iCurrentLevel + "/" + levelCount.ToString();
                 if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Backspace)) {            
                     Restart();
                 }
@@ -105,10 +109,10 @@ public class LevelCode : MonoBehaviour {
                 break;
         }
         
-        if (Input.GetKeyDown(KeyCode.Backspace)) {
+        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.Escape)) {
             Application.LoadLevel(Application.loadedLevel);
         }
-        if (isDevMode) {
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
 
             if (Input.GetKeyDown(KeyCode.Alpha1)) {
                 LoadLevel(1);
@@ -139,7 +143,7 @@ public class LevelCode : MonoBehaviour {
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha0)) {
-                LoadLevel(13);
+                LoadLevel(11);
             }
         }
 

@@ -90,7 +90,7 @@ Material:
       data:
         first:
           name: _Radius
-        second: .600000024
+        second: .136228308
       data:
         first:
           name: _Cutoff
@@ -146,13 +146,13 @@ Material:
         second: {r: 0, g: 0, b: 0, a: 1}
       data:
         first:
-          name: _EmissionColorUI
-        second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
           name: _Position1
-        second: {r: .5, g: .281121761, b: 0, a: 0}
+        second: {r: .427622467, g: .401982307, b: 0, a: 0}
       data:
         first:
           name: _Position2
-        second: {r: .5, g: .281121761, b: 0, a: 0}
+        second: {r: .572377503, g: .160723969, b: 0, a: 0}
+      data:
+        first:
+          name: _EmissionColorUI
+        second: {r: 1, g: 1, b: 1, a: 1}
