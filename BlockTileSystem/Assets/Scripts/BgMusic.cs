@@ -19,7 +19,10 @@ public class BgMusic : MonoBehaviour
     // {
     //     Events.g.AddListener<LevelLoadedEvent>(LevelEntered);
     // }
+    void Start()
+    {
 
+    }
     void Update()
     {
         switch (LevelCode.gameState)
@@ -54,6 +57,9 @@ public class BgMusic : MonoBehaviour
             PlayMusicById(_iMusicId);
             _iCurrentMusicId = _iMusicId;
         }
+        else{
+            gameObject.GetComponent<AudioSource>().volume=LevelCode.musicVolume;
+        }
 			
     }
 
@@ -82,7 +88,7 @@ public class BgMusic : MonoBehaviour
                 break;
             }
         }
-        while (gameObject.GetComponent<AudioSource>().volume < 1)
+        while (gameObject.GetComponent<AudioSource>().volume < LevelCode.musicVolume)
         {
             gameObject.GetComponent<AudioSource>().volume += 0.5f * Time.deltaTime;
         }

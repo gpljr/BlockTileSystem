@@ -113,7 +113,6 @@ public class WorldEntity : MonoBehaviour {
         //     _tempCollisionType = _collidingType;
         //     tempCollisionTypeSet = true;
         // }
-        print(gameObject+" layer "+_visuals.gameObject.GetComponent<SpriteRenderer>().sortingOrder);
         if (isSpriteSet) {
             Vector2 fixedOffset = new Vector2(0.5f, -0.5f);
             

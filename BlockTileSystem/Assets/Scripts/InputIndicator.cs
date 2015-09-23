@@ -17,16 +17,15 @@ public class InputIndicator : MonoBehaviour {
     [SerializeField] Sprite leftPressed;
     [SerializeField] Sprite rightPressed;
 
-    [SerializeField] float duration=0.3f;
-    // Use this for initialization
-    void Start () {
-		
-    }
+    [SerializeField] float duration = 0.3f;
+
+
+
 	
     // Update is called once per frame
     void Update () {
         if (WorldManager.g.char1Entity.GetComponent<Character>().MoveInput) {
-        	StartCoroutine(ButtonSet(WorldManager.g.char1Entity.GetComponent<Character>().Direction));
+            StartCoroutine(ButtonSet(WorldManager.g.char1Entity.GetComponent<Character>().Direction));
         }
         if (WorldManager.g.char2Entity.GetComponent<Character>().MoveInput) {
             StartCoroutine(ButtonSet(WorldManager.g.char2Entity.GetComponent<Character>().Direction));
@@ -34,6 +33,7 @@ public class InputIndicator : MonoBehaviour {
         if (WorldManager.g.charCombinedEntity.GetComponent<Character>().MoveInput) {
             StartCoroutine(ButtonSet(WorldManager.g.charCombinedEntity.GetComponent<Character>().Direction));
         }
+        print("size"+transform.localScale);
     }
     IEnumerator ButtonSet (Direction direction) {
         switch (direction) {
@@ -62,4 +62,6 @@ public class InputIndicator : MonoBehaviour {
                 break;
         }
     }
+
+
 }

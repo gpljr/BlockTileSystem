@@ -57,7 +57,7 @@ public class LevelCode : MonoBehaviour {
         image.SetActive(true);
         _image = image.GetComponent<Image>();
         EnterStartingScreen();
-        Cursor.visible = false;
+        //Cursor.visible = false;
         isDevMode = _isDevMode;
         DevModeText.SetActive(isDevMode);
         

@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraControl : MonoBehaviour
-{
+public class CameraControl : MonoBehaviour {
     bool isCombined;
     [SerializeField]
     GameObject _singleCameraObject;
@@ -23,8 +22,7 @@ public class CameraControl : MonoBehaviour
     IntVector _dims;
     float _tileSize;
 
-    void Awake()
-    {
+    void Awake () {
         _singleCamera = _singleCameraObject.GetComponent<Camera>();
         _doubleCamera1 = _doubleCameraObject1.GetComponent<Camera>();
         _doubleCamera2 = _doubleCameraObject2.GetComponent<Camera>();
@@ -32,31 +30,24 @@ public class CameraControl : MonoBehaviour
         _singleCameraObject.SetActive(true);
         _doubleCameraObject1.SetActive(false);
         _doubleCameraObject2.SetActive(false);
+        CameraBlur(false);
 
     }
-    void LateUpdate()
-    {
-        if (LevelCode.gameState == GameState.InLevel)
-        {
-            if (LevelCode.isDevMode && Input.GetKeyDown(KeyCode.Space))
-            {
+    void LateUpdate () {
+        if (LevelCode.gameState == GameState.InLevel) {
+            if (LevelCode.isDevMode && Input.GetKeyDown(KeyCode.Space)) {
                 isBirdView = !isBirdView;
             }
-            if (isBirdView)
-            {
+            if (isBirdView) {
                 _dims = WorldManager.g.Dims;
                 _singleCameraObject.transform.position = new Vector3(_dims.x * _tileSize / 2, _dims.y * _tileSize / 2, -12f);
                 _singleCamera.orthographicSize = Mathf.Min(_dims.x, _dims.y) * _tileSize / 2 + 2;
-            }
-            else
-            {
+            } else {
                 
                 Vector2 cameraLocation;
-                switch (LevelCode.levelType)
-                {
+                switch (LevelCode.levelType) {
                     case LevelType.Normal:
-                        if (WorldManager.g.char1Entity != null && WorldManager.g.char2Entity != null)
-                        {
+                        if (WorldManager.g.char1Entity != null && WorldManager.g.char2Entity != null) {
                             cameraLocation = (WorldManager.g.char1Entity.visPosition + WorldManager.g.char2Entity.visPosition) * _tileSize / 2f;
                             _singleCameraObject.transform.position = new Vector3(cameraLocation.x, cameraLocation.y, -12f);
                             float distance = Vector2.Distance(WorldManager.g.char1Entity.visPosition, WorldManager.g.char2Entity.visPosition);
@@ -64,8 +55,7 @@ public class CameraControl : MonoBehaviour
                         }
                         break;
                     case LevelType.Combined:
-                        if (WorldManager.g.charCombinedEntity != null)
-                        {
+                        if (WorldManager.g.charCombinedEntity != null) {
                             cameraLocation = WorldManager.g.charCombinedEntity.visPosition * _tileSize;
                             _singleCameraObject.transform.position = new Vector3(cameraLocation.x, cameraLocation.y, -12f);
                             _singleCamera.orthographicSize = _fSingleCameraSize * _tileSize;
@@ -84,10 +74,8 @@ public class CameraControl : MonoBehaviour
             }
         }
     }
-    void CameraSeparation()
-    {
-        if (WorldManager.g.char1Entity != null && WorldManager.g.char2Entity != null)
-        {
+    void CameraSeparation () {
+        if (WorldManager.g.char1Entity != null && WorldManager.g.char2Entity != null) {
             Vector2 cameraLocation1 = WorldManager.g.char1Entity.visPosition * _tileSize;
             Vector2 cameraLocation2 = WorldManager.g.char2Entity.visPosition * _tileSize;
             _doubleCameraObject1.transform.position = new Vector3(cameraLocation1.x, cameraLocation1.y, -12f);
@@ -96,28 +84,31 @@ public class CameraControl : MonoBehaviour
             _doubleCamera2.orthographicSize = _fDoubleCameraSize * _tileSize;
         }
     }
-    void OnEnable()
-    {
+    void OnEnable () {
         Events.g.AddListener<LevelLoadedEvent>(LevelLoaded);
     }
     
-    void OnDisable()
-    {
+    void OnDisable () {
         Events.g.RemoveListener<LevelLoadedEvent>(LevelLoaded);
     }
-    void LevelLoaded(LevelLoadedEvent e)
-    {
-        if (LevelCode.levelType == LevelType.Combined || LevelCode.levelType == LevelType.Normal)
-        {
+    void LevelLoaded (LevelLoadedEvent e) {
+        if (LevelCode.levelType == LevelType.Combined || LevelCode.levelType == LevelType.Normal) {
             _singleCameraObject.SetActive(true);
             _doubleCameraObject1.SetActive(false);
             _doubleCameraObject2.SetActive(false);
-        }
-        else
-        {
+        } else {
             _singleCameraObject.SetActive(false);
             _doubleCameraObject1.SetActive(true);
             _doubleCameraObject2.SetActive(true);
+        }
+    }
+    public void CameraBlur (bool isBlur) {
+        if (LevelCode.levelType == LevelType.Combined || LevelCode.levelType == LevelType.Normal) {
+            _singleCameraObject.GetComponent<UnityStandardAssets.ImageEffects.BlurOptimized>().enabled = isBlur;
+        } else {
+            _doubleCameraObject1.GetComponent<UnityStandardAssets.ImageEffects.BlurOptimized>().enabled = isBlur;
+            _doubleCameraObject2.GetComponent<UnityStandardAssets.ImageEffects.BlurOptimized>().enabled = isBlur;
+        
         }
     }
 }
