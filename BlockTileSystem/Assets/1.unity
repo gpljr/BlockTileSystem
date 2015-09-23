@@ -1016,6 +1016,7 @@ MonoBehaviour:
   _char2Face3Sprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
   isPushingDown: 0
   isPushedDown: 0
+  isPushedUp: 0
 --- !u!114 &684781640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1052,24 +1053,19 @@ MonoBehaviour:
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
-  visPushDownCurve:
+  visPushedUpCurve:
     serializedVersion: 2
     m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: .453248739
-      value: .0692594498
-      inSlope: .321887314
-      outSlope: .321887314
-      tangentMode: 0
+    - time: .449999988
+      value: .00624999963
+      inSlope: 1.80681813
+      outSlope: 1.80681813
+      tangentMode: 10
     - time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      inSlope: 1.80681813
+      outSlope: 1.80681813
+      tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
   visPushedDownCurve:
@@ -2077,7 +2073,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!1 &1215162032
 GameObject:
   m_ObjectHideFlags: 0
@@ -2611,44 +2607,34 @@ MonoBehaviour:
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
-  visPushDownCurve:
+  visPushedUpCurve:
     serializedVersion: 2
     m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: .453248739
-      value: .0692594498
-      inSlope: .321887314
-      outSlope: .321887314
-      tangentMode: 0
+    - time: .449999988
+      value: .00624999963
+      inSlope: 1.80681813
+      outSlope: 1.80681813
+      tangentMode: 10
     - time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      inSlope: 1.80681813
+      outSlope: 1.80681813
+      tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
   visPushedDownCurve:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - time: .449999988
       value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-    - time: .667248189
-      value: .995956182
-      inSlope: .0467361547
-      outSlope: .0467361547
-      tangentMode: 0
+      inSlope: 1.81818175
+      outSlope: 1.81818175
+      tangentMode: 10
     - time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 1.81818175
+      outSlope: 1.81818175
+      tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
   movingDuration: .349999994
@@ -2664,7 +2650,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!114 &1436136982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2700,6 +2686,7 @@ MonoBehaviour:
   _char2Face3Sprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
   isPushingDown: 0
   isPushedDown: 0
+  isPushedUp: 0
 --- !u!1 &1496431008
 GameObject:
   m_ObjectHideFlags: 0
@@ -3209,44 +3196,34 @@ MonoBehaviour:
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
-  visPushDownCurve:
+  visPushedUpCurve:
     serializedVersion: 2
     m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: .453248739
-      value: .0692594498
-      inSlope: .321887314
-      outSlope: .321887314
-      tangentMode: 0
+    - time: .449999988
+      value: .00624999963
+      inSlope: 1.80681813
+      outSlope: 1.80681813
+      tangentMode: 10
     - time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      inSlope: 1.80681813
+      outSlope: 1.80681813
+      tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
   visPushedDownCurve:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - time: .449999988
       value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-    - time: .667248189
-      value: .995956182
-      inSlope: .0467361547
-      outSlope: .0467361547
-      tangentMode: 0
+      inSlope: 1.81818175
+      outSlope: 1.81818175
+      tangentMode: 10
     - time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 1.81818175
+      outSlope: 1.81818175
+      tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
   movingDuration: .349999994
@@ -3262,7 +3239,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!114 &1755608595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3298,6 +3275,7 @@ MonoBehaviour:
   _char2Face3Sprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
   isPushingDown: 0
   isPushedDown: 0
+  isPushedUp: 0
 --- !u!1 &1755804818
 GameObject:
   m_ObjectHideFlags: 0

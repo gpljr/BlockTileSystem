@@ -59,6 +59,7 @@ public class Character : MonoBehaviour {
 
     [HideInInspector] public bool isPushingDown;
     [HideInInspector] public bool isPushedDown;
+    [HideInInspector] public bool isPushedUp;
 
     public void Cache () {
         _worldEntity = GetComponent<WorldEntity>();
@@ -165,6 +166,7 @@ public class Character : MonoBehaviour {
         switch (direction) {
             case Direction.North:
                 _worldEntity.SetBoolAnimationParameter("PushedUp", true);
+                isPushedUp=true;
                 break;
             case Direction.South:
                 _worldEntity.SetBoolAnimationParameter("PushedDown", true);

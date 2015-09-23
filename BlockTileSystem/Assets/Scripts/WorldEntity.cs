@@ -72,7 +72,7 @@ public class WorldEntity : MonoBehaviour {
     public bool instantMove;
 
     public AnimationCurve visMovingCurve;
-    public AnimationCurve visPushDownCurve;
+    public AnimationCurve visPushedUpCurve;
     public AnimationCurve visPushedDownCurve;
 
     [HideInInspector] public float movingDuration = 0.5f;
@@ -135,10 +135,10 @@ public class WorldEntity : MonoBehaviour {
                 if (timer < movingDuration) {
 
                     timer += Time.deltaTime;
-                    if (entityType == EntityType.Character && gameObject.GetComponent<Character>().isPushingDown) {
+                    if (entityType == EntityType.Character && gameObject.GetComponent<Character>().isPushedUp) {
 
 
-                        _currStateInfo.fractionComplete = visPushDownCurve.Evaluate(timer / movingDuration);
+                        _currStateInfo.fractionComplete = visPushedUpCurve.Evaluate(timer / movingDuration);
                     } else if (entityType == EntityType.Character && gameObject.GetComponent<Character>().isPushedDown) {
                         _currStateInfo.fractionComplete = visPushedDownCurve.Evaluate(timer / movingDuration);
  
@@ -158,7 +158,7 @@ public class WorldEntity : MonoBehaviour {
                     timer = 0f;
                     _collidingType = _tempCollisionType;
                     if (entityType == EntityType.Character) {
-                        gameObject.GetComponent<Character>().isPushingDown = false;
+                        gameObject.GetComponent<Character>().isPushedUp = false;
                         gameObject.GetComponent<Character>().isPushedDown = false;
                     }
                     
