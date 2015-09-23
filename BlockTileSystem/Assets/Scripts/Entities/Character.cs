@@ -17,7 +17,13 @@ public class Character : MonoBehaviour {
     private IntVector _input;
 
     private Direction _direction;
+    public Direction Direction{
+        get {return _direction;}
+    }
     private bool _bMove;
+    public bool MoveInput{
+        get {return _bMove;}
+    }
 
     [SerializeField]
     AudioClip _audioMove;
