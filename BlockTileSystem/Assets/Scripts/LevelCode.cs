@@ -71,7 +71,7 @@ public class LevelCode : MonoBehaviour {
         // }
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
             if (Input.GetKeyDown(KeyCode.P)) {
-                inLevelText.SetActive(!inLevelText.active);
+                inLevelText.SetActive(!inLevelText.activeSelf);
             }
         }
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {

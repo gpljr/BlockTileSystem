@@ -57,7 +57,6 @@ public class Character : MonoBehaviour {
 
     private bool onMergingStar;
 
-    [HideInInspector] public bool isPushingDown;
     [HideInInspector] public bool isPushedDown;
     [HideInInspector] public bool isPushedUp;
 
@@ -103,7 +102,7 @@ public class Character : MonoBehaviour {
     void Update () {
         if (!_worldEntity.isSpriteSet) {
             _worldEntity.SetVisual(GetSpriteByID(false));
-            _worldEntity.SetOrderLayer(10);
+            SetLayer(false);
 
         } else if (!onMergingStar) {
             SetSprite(false);
@@ -167,10 +166,12 @@ public class Character : MonoBehaviour {
             case Direction.North:
                 _worldEntity.SetBoolAnimationParameter("PushedUp", true);
                 isPushedUp=true;
+                _worldEntity.SetOrderLayer(8);
                 break;
             case Direction.South:
                 _worldEntity.SetBoolAnimationParameter("PushedDown", true);
                 isPushedDown=true;
+                _worldEntity.SetOrderLayer(12);
                 break;
             case Direction.West:
                 _worldEntity.SetBoolAnimationParameter("PushedLeft", true);
@@ -209,7 +210,6 @@ public class Character : MonoBehaviour {
                 break;
             case Direction.South:
                 _worldEntity.SetBoolAnimationParameter("PushDown", true);
-                isPushingDown=true;
                 break;
             case Direction.West:
                 _worldEntity.SetBoolAnimationParameter("PushLeft", true);
@@ -293,24 +293,28 @@ public class Character : MonoBehaviour {
                 _worldEntity.CollidingType = EntityCollidingType.Empty;
 
                 SetSprite(isInMerging: true);
+                SetLayer(isInMerging: true);
                 oneEnteredMergingStar = true;
             } else {
                 onMergingStar = false;
                 _worldEntity.CollidingType = EntityCollidingType.Pushable;
                 SetSprite(isInMerging: false);
+                SetLayer(isInMerging: false);
                 oneEnteredMergingStar = false;
             }
         }
     }
     void SetSprite (bool isInMerging) {
         _worldEntity.ChangeVisual(GetSpriteByID(isInMerging));
+    }
+    void SetLayer(bool isInMerging)
+    {
         if (!isInMerging || oneEnteredMergingStar) {
             
             _worldEntity.SetOrderLayer(10);
         } else {
             _worldEntity.SetOrderLayer(9);
         }
-
     }
     private Sprite GetSpriteByID (bool isInMerging) {
         Sprite sprite = new Sprite();

@@ -113,7 +113,7 @@ public class WorldEntity : MonoBehaviour {
         //     _tempCollisionType = _collidingType;
         //     tempCollisionTypeSet = true;
         // }
-        
+        print(gameObject+" layer "+_visuals.gameObject.GetComponent<SpriteRenderer>().sortingOrder);
         if (isSpriteSet) {
             Vector2 fixedOffset = new Vector2(0.5f, -0.5f);
             
@@ -136,14 +136,12 @@ public class WorldEntity : MonoBehaviour {
 
                     timer += Time.deltaTime;
                     if (entityType == EntityType.Character && gameObject.GetComponent<Character>().isPushedUp) {
-
-
                         _currStateInfo.fractionComplete = visPushedUpCurve.Evaluate(timer / movingDuration);
-                    } else if (entityType == EntityType.Character && gameObject.GetComponent<Character>().isPushedDown) {
+                    } 
+                    else if (entityType == EntityType.Character && gameObject.GetComponent<Character>().isPushedDown) {
                         _currStateInfo.fractionComplete = visPushedDownCurve.Evaluate(timer / movingDuration);
- 
-                        
-                    } else {
+                    } 
+                    else {
                         _currStateInfo.fractionComplete = visMovingCurve.Evaluate(timer / movingDuration);
                     }
                 }
