@@ -19,22 +19,16 @@ public class InputIndicator : MonoBehaviour {
 
     [SerializeField] float duration = 0.3f;
 
-
-
-	
-    // Update is called once per frame
-    void Update () {
-        if (WorldManager.g.char1Entity.GetComponent<Character>().MoveInput) {
-            StartCoroutine(ButtonSet(WorldManager.g.char1Entity.GetComponent<Character>().Direction));
-        }
-        if (WorldManager.g.char2Entity.GetComponent<Character>().MoveInput) {
-            StartCoroutine(ButtonSet(WorldManager.g.char2Entity.GetComponent<Character>().Direction));
-        }
-        if (WorldManager.g.charCombinedEntity.GetComponent<Character>().MoveInput) {
-            StartCoroutine(ButtonSet(WorldManager.g.charCombinedEntity.GetComponent<Character>().Direction));
-        }
-        print("size"+transform.localScale);
+    void OnEnable () {
+        Events.g.AddListener<MoveInputEvent>(MoveInput);
     }
+    void OnDisable () {
+        Events.g.RemoveListener<MoveInputEvent>(MoveInput);
+    }
+    void MoveInput (MoveInputEvent e) {
+        StartCoroutine(ButtonSet(e.direction));
+    }
+
     IEnumerator ButtonSet (Direction direction) {
         switch (direction) {
             case Direction.North:

@@ -191,6 +191,7 @@ public class Character : MonoBehaviour {
     }
     private void Simulate () {
         if (_bMove) {
+            Events.g.Raise(new MoveInputEvent(_iCharacterID, _direction));
             switch (WorldManager.g.CanMove(_worldEntity.Location, _direction, _worldEntity)) {
                 case MoveResult.Move:
                     Move();
