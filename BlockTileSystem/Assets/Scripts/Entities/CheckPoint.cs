@@ -7,6 +7,8 @@ public class CheckPoint : MonoBehaviour
 
     [SerializeField]
     private Sprite _sprite;
+    [SerializeField] Sprite _spriteStepOn;
+    [SerializeField] GameObject deadCheckPointPrefab;
 
     public int iID;
 
@@ -22,7 +24,9 @@ public class CheckPoint : MonoBehaviour
     }
     public void MoveCheckPoint()
     {
-        
+        var deadCheckObject = Instantiate(deadCheckPointPrefab);
+        deadCheckObject.GetComponent<WorldTrigger>().Location=_worldTrigger.Location;
+        print("instantiate new visual");
     }
     void LateUpdate()
     {
@@ -38,6 +42,8 @@ public class CheckPoint : MonoBehaviour
         {
             if (_worldTrigger.isSteppedOn)
             {
+                _worldTrigger.ChangeVisual(_spriteStepOn);
+                print("step on change visual");
                 switch (_worldTrigger.iStepCharacterID)
                 {
                     case 1:
@@ -54,6 +60,7 @@ public class CheckPoint : MonoBehaviour
             }
             else
             {
+                _worldTrigger.ChangeVisual(_sprite);
                 switch (_worldTrigger.iStepCharacterID)
                 {
 

@@ -61,7 +61,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1931e547e283c7d47bf28216d2c2151e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: 0f24a8e72d1563940880e260084c6ee2, type: 3}
+  _sprite: {fileID: 21300000, guid: b017464256da141048a6824d4a2c5eb3, type: 3}
+  _spriteStepOn: {fileID: 21300000, guid: 8bf0872aab727443cac57c37b89ace3c, type: 3}
+  deadCheckPointPrefab: {fileID: 121298, guid: 8e0b05d46d349494a9af7ab740c173c6, type: 2}
   iID: 0
 --- !u!1001 &100100000
 Prefab:
@@ -69,7 +71,26 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b017464256da141048a6824d4a2c5eb3,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: _spriteStepOn
+      value: 
+      objectReference: {fileID: 21300000, guid: 8bf0872aab727443cac57c37b89ace3c,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: _spriteChecked
+      value: 
+      objectReference: {fileID: 21300000, guid: 4efe99b9859904c489533bd37c437314,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: deadCheckPointPrefab
+      value: 
+      objectReference: {fileID: 121298, guid: 8e0b05d46d349494a9af7ab740c173c6, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 118194}

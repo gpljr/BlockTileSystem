@@ -1753,7 +1753,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
 --- !u!1 &685240536
 GameObject:
   m_ObjectHideFlags: 0
@@ -2451,6 +2451,48 @@ RectTransform:
   m_AnchoredPosition: {x: -335, y: -188.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: .5, y: .5}
+--- !u!1001 &955908598
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 428802, guid: 8e0b05d46d349494a9af7ab740c173c6, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 290.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 428802, guid: 8e0b05d46d349494a9af7ab740c173c6, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 163.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 428802, guid: 8e0b05d46d349494a9af7ab740c173c6, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 428802, guid: 8e0b05d46d349494a9af7ab740c173c6, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 428802, guid: 8e0b05d46d349494a9af7ab740c173c6, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 428802, guid: 8e0b05d46d349494a9af7ab740c173c6, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 428802, guid: 8e0b05d46d349494a9af7ab740c173c6, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 428802, guid: 8e0b05d46d349494a9af7ab740c173c6, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 8e0b05d46d349494a9af7ab740c173c6, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &958108729
 GameObject:
   m_ObjectHideFlags: 0
@@ -2635,7 +2677,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
 --- !u!82 &1064573373
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3016,7 +3058,7 @@ Transform:
   - {fileID: 1343840459}
   - {fileID: 1290411937}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
 --- !u!114 &1215162034
 MonoBehaviour:
   m_ObjectHideFlags: 0

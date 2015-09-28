@@ -52,6 +52,8 @@ public class CheckPointsManager : MonoBehaviour {
         IntVector zero = new IntVector(0, 0);
         if (LevelCode.levelType != LevelType.Combined)
         {
+            checkPoint1Object.GetComponent<CheckPoint>().MoveCheckPoint();
+            checkPoint2Object.GetComponent<CheckPoint>().MoveCheckPoint();
             if (iCheckPointLocationID < CheckPoint1Locations.Length &&
                 CheckPoint1Locations[iCheckPointLocationID] != zero &&
                 CheckPoint2Locations[iCheckPointLocationID] != zero)
@@ -72,6 +74,7 @@ public class CheckPointsManager : MonoBehaviour {
         }
         else
         {
+            checkPoint1Object.GetComponent<CheckPoint>().MoveCheckPoint();
             if (iCheckPointLocationID < CheckPoint1Locations.Length &&
                 CheckPoint1Locations[iCheckPointLocationID] != zero)
             {
