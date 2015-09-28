@@ -204,7 +204,7 @@ public class LevelCode : MonoBehaviour {
         _isMergingShaderComplete = true;
     }
 
-    void Restart () {
+    public void Restart () {
         _timeToFadeIn = 0.5f;
         _timeToFadeOut = 0.5f;
         if (WorldManager.g.checkPointsMoved) {
