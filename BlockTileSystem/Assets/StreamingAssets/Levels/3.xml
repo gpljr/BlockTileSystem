@@ -75,6 +75,16 @@
     <cCheckPoints>
         <CheckPointInXML>
             <vCheckPoint1Position>
+                <x>6</x>
+                <y>2</y>
+            </vCheckPoint1Position>
+            <vCheckPoint2Position>
+                <x>5</x>
+                <y>2</y>
+            </vCheckPoint2Position>
+        </CheckPointInXML>
+        <CheckPointInXML>
+            <vCheckPoint1Position>
                 <x>8</x>
                 <y>4</y>
             </vCheckPoint1Position>
@@ -83,10 +93,7 @@
                 <y>3</y>
             </vCheckPoint2Position>
         </CheckPointInXML>
-        <CheckPointInXML>
-            <vCheckPoint1Position/>
-            <vCheckPoint2Position/>
-        </CheckPointInXML>
+        
     </cCheckPoints>
     <pPushers>
         <PusherInXML>

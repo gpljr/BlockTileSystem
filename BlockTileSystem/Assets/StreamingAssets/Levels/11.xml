@@ -104,7 +104,11 @@
     </sShooters>
     <cCheckPoints>
         <CheckPointInXML>
-            <vCheckPoint1Position/>
+            <vCheckPoint1Position>
+                <x>9</x>
+                <y>14</y>
+            </vCheckPoint1Position>
+            
             <vCheckPoint2Position/>
         </CheckPointInXML>
         <CheckPointInXML>

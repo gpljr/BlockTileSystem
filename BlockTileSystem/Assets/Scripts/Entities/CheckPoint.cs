@@ -26,7 +26,7 @@ public class CheckPoint : MonoBehaviour
     {
         var deadCheckObject = Instantiate(deadCheckPointPrefab);
         deadCheckObject.GetComponent<WorldTrigger>().Location=_worldTrigger.Location;
-        print("instantiate new visual");
+        _worldTrigger.ChangeVisual(_sprite);
     }
     void LateUpdate()
     {
@@ -43,7 +43,6 @@ public class CheckPoint : MonoBehaviour
             if (_worldTrigger.isSteppedOn)
             {
                 _worldTrigger.ChangeVisual(_spriteStepOn);
-                print("step on change visual");
                 switch (_worldTrigger.iStepCharacterID)
                 {
                     case 1:

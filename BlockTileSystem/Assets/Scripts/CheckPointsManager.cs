@@ -47,7 +47,6 @@ public class CheckPointsManager : MonoBehaviour {
     }
     private void MoveCheckPoints()
     {
-        print("check");
         iCheckPointLocationID++;
         IntVector zero = new IntVector(0, 0);
         if (LevelCode.levelType != LevelType.Combined)
@@ -84,7 +83,7 @@ public class CheckPointsManager : MonoBehaviour {
             else
             {
                 Destroy(checkPoint1Object);
-                iCheckPointLocationID--;
+                //iCheckPointLocationID--;
             }
         }
         WorldManager.g.checkPointsMoved = true;
