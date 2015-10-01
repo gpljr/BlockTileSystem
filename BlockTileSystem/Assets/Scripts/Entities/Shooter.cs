@@ -213,7 +213,7 @@ public class Shooter : MonoBehaviour
             if(distanceCombined<soundDistanceRange)
             {
                 volume*=Mathf.Pow((1.0f-distanceCombined/soundDistanceRange),2);
-                AudioSource.PlayClipAtPoint(_audioShoot, currentLocation, volume);
+                AudioSource.PlayClipAtPoint(_audioShoot, CameraControl.cameraLoc, volume);
             }
         break;
     }
@@ -230,21 +230,21 @@ public class Shooter : MonoBehaviour
             if(distance2<soundDistanceRange )
             {
                 volume*=Mathf.Pow(1.0f-distance2/soundDistanceRange,2);
-                AudioSource.PlayClipAtPoint(_audioShoot, currentLocation, volume);
+                AudioSource.PlayClipAtPoint(_audioShoot, CameraControl.cameraLoc, volume);
             }
         }else if(_bPlayer2Entered)
         {
             if(distance1<soundDistanceRange)
             {
                 volume*=Mathf.Pow(1.0f-distance1/soundDistanceRange,2);
-                AudioSource.PlayClipAtPoint(_audioShoot, currentLocation, volume);
+                AudioSource.PlayClipAtPoint(_audioShoot, CameraControl.cameraLoc, volume);
             }
         }else
         {
             if(Mathf.Min(distance1,distance2)<soundDistanceRange )
             {
                 volume*=Mathf.Pow(1.0f-Mathf.Min(distance1,distance2)/soundDistanceRange,2);
-                AudioSource.PlayClipAtPoint(_audioShoot, currentLocation, volume);
+                AudioSource.PlayClipAtPoint(_audioShoot, CameraControl.cameraLoc, volume);
             }
         }
     }

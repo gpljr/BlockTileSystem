@@ -39,7 +39,7 @@ public class LevelStar : MonoBehaviour
 
             if (_worldTrigger.isSteppedOn)
             {
-                AudioSource.PlayClipAtPoint (_audio, _worldTrigger.Location.ToVector2(), LevelCode.audioVolume);
+                AudioSource.PlayClipAtPoint (_audio, CameraControl.cameraLoc, LevelCode.audioVolume);
                 _worldTrigger.ChangeVisual(_spriteStepOn);
                 switch (_worldTrigger.iStepCharacterID)
                 {

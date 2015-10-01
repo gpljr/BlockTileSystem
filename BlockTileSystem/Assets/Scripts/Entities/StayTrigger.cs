@@ -62,12 +62,12 @@ public class StayTrigger : MonoBehaviour
             if (_worldTrigger.isSteppedOn)
             {
                 TriggerStayed(true);
-                AudioSource.PlayClipAtPoint(_audioOn, _worldTrigger.Location.ToVector2(), LevelCode.audioVolume);
+                AudioSource.PlayClipAtPoint(_audioOn, CameraControl.cameraLoc, LevelCode.audioVolume);
             }
             else
             {
                 TriggerStayed(false);
-                AudioSource.PlayClipAtPoint(_audioOff, _worldTrigger.Location.ToVector2(), LevelCode.audioVolume);
+                AudioSource.PlayClipAtPoint(_audioOff, CameraControl.cameraLoc, LevelCode.audioVolume);
             }
             _worldTrigger.isMessageSent = true;
         }

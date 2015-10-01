@@ -235,7 +235,7 @@ public class LevelCode : MonoBehaviour {
         EndLevel(iLevel);
     }
     public void LoadNextLevel () {
-        AudioSource.PlayClipAtPoint(_audioNextLevel, Vector3.zero, LevelCode.audioVolume);
+        AudioSource.PlayClipAtPoint(_audioNextLevel, CameraControl.cameraLoc, LevelCode.audioVolume);
 
         _timeToFadeIn = 1f;
         _timeToFadeOut = 1f;

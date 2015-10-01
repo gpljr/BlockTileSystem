@@ -209,7 +209,7 @@ public class Character : MonoBehaviour {
     private void Push () {
         //play push animation
 
-        AudioSource.PlayClipAtPoint(_audioPush, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
+        AudioSource.PlayClipAtPoint(_audioPush, CameraControl.cameraLoc, LevelCode.audioVolume);
 
         switch (_direction) {
             case Direction.North:
@@ -238,8 +238,21 @@ public class Character : MonoBehaviour {
     }
     private void Stuck () {
         //play stuck animation
-
-        AudioSource.PlayClipAtPoint(_audioStuck, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
+        switch (_direction) {
+            case Direction.North:
+                _worldEntity.SetBoolAnimationParameter("StuckUp", true);
+                break;
+            case Direction.South:
+                _worldEntity.SetBoolAnimationParameter("StuckDown", true);
+                break;
+            case Direction.West:
+                _worldEntity.SetBoolAnimationParameter("StuckLeft", true);
+                break;
+            case Direction.East:
+                _worldEntity.SetBoolAnimationParameter("StuckRight", true);
+                break;
+        }
+        AudioSource.PlayClipAtPoint(_audioStuck, CameraControl.cameraLoc, LevelCode.audioVolume);
 
         _input.x = 0;
         _input.y = 0; 
@@ -248,7 +261,7 @@ public class Character : MonoBehaviour {
     private void Move () {
         //play move animaition
 
-        AudioSource.PlayClipAtPoint(_audioMove, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
+        AudioSource.PlayClipAtPoint(_audioMove, CameraControl.cameraLoc, LevelCode.audioVolume);
         if (LevelCode.levelType == LevelType.Separation || LevelCode.levelType == LevelType.Merging) {
             switch (_direction) {
                 case Direction.North:

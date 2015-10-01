@@ -72,7 +72,7 @@ public class StepTrigger : MonoBehaviour
             isFunctioning=false;
         //texture change, sound
         isTriggered = true;
-        AudioSource.PlayClipAtPoint(_audio, _worldTrigger.Location.ToVector2(), LevelCode.audioVolume);
+        AudioSource.PlayClipAtPoint(_audio, CameraControl.cameraLoc, LevelCode.audioVolume);
         Events.g.Raise(new StepTriggerEvent(triggerID: iID));
         _worldTrigger.ChangeVisual(GetSpriteByID());
         //_worldTrigger.DestroyVisual();

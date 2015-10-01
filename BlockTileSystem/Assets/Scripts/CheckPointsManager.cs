@@ -39,7 +39,7 @@ public class CheckPointsManager : MonoBehaviour {
     {
         if (_bPlayer1Entered && _bPlayer2Entered)
         {
-            AudioSource.PlayClipAtPoint(_audio, Vector3.zero, LevelCode.audioVolume);
+            AudioSource.PlayClipAtPoint(_audio, CameraControl.cameraLoc, LevelCode.audioVolume);
             _bPlayer1Entered = false;
             _bPlayer2Entered = false;
             MoveCheckPoints();

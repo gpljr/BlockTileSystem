@@ -83,7 +83,10 @@
                 <y>3</y>
             </vCheckPoint2Position>
         </CheckPointInXML>
-        
+        <CheckPointInXML>
+            <vCheckPoint1Position/>
+            <vCheckPoint2Position/>
+        </CheckPointInXML>
     </cCheckPoints>
     <pPushers>
         <PusherInXML>

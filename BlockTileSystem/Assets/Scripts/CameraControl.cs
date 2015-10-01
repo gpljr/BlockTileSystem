@@ -17,6 +17,8 @@ public class CameraControl : MonoBehaviour {
     [SerializeField]
     private float _fDoubleCameraSize = 4f;
 
+    public static Vector3 cameraLoc;
+
 
     Camera _singleCamera, _doubleCamera1, _doubleCamera2;
     IntVector _dims;
@@ -32,6 +34,8 @@ public class CameraControl : MonoBehaviour {
         _doubleCameraObject2.SetActive(false);
         CameraBlur(false);
 
+        cameraLoc=Vector3.zero;
+
     }
     void LateUpdate () {
         if (LevelCode.gameState == GameState.InLevel) {
@@ -42,6 +46,8 @@ public class CameraControl : MonoBehaviour {
                 _dims = WorldManager.g.Dims;
                 _singleCameraObject.transform.position = new Vector3(_dims.x * _tileSize / 2, _dims.y * _tileSize / 2, -12f);
                 _singleCamera.orthographicSize = Mathf.Min(_dims.x, _dims.y) * _tileSize / 2 + 2;
+
+                cameraLoc=_singleCamera.transform.position;
             } else {
                 
                 Vector2 cameraLocation;
@@ -53,6 +59,8 @@ public class CameraControl : MonoBehaviour {
                             float distance = Vector2.Distance(WorldManager.g.char1Entity.visPosition, WorldManager.g.char2Entity.visPosition);
                             _singleCamera.orthographicSize = Mathf.Max(distance, _fSingleCameraSize) * _tileSize;
                         }
+
+                        cameraLoc=_singleCamera.transform.position;
                         break;
                     case LevelType.Combined:
                         if (WorldManager.g.charCombinedEntity != null) {
@@ -60,12 +68,18 @@ public class CameraControl : MonoBehaviour {
                             _singleCameraObject.transform.position = new Vector3(cameraLocation.x, cameraLocation.y, -12f);
                             _singleCamera.orthographicSize = _fSingleCameraSize * _tileSize;
                         }
+
+                        cameraLoc=_singleCamera.transform.position;
                         break;
                     case LevelType.Separation: 
                         CameraSeparation();
+
+                        cameraLoc=_doubleCamera1.transform.position;
                         break;
                     case LevelType.Merging:
                         CameraSeparation();
+
+                        cameraLoc=_doubleCamera1.transform.position;
                         break;
                 }
                 

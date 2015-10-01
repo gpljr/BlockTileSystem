@@ -85,7 +85,7 @@ public class Bullet : MonoBehaviour
     {
         if(_worldTrigger.steppingEntityType == EntityType.Character)
         {
-            AudioSource.PlayClipAtPoint(_audio, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
+            AudioSource.PlayClipAtPoint(_audio, CameraControl.cameraLoc, LevelCode.audioVolume);
             Events.g.Raise(new BulletHitEvent());//bullet kill
         }
         if(_worldTrigger.steppingEntityType != EntityType.Shooter && _worldTrigger.steppingEntityType != EntityType.Bullet)
