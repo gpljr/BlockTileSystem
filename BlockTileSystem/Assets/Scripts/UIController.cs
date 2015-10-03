@@ -17,10 +17,10 @@ public class UIController : MonoBehaviour {
     [SerializeField] Sprite AudioOn;
     [SerializeField] Sprite AudioOff;
 
-    // [SerializeField] Button Setting;
+    [SerializeField] Button Setting;
     // [SerializeField] Button RestartLevel;
-    // [SerializeField] Sprite settingHighlight;
-    // [SerializeField] Sprite settingNormal;
+    [SerializeField] Sprite settingHighlight;
+    [SerializeField] Sprite settingNormal;
     // [SerializeField] Sprite restartLevelHighlight;
     // [SerializeField] Sprite restartLevelNormal;
 
@@ -35,13 +35,24 @@ public class UIController : MonoBehaviour {
         musicSlider.onValueChanged.AddListener(delegate {
                 audioValueUpdate();
             });
+
+        SetButtonHighlight(Setting,settingHighlight);
     }
-    // Update is called once per frame
+    void SetButtonHighlight(Button button, Sprite highlightSprite)
+    {
+        SpriteState settingST = new SpriteState();
+        settingST.highlightedSprite = highlightSprite;
+        settingST.pressedSprite = highlightSprite;
+        settingST.disabledSprite = highlightSprite;
+        button.spriteState=settingST;
+        print("set state");
+    }//not working
+
+    
     void Update () {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             ShowUIPanel();
         }
-        
     }
     // void SettingButtonHighlight () {
     //     Setting.image.sprite = settingHighlight;
