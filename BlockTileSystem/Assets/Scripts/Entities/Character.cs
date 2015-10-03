@@ -65,6 +65,7 @@ public class Character : MonoBehaviour {
 
     [HideInInspector] public bool isPushedDown;
     [HideInInspector] public bool isPushedUp;
+    [HideInInspector] public bool isStuck;
 
     public void Cache () {
         _worldEntity = GetComponent<WorldEntity>();
@@ -75,6 +76,7 @@ public class Character : MonoBehaviour {
         _worldEntity.CollidingType = EntityCollidingType.Pushable;
         _worldEntity.entityType = EntityType.Character;
         _worldEntity.characterID = _iCharacterID;
+        _worldEntity.SetCharacter();
     }
     void RefreshOnLevelLoaded (LevelLoadedEvent e) {
         Refresh();
@@ -256,6 +258,7 @@ public class Character : MonoBehaviour {
 
         _input.x = 0;
         _input.y = 0; 
+        isStuck=true;
         
     }
     private void Move () {

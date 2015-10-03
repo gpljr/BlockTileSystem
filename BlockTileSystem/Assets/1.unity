@@ -1616,7 +1616,22 @@ MonoBehaviour:
     m_PostInfinity: 2
   visStuckCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: .57604146
+      outSlope: .57604146
+      tangentMode: 10
+    - time: .497115403
+      value: .286359072
+      inSlope: .019723773
+      outSlope: .019723773
+      tangentMode: 10
+    - time: .995833337
+      value: .0187500715
+      inSlope: -.536593914
+      outSlope: -.536593914
+      tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
   movingDuration: .349999994
@@ -3997,7 +4012,22 @@ MonoBehaviour:
     m_PostInfinity: 2
   visStuckCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: .57604146
+      outSlope: .57604146
+      tangentMode: 10
+    - time: .497115403
+      value: .286359072
+      inSlope: .019723773
+      outSlope: .019723773
+      tangentMode: 10
+    - time: .995833337
+      value: .0187500715
+      inSlope: -.536593914
+      outSlope: -.536593914
+      tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
   movingDuration: .349999994
@@ -5037,7 +5067,22 @@ MonoBehaviour:
     m_PostInfinity: 2
   visStuckCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: .57604146
+      outSlope: .57604146
+      tangentMode: 10
+    - time: .497115403
+      value: .286359072
+      inSlope: .019723773
+      outSlope: .019723773
+      tangentMode: 10
+    - time: .995833337
+      value: .0187500715
+      inSlope: -.536593914
+      outSlope: -.536593914
+      tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
   movingDuration: .349999994

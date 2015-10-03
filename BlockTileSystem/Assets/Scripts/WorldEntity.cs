@@ -75,8 +75,19 @@ public class WorldEntity : MonoBehaviour {
     public AnimationCurve visPushedUpCurve;
     public AnimationCurve visPushedDownCurve;
 
+    public AnimationCurve visStuckCurve;
+
     [HideInInspector] public float movingDuration = 0.5f;
+    float stuckDuration = 0.25f;
     float timer;
+
+    private Character _character;
+
+    public void SetCharacter () {
+        if (gameObject.GetComponent<Character>() != null) {
+            _character = gameObject.GetComponent<Character>();
+        }
+    }
 
     public bool isSpriteSet;
     public void SetVisual (Sprite sprite) {
@@ -108,68 +119,114 @@ public class WorldEntity : MonoBehaviour {
         _currStateInfo.characterInMoving = false;
     }
     private void Update () {
-        // if (!tempCollisionTypeSet)
-        // {
-        //     _tempCollisionType = _collidingType;
-        //     tempCollisionTypeSet = true;
-        // }
+        
+        //sprite moving animation
         if (isSpriteSet) {
             Vector2 fixedOffset = new Vector2(0.5f, -0.5f);
-            
+            bool stuck = false;
             float distance = Vector2.Distance(_location.ToVector2(), _currStateInfo.lastLoc);
-            
-            if (!instantMove && distance > 0f) {
+            if (_character != null) {
+                stuck = _character.isStuck;
+            }
+            //stuck animation
+            if (stuck) {
+                
                 Vector2 v = Vector2.zero;
-                Vector2 visualOffset = (_location.ToVector2() - _currStateInfo.lastLoc)
-                                       * (_currStateInfo.fractionComplete);
+                float x = 0f;
+                float y = 0f;
+                switch (_character.Direction) {
+                    case Direction.North:
+                        x = 0f;
+                        y = 1f;
+                        break;
+                    case Direction.South:
+                        x = 0f;
+                        y = -1f;
+                        break;
+                    case Direction.West:
+                        x = -1f;
+                        y = 0f;
+                        break;
+                    case Direction.East:
+                        x = 1f;
+                        y = 0f;
+                        break;
+                }
+                Vector2 visualOffset = new Vector2(x, y);
+                visualOffset *= (_currStateInfo.fractionComplete);
                 
                 v = _currStateInfo.lastLoc + visualOffset + fixedOffset;
                 _visuals.position = v * WorldManager.g.TileSize;
-                
-                if (entityType == EntityType.Character) {
-                    _collidingType = EntityCollidingType.Colliding;
-                    _currStateInfo.characterInMoving = true;
-                }
-                
-                if (timer < movingDuration) {
-
+                if (timer < stuckDuration) {
                     timer += Time.deltaTime;
-                    if (entityType == EntityType.Character && gameObject.GetComponent<Character>().isPushedUp) {
-                        _currStateInfo.fractionComplete = visPushedUpCurve.Evaluate(timer / movingDuration);
-                    } 
-                    else if (entityType == EntityType.Character && gameObject.GetComponent<Character>().isPushedDown) {
-                        _currStateInfo.fractionComplete = visPushedDownCurve.Evaluate(timer / movingDuration);
-                    } 
-                    else {
-                        _currStateInfo.fractionComplete = visMovingCurve.Evaluate(timer / movingDuration);
-                    }
-                }
-                //if (_currStateInfo.fractionComplete >= 1f)
-                if (timer >= movingDuration) {
+                    _currStateInfo.fractionComplete = visStuckCurve.Evaluate(timer / stuckDuration);
+                } else {
                     AnimationStop();
                     _currStateInfo.lastLoc = _location.ToVector2();
                     _currStateInfo.fractionComplete = 0f;
-                    if (entityType == EntityType.Character) {
-                        _currStateInfo.characterInMoving = false;
-                    }
+                    
                     timer = 0f;
-                    _collidingType = _tempCollisionType;
-                    if (entityType == EntityType.Character) {
-                        gameObject.GetComponent<Character>().isPushedUp = false;
-                        gameObject.GetComponent<Character>().isPushedDown = false;
-                    }
+                    _character.isStuck = false;
                     
                 }
-                    
+
             } else {
-                Vector2 v = _currStateInfo.lastLoc + fixedOffset;
-                _visuals.position = v * WorldManager.g.TileSize;
-                _currStateInfo.lastLoc = _location.ToVector2();
-                instantMove = false;
-                _collidingType = _tempCollisionType;
+                if (!instantMove && distance > 0f) {
+                    Vector2 v = Vector2.zero;
+                    Vector2 visualOffset = (_location.ToVector2() - _currStateInfo.lastLoc)
+                                           * (_currStateInfo.fractionComplete);
+                
+                    v = _currStateInfo.lastLoc + visualOffset + fixedOffset;
+                    _visuals.position = v * WorldManager.g.TileSize;
+                
+                    if (_character!=null) {
+                        _collidingType = EntityCollidingType.Colliding;
+                        _currStateInfo.characterInMoving = true;
+                    }
+                
+                    if (timer < movingDuration) {
+
+                        timer += Time.deltaTime;
+                        if (_character != null) {
+                            if (_character.isPushedUp) {
+                                _currStateInfo.fractionComplete = visPushedUpCurve.Evaluate(timer / movingDuration);
+                            } else if (_character.isPushedDown) {
+                                _currStateInfo.fractionComplete = visPushedDownCurve.Evaluate(timer / movingDuration);
+                            } else {
+                                _currStateInfo.fractionComplete = visMovingCurve.Evaluate(timer / movingDuration);
+                            }
+                        } else {
+                            _currStateInfo.fractionComplete = visMovingCurve.Evaluate(timer / movingDuration);
+                        }
+                        
+                    }else {
+                        AnimationStop();
+                        _currStateInfo.lastLoc = _location.ToVector2();
+                        _currStateInfo.fractionComplete = 0f;
+
+                        timer = 0f;
+                        _collidingType = _tempCollisionType;
+                        if (_character!=null) {
+                            _currStateInfo.characterInMoving = false;
+                            _character.isPushedUp = false;
+                            _character.isPushedDown = false;
+                        }
+                    
+                    }
+                } else {
+                    Vector2 v = _currStateInfo.lastLoc + fixedOffset;
+                    _visuals.position = v * WorldManager.g.TileSize;
+                    _currStateInfo.lastLoc = _location.ToVector2();
+                    instantMove = false;
+                    _collidingType = _tempCollisionType;
+                }
             }
-            //tempLocation = _location;
+
         }
+
+
+
+
     }
     private void AnimationStop () {
         SetBoolAnimationParameter("MoveUp", false);
@@ -213,8 +270,6 @@ public class WorldEntity : MonoBehaviour {
         }
     }
 
-    void Awake () {
-    }
     void Start () {
         RegisterMe();
         
