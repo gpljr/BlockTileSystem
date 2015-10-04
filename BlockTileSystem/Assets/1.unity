@@ -1293,7 +1293,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 471894, guid: 88b7b1b3092d8485fbec830912f96062, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 141474, guid: 88b7b1b3092d8485fbec830912f96062, type: 2}
       propertyPath: m_IsActive
@@ -1635,7 +1635,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   movingDuration: .349999994
-  stuckDuration: .150000006
+  stuckDuration: .200000003
   isSpriteSet: 0
 --- !u!4 &684781641
 Transform:
@@ -3466,7 +3466,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 467752, guid: 15b2480a3d230466ab112eb0f2f5a08c, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 191076, guid: 15b2480a3d230466ab112eb0f2f5a08c, type: 2}
       propertyPath: m_IsActive
@@ -4032,7 +4032,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   movingDuration: .349999994
-  stuckDuration: .150000006
+  stuckDuration: .200000003
   isSpriteSet: 0
 --- !u!4 &1436136981
 Transform:
@@ -5088,7 +5088,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   movingDuration: .349999994
-  stuckDuration: .150000006
+  stuckDuration: .200000003
   isSpriteSet: 0
 --- !u!4 &1755608594
 Transform:
