@@ -1619,22 +1619,23 @@ MonoBehaviour:
     m_Curve:
     - time: 0
       value: 0
-      inSlope: .57604146
-      outSlope: .57604146
+      inSlope: .289206803
+      outSlope: .289206803
       tangentMode: 10
-    - time: .497115403
-      value: .286359072
-      inSlope: .019723773
-      outSlope: .019723773
+    - time: .501264691
+      value: .144969165
+      inSlope: .0169981718
+      outSlope: .0169981718
       tangentMode: 10
     - time: .995833337
       value: .0187500715
-      inSlope: -.536593914
-      outSlope: -.536593914
+      inSlope: -.255210459
+      outSlope: -.255210459
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
   movingDuration: .349999994
+  stuckDuration: .150000006
   isSpriteSet: 0
 --- !u!4 &684781641
 Transform:
@@ -1777,7 +1778,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
 --- !u!1 &685240536
 GameObject:
   m_ObjectHideFlags: 0
@@ -4015,22 +4016,23 @@ MonoBehaviour:
     m_Curve:
     - time: 0
       value: 0
-      inSlope: .57604146
-      outSlope: .57604146
+      inSlope: .289206803
+      outSlope: .289206803
       tangentMode: 10
-    - time: .497115403
-      value: .286359072
-      inSlope: .019723773
-      outSlope: .019723773
+    - time: .501264691
+      value: .144969165
+      inSlope: .0169981718
+      outSlope: .0169981718
       tangentMode: 10
     - time: .995833337
       value: .0187500715
-      inSlope: -.536593914
-      outSlope: -.536593914
+      inSlope: -.255210459
+      outSlope: -.255210459
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
   movingDuration: .349999994
+  stuckDuration: .150000006
   isSpriteSet: 0
 --- !u!4 &1436136981
 Transform:
@@ -5070,22 +5072,23 @@ MonoBehaviour:
     m_Curve:
     - time: 0
       value: 0
-      inSlope: .57604146
-      outSlope: .57604146
+      inSlope: .289206803
+      outSlope: .289206803
       tangentMode: 10
-    - time: .497115403
-      value: .286359072
-      inSlope: .019723773
-      outSlope: .019723773
+    - time: .501264691
+      value: .144969165
+      inSlope: .0169981718
+      outSlope: .0169981718
       tangentMode: 10
     - time: .995833337
       value: .0187500715
-      inSlope: -.536593914
-      outSlope: -.536593914
+      inSlope: -.255210459
+      outSlope: -.255210459
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
   movingDuration: .349999994
+  stuckDuration: .150000006
   isSpriteSet: 0
 --- !u!4 &1755608594
 Transform:

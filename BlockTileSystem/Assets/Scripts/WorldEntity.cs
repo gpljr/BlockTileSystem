@@ -69,7 +69,7 @@ public class WorldEntity : MonoBehaviour {
             _visuals.position = value;
         }
     }
-    public bool instantMove;
+    [HideInInspector] public bool instantMove;
 
     public AnimationCurve visMovingCurve;
     public AnimationCurve visPushedUpCurve;
@@ -78,7 +78,7 @@ public class WorldEntity : MonoBehaviour {
     public AnimationCurve visStuckCurve;
 
     [HideInInspector] public float movingDuration = 0.5f;
-    float stuckDuration = 0.25f;
+    [SerializeField] float stuckDuration = 0.15f;
     float timer;
 
     private Character _character;
@@ -89,7 +89,7 @@ public class WorldEntity : MonoBehaviour {
         }
     }
 
-    public bool isSpriteSet;
+    [HideInInspector] public bool isSpriteSet;
     public void SetVisual (Sprite sprite) {
         _visuals = ((GameObject)Instantiate(_visualPrefab, (_location.ToVector2() + new Vector2(0.5f, -0.5f)) * WorldManager.g.TileSize, new Quaternion(0, 0, 0, 0))).transform;
         _visuals.gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
@@ -161,6 +161,7 @@ public class WorldEntity : MonoBehaviour {
                     timer += Time.deltaTime;
                     _currStateInfo.fractionComplete = visStuckCurve.Evaluate(timer / stuckDuration);
                 } else {
+                    print("stop anim");
                     AnimationStop();
                     _currStateInfo.lastLoc = _location.ToVector2();
                     _currStateInfo.fractionComplete = 0f;
@@ -249,10 +250,10 @@ public class WorldEntity : MonoBehaviour {
         SetBoolAnimationParameter("PushedLeft", false);
         SetBoolAnimationParameter("PushedRight", false);
 
-        SetBoolAnimationParameter("StuckUp", false);
-        SetBoolAnimationParameter("StuckDown", false);
-        SetBoolAnimationParameter("StuckLeft", false);
-        SetBoolAnimationParameter("StuckRight", false);
+        SetBoolAnimationParameter("StuckUp1", false);
+        SetBoolAnimationParameter("StuckDown1", false);
+        SetBoolAnimationParameter("StuckLeft1", false);
+        SetBoolAnimationParameter("StuckRight1", false);
     }
     private bool _registered = false;
 

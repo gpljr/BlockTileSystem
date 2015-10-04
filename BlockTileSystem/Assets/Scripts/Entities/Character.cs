@@ -242,16 +242,16 @@ public class Character : MonoBehaviour {
         //play stuck animation
         switch (_direction) {
             case Direction.North:
-                _worldEntity.SetBoolAnimationParameter("StuckUp", true);
+                _worldEntity.SetBoolAnimationParameter("StuckUp1", true);
                 break;
             case Direction.South:
-                _worldEntity.SetBoolAnimationParameter("StuckDown", true);
+                _worldEntity.SetBoolAnimationParameter("StuckDown1", true);
                 break;
             case Direction.West:
-                _worldEntity.SetBoolAnimationParameter("StuckLeft", true);
+                _worldEntity.SetBoolAnimationParameter("StuckLeft1", true);
                 break;
             case Direction.East:
-                _worldEntity.SetBoolAnimationParameter("StuckRight", true);
+                _worldEntity.SetBoolAnimationParameter("StuckRight1", true);
                 break;
         }
         AudioSource.PlayClipAtPoint(_audioStuck, CameraControl.cameraLoc, LevelCode.audioVolume);
