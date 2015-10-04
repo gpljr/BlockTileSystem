@@ -17,12 +17,12 @@ public class Character : MonoBehaviour {
     private IntVector _input;
 
     private Direction _direction;
-    public Direction Direction{
-        get {return _direction;}
+    public Direction Direction {
+        get { return _direction; }
     }
     private bool _bMove;
-    public bool MoveInput{
-        get {return _bMove;}
+    public bool MoveInput {
+        get { return _bMove; }
     }
 
     [SerializeField]
@@ -66,6 +66,12 @@ public class Character : MonoBehaviour {
     [HideInInspector] public bool isPushedDown;
     [HideInInspector] public bool isPushedUp;
     [HideInInspector] public bool isStuck;
+
+    float idleTimer;
+    [SerializeField] float idleTimeLimit = 3f;
+    [SerializeField] float idleTimeRandLimit = 2f;
+    bool idling;
+    float idlingTimer;
 
     public void Cache () {
         _worldEntity = GetComponent<WorldEntity>();
@@ -131,37 +137,56 @@ public class Character : MonoBehaviour {
                     _worldEntity.movingDuration = 0.35f;
                     break;
             }
-        }
-        if (!_worldEntity.StateInfo.characterInMoving
-            && LevelCode.gameState == GameState.InLevel
-            && !onMergingStar) {
-            //_input = new IntVector(Vector2.zero);
-            if (Input.GetKeyDown(_leftKey)) {
-                _input.x -= 1;
-                _direction = Direction.West;
-                _bMove = true;
+            idleTimer += Time.deltaTime;
+            if (idleTimer >= idleTimeLimit + Random.Range(0f, idleTimeRandLimit)) {
+                _worldEntity.SetBoolAnimationParameter("Idle", true);
+                idleTimer = 0f;
+                idling = true;
             }
-            if (Input.GetKeyDown(_rightKey)) {
-                _input.x += 1;
-                _direction = Direction.East;
-                _bMove = true;
-                
-                //Invoke("StopAnimation", 0.35f);
+            if (idling) {
+                idlingTimer += Time.deltaTime;
             }
-            if (Input.GetKeyDown(_upKey)) {
-                _input.y += 1;
-                _direction = Direction.North;
-                _bMove = true;
+            if (idlingTimer >= 0.2f) {
+                _worldEntity.SetBoolAnimationParameter("Idle", false);
+                idlingTimer = 0f;
+                idling = false;
             }
-            if (Input.GetKeyDown(_downKey)) {
-                _input.y -= 1;
-                _direction = Direction.South;
-                _bMove = true;
+
+            if (!_worldEntity.StateInfo.characterInMoving && !onMergingStar) {
+                //_input = new IntVector(Vector2.zero);
+                if (Input.GetKeyDown(_leftKey)) {
+                    _input.x -= 1;
+                    _direction = Direction.West;
+                    _bMove = true;
+                    idleTimer = 0f;
+                }
+                if (Input.GetKeyDown(_rightKey)) {
+                    _input.x += 1;
+                    _direction = Direction.East;
+                    _bMove = true;
+                    idleTimer = 0f;
+                }
+                if (Input.GetKeyDown(_upKey)) {
+                    _input.y += 1;
+                    _direction = Direction.North;
+                    _bMove = true;
+                    idleTimer = 0f;
+                }
+                if (Input.GetKeyDown(_downKey)) {
+                    _input.y -= 1;
+                    _direction = Direction.South;
+                    _bMove = true;
+                    idleTimer = 0f;
+                }
             }
-        }
-        if (_worldEntity.isPushed) {
-            Pushed(_worldEntity.pushedDirection);
-            _worldEntity.isPushed = false;
+            if (_worldEntity.isPushed) {
+                Pushed(_worldEntity.pushedDirection);
+                _worldEntity.isPushed = false;
+                idleTimer = 0f;
+            }
+            if (onMergingStar) {
+                idleTimer = 0f;
+            }
         }
     }
     // void StopAnimation()
@@ -173,12 +198,12 @@ public class Character : MonoBehaviour {
         switch (direction) {
             case Direction.North:
                 _worldEntity.SetBoolAnimationParameter("PushedUp", true);
-                isPushedUp=true;
+                isPushedUp = true;
                 _worldEntity.SetOrderLayer(8);
                 break;
             case Direction.South:
                 _worldEntity.SetBoolAnimationParameter("PushedDown", true);
-                isPushedDown=true;
+                isPushedDown = true;
                 _worldEntity.SetOrderLayer(12);
                 break;
             case Direction.West:
@@ -258,7 +283,7 @@ public class Character : MonoBehaviour {
 
         _input.x = 0;
         _input.y = 0; 
-        isStuck=true;
+        isStuck = true;
         
     }
     private void Move () {
@@ -330,8 +355,7 @@ public class Character : MonoBehaviour {
     void SetSprite (bool isInMerging) {
         _worldEntity.ChangeVisual(GetSpriteByID(isInMerging));
     }
-    void SetLayer(bool isInMerging)
-    {
+    void SetLayer (bool isInMerging) {
         if (!isInMerging || oneEnteredMergingStar) {
             
             _worldEntity.SetOrderLayer(10);
