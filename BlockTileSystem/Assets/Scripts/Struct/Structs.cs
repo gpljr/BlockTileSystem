@@ -141,6 +141,14 @@ public struct SavableLevel
         Stretch
     }
 
+    public enum StuckType
+    {
+        Null,
+        MoveStuck,
+        PushStuck,
+        PushedStuck
+    }
+
 public class Structs : MonoBehaviour {
 	
 }

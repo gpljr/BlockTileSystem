@@ -266,20 +266,58 @@ public class Character : MonoBehaviour {
     }
     private void Stuck () {
         //play stuck animation
-        switch (_direction) {
-            case Direction.North:
-                _worldEntity.SetBoolAnimationParameter("StuckUp1", true);
+        print(_worldEntity.stuckType);
+        switch (_worldEntity.stuckType) {
+            case StuckType.MoveStuck:
+                switch (_direction) {
+                    case Direction.North:
+                        _worldEntity.SetBoolAnimationParameter("StuckUp1", true);
+                        break;
+                    case Direction.South:
+                        _worldEntity.SetBoolAnimationParameter("StuckDown1", true);
+                        break;
+                    case Direction.West:
+                        _worldEntity.SetBoolAnimationParameter("StuckLeft1", true);
+                        break;
+                    case Direction.East:
+                        _worldEntity.SetBoolAnimationParameter("StuckRight1", true);
+                        break;
+                }
                 break;
-            case Direction.South:
-                _worldEntity.SetBoolAnimationParameter("StuckDown1", true);
+            case StuckType.PushStuck:
+                switch (_direction) {
+                    case Direction.North:
+                        _worldEntity.SetBoolAnimationParameter("PushStuckUp", true);
+                        break;
+                    case Direction.South:
+                        _worldEntity.SetBoolAnimationParameter("PushStuckDown", true);
+                        break;
+                    case Direction.West:
+                        _worldEntity.SetBoolAnimationParameter("PushStuckLeft", true);
+                        break;
+                    case Direction.East:
+                        _worldEntity.SetBoolAnimationParameter("PushStuckRight", true);
+                        break;
+                }
                 break;
-            case Direction.West:
-                _worldEntity.SetBoolAnimationParameter("StuckLeft1", true);
-                break;
-            case Direction.East:
-                _worldEntity.SetBoolAnimationParameter("StuckRight1", true);
+            case StuckType.PushedStuck:
+                switch (_direction) {
+                    case Direction.North:
+                        _worldEntity.SetBoolAnimationParameter("PushedStuckUp", true);
+                        break;
+                    case Direction.South:
+                        _worldEntity.SetBoolAnimationParameter("PushedStuckDown", true);
+                        break;
+                    case Direction.West:
+                        _worldEntity.SetBoolAnimationParameter("PushedStuckLeft", true);
+                        break;
+                    case Direction.East:
+                        _worldEntity.SetBoolAnimationParameter("PushedStuckRight", true);
+                        break;
+                }
                 break;
         }
+        
         AudioSource.PlayClipAtPoint(_audioStuck, CameraControl.cameraLoc, LevelCode.audioVolume);
 
         _input.x = 0;

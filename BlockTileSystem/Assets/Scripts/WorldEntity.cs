@@ -78,10 +78,11 @@ public class WorldEntity : MonoBehaviour {
     public AnimationCurve visStuckCurve;
 
     [HideInInspector] public float movingDuration = 0.5f;
-    [SerializeField] float stuckDuration = 0.15f;
+    [SerializeField] float moveStuckDuration = 0.2f;
     float timer;
 
     private Character _character;
+    public StuckType stuckType;
 
     public void SetCharacter () {
         if (gameObject.GetComponent<Character>() != null) {
@@ -157,9 +158,28 @@ public class WorldEntity : MonoBehaviour {
                 
                 v = _currStateInfo.lastLoc + visualOffset + fixedOffset;
                 _visuals.position = v * WorldManager.g.TileSize;
+
+                float stuckDuration = moveStuckDuration;
+                var stuckCurve = visStuckCurve;
+                // switch (stuckType) {
+                //     case StuckType.MoveStuck:
+                //         stuckDuration = moveStuckDuration;
+                //         stuckCurve = visStuckCurve;
+                //         break;
+                //     case StuckType.PushStuck:
+                //         stuckDuration = pushStuckDuration;
+                //         stuckCurve = visPushStuckCurve;
+                //         break;
+                //     case StuckType.PushedStuck:
+                //         stuckDuration = pushedStuckDuration;
+                //         stuckCurve = visPushedStuckCurve;
+                //         break;
+                // }
                 if (timer < stuckDuration) {
                     timer += Time.deltaTime;
-                    _currStateInfo.fractionComplete = visStuckCurve.Evaluate(timer / stuckDuration);
+
+                    _currStateInfo.fractionComplete = stuckCurve.Evaluate(timer / stuckDuration);
+   
                 } else {
                     print("stop anim");
                     AnimationStop();
@@ -171,6 +191,7 @@ public class WorldEntity : MonoBehaviour {
                     
                 }
 
+                //non stuck
             } else {
                 if (!instantMove && distance > 0f) {
                     Vector2 v = Vector2.zero;
@@ -180,7 +201,7 @@ public class WorldEntity : MonoBehaviour {
                     v = _currStateInfo.lastLoc + visualOffset + fixedOffset;
                     _visuals.position = v * WorldManager.g.TileSize;
                 
-                    if (_character!=null) {
+                    if (_character != null) {
                         _collidingType = EntityCollidingType.Colliding;
                         _currStateInfo.characterInMoving = true;
                     }
@@ -200,14 +221,14 @@ public class WorldEntity : MonoBehaviour {
                             _currStateInfo.fractionComplete = visMovingCurve.Evaluate(timer / movingDuration);
                         }
                         
-                    }else {
+                    } else {
                         AnimationStop();
                         _currStateInfo.lastLoc = _location.ToVector2();
                         _currStateInfo.fractionComplete = 0f;
 
                         timer = 0f;
                         _collidingType = _tempCollisionType;
-                        if (_character!=null) {
+                        if (_character != null) {
                             _currStateInfo.characterInMoving = false;
                             _character.isPushedUp = false;
                             _character.isPushedDown = false;

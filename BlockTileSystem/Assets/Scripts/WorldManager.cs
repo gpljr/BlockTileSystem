@@ -431,9 +431,9 @@ public class WorldManager : MonoBehaviour
         IntVector destination = Destination(from, direction);
         int x = destination.x;
         int y = destination.y;
-        
         if (_world[x, y] == TileType.Wall)
         {
+            movingEntity.stuckType=StuckType.MoveStuck;
             return MoveResult.Stuck;
         }
 
@@ -449,6 +449,7 @@ public class WorldManager : MonoBehaviour
                         break;
                     case EntityCollidingType.Colliding:
                         moveResult = MoveResult.Stuck;
+                        movingEntity.stuckType=StuckType.MoveStuck;
                         break;
                     case EntityCollidingType.Pushable:
                         var pushMoveResult = CanMove(destination, direction, _entities[i]);
@@ -460,6 +461,8 @@ public class WorldManager : MonoBehaviour
                                 break;
                             case MoveResult.Stuck:
                                 moveResult = MoveResult.Stuck;
+                                _entities[i].stuckType=StuckType.PushedStuck;
+                                movingEntity.stuckType=StuckType.PushStuck;
                                 break;
                             case MoveResult.Push:
                                 PushEntity(_entities[i], direction);
