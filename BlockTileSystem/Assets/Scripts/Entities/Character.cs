@@ -146,7 +146,7 @@ public class Character : MonoBehaviour {
             if (idling) {
                 idlingTimer += Time.deltaTime;
             }
-            if (idlingTimer >= 0.2f) {
+            if (idlingTimer >= 0.4f) {
                 _worldEntity.SetBoolAnimationParameter("Idle", false);
                 idlingTimer = 0f;
                 idling = false;
@@ -189,9 +189,10 @@ public class Character : MonoBehaviour {
             }
         }
     }
-    // void StopAnimation()
+
+    // public void SetIdleTimerZero()
     // {
-    //     _worldEntity.SetBoolAnimationParameter("MoveRight", false);
+    //     idleTimer=0f;
     // }
     private void Pushed (Direction direction) {
         //play pushed animation

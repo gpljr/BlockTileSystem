@@ -1544,7 +1544,7 @@ MonoBehaviour:
   isPushedUp: 0
   isStuck: 0
   idleTimeLimit: 3
-  idleTimeRandLimit: 2
+  idleTimeRandLimit: 3
 --- !u!114 &684781640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4085,7 +4085,7 @@ MonoBehaviour:
   isPushedUp: 0
   isStuck: 0
   idleTimeLimit: 3
-  idleTimeRandLimit: 2
+  idleTimeRandLimit: 3
 --- !u!1 &1455397163
 GameObject:
   m_ObjectHideFlags: 0
@@ -5143,7 +5143,7 @@ MonoBehaviour:
   isPushedUp: 0
   isStuck: 0
   idleTimeLimit: 3
-  idleTimeRandLimit: 2
+  idleTimeRandLimit: 3
 --- !u!1 &1755804818
 GameObject:
   m_ObjectHideFlags: 0
