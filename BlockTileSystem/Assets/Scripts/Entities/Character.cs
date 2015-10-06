@@ -266,6 +266,7 @@ public class Character : MonoBehaviour {
         _worldEntity.Location = vec;
     }
     public void Stuck () {
+        idleTimer = 0f;
         //play stuck animation
         switch (_worldEntity.stuckType) {
             case StuckType.MoveStuck:

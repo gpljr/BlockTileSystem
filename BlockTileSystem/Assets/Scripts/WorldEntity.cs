@@ -76,9 +76,11 @@ public class WorldEntity : MonoBehaviour {
     public AnimationCurve visPushedDownCurve;
 
     public AnimationCurve visStuckCurve;
+    public AnimationCurve visPushStuckCurve;
+    public AnimationCurve visPushedStuckCurve;
 
     [HideInInspector] public float movingDuration = 0.5f;
-    [SerializeField] float moveStuckDuration = 0.2f;
+    [SerializeField] float stuckDuration = 0.2f;
     float timer;
 
     private Character _character;
@@ -166,22 +168,19 @@ public class WorldEntity : MonoBehaviour {
                 v = _currStateInfo.lastLoc + visualOffset + fixedOffset;
                 _visuals.position = v * WorldManager.g.TileSize;
 
-                float stuckDuration = moveStuckDuration;
+                
                 var stuckCurve = visStuckCurve;
-                // switch (stuckType) {
-                //     case StuckType.MoveStuck:
-                //         stuckDuration = moveStuckDuration;
-                //         stuckCurve = visStuckCurve;
-                //         break;
-                //     case StuckType.PushStuck:
-                //         stuckDuration = pushStuckDuration;
-                //         stuckCurve = visPushStuckCurve;
-                //         break;
-                //     case StuckType.PushedStuck:
-                //         stuckDuration = pushedStuckDuration;
-                //         stuckCurve = visPushedStuckCurve;
-                //         break;
-                // }
+                switch (stuckType) {
+                    case StuckType.MoveStuck:
+                        stuckCurve = visStuckCurve;
+                        break;
+                    case StuckType.PushStuck:
+                        stuckCurve = visPushStuckCurve;
+                        break;
+                    case StuckType.PushedStuck:
+                        stuckCurve = visPushedStuckCurve;
+                        break;
+                }
                 if (timer < stuckDuration) {
                     timer += Time.deltaTime;
 
@@ -195,6 +194,7 @@ public class WorldEntity : MonoBehaviour {
                     
                     timer = 0f;
                     _character.isStuck = false;
+                    stuckType=StuckType.Null;
                     
                 }
 

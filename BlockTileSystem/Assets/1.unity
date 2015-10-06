@@ -1636,8 +1636,58 @@ MonoBehaviour:
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
+  visPushStuckCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: .398843914
+      outSlope: .398843914
+      tangentMode: 10
+    - time: .499038428
+      value: .199038446
+      inSlope: .000765666366
+      outSlope: .000765666366
+      tangentMode: 10
+    - time: 1
+      value: 1.1920929e-07
+      inSlope: -.397312582
+      outSlope: -.397312582
+      tangentMode: 10
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  visPushedStuckCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: .0892113224
+      outSlope: .0892113224
+      tangentMode: 10
+    - time: .323704928
+      value: .0288781449
+      inSlope: .381575823
+      outSlope: .381575823
+      tangentMode: 10
+    - time: .504487157
+      value: .150714576
+      inSlope: .159342051
+      outSlope: .159342051
+      tangentMode: 10
+    - time: .839142323
+      value: .031826254
+      inSlope: -.276554465
+      outSlope: -.276554465
+      tangentMode: 10
+    - time: 1
+      value: 1.1920929e-07
+      inSlope: -.197852761
+      outSlope: -.197852761
+      tangentMode: 10
+    m_PreInfinity: 2
+    m_PostInfinity: 2
   movingDuration: .349999994
-  moveStuckDuration: .200000003
+  stuckDuration: .200000003
   stuckType: 0
   isSpriteSet: 0
 --- !u!4 &684781641
@@ -4034,8 +4084,58 @@ MonoBehaviour:
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
+  visPushStuckCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: .398843914
+      outSlope: .398843914
+      tangentMode: 10
+    - time: .499038428
+      value: .199038446
+      inSlope: .000765666366
+      outSlope: .000765666366
+      tangentMode: 10
+    - time: 1
+      value: 1.1920929e-07
+      inSlope: -.397312582
+      outSlope: -.397312582
+      tangentMode: 10
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  visPushedStuckCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: .0892113224
+      outSlope: .0892113224
+      tangentMode: 10
+    - time: .323704928
+      value: .0288781449
+      inSlope: .381575823
+      outSlope: .381575823
+      tangentMode: 10
+    - time: .504487157
+      value: .150714576
+      inSlope: .159342051
+      outSlope: .159342051
+      tangentMode: 10
+    - time: .839142323
+      value: .031826254
+      inSlope: -.276554465
+      outSlope: -.276554465
+      tangentMode: 10
+    - time: 1
+      value: 1.1920929e-07
+      inSlope: -.197852761
+      outSlope: -.197852761
+      tangentMode: 10
+    m_PreInfinity: 2
+    m_PostInfinity: 2
   movingDuration: .349999994
-  moveStuckDuration: .200000003
+  stuckDuration: .200000003
   stuckType: 0
   isSpriteSet: 0
 --- !u!4 &1436136981
@@ -5093,8 +5193,58 @@ MonoBehaviour:
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
+  visPushStuckCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: .398843914
+      outSlope: .398843914
+      tangentMode: 10
+    - time: .499038428
+      value: .199038446
+      inSlope: .000765666366
+      outSlope: .000765666366
+      tangentMode: 10
+    - time: 1
+      value: 1.1920929e-07
+      inSlope: -.397312582
+      outSlope: -.397312582
+      tangentMode: 10
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  visPushedStuckCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: .0892113224
+      outSlope: .0892113224
+      tangentMode: 10
+    - time: .323704928
+      value: .0288781449
+      inSlope: .381575823
+      outSlope: .381575823
+      tangentMode: 10
+    - time: .504487157
+      value: .150714576
+      inSlope: .159342051
+      outSlope: .159342051
+      tangentMode: 10
+    - time: .839142323
+      value: .031826254
+      inSlope: -.276554465
+      outSlope: -.276554465
+      tangentMode: 10
+    - time: 1
+      value: 1.1920929e-07
+      inSlope: -.197852761
+      outSlope: -.197852761
+      tangentMode: 10
+    m_PreInfinity: 2
+    m_PostInfinity: 2
   movingDuration: .349999994
-  moveStuckDuration: .200000003
+  stuckDuration: .200000003
   stuckType: 0
   isSpriteSet: 0
 --- !u!4 &1755608594
