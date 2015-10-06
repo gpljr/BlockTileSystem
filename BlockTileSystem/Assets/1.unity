@@ -1637,7 +1637,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   movingDuration: .349999994
-  stuckDuration: .200000003
+  moveStuckDuration: .200000003
+  stuckType: 0
   isSpriteSet: 0
 --- !u!4 &684781641
 Transform:
@@ -4034,7 +4035,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   movingDuration: .349999994
-  stuckDuration: .200000003
+  moveStuckDuration: .200000003
+  stuckType: 0
   isSpriteSet: 0
 --- !u!4 &1436136981
 Transform:
@@ -5092,7 +5094,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   movingDuration: .349999994
-  stuckDuration: .200000003
+  moveStuckDuration: .200000003
+  stuckType: 0
   isSpriteSet: 0
 --- !u!4 &1755608594
 Transform:
