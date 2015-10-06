@@ -119,6 +119,13 @@ public class WorldEntity : MonoBehaviour {
         _currStateInfo.fractionComplete = 0f;
         _currStateInfo.characterInMoving = false;
     }
+    public void PushedStuck(Direction direction)
+    {
+        if (_character != null) {
+                _character.Stuck();
+                _character.Direction=direction;
+            }
+    }
     private void Update () {
         
         //sprite moving animation
@@ -275,6 +282,17 @@ public class WorldEntity : MonoBehaviour {
         SetBoolAnimationParameter("StuckDown1", false);
         SetBoolAnimationParameter("StuckLeft1", false);
         SetBoolAnimationParameter("StuckRight1", false);
+
+        SetBoolAnimationParameter("PushStuckUp", false);
+        SetBoolAnimationParameter("PushStuckDown", false);
+        SetBoolAnimationParameter("PushStuckLeft", false);
+        SetBoolAnimationParameter("PushStuckRight", false);
+
+        SetBoolAnimationParameter("PushedStuckUp", false);
+        SetBoolAnimationParameter("PushedStuckDown", false);
+        SetBoolAnimationParameter("PushedStuckLeft", false);
+        SetBoolAnimationParameter("PushedStuckRight", false);
+
     }
     private bool _registered = false;
 

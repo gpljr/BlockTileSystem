@@ -462,6 +462,7 @@ public class WorldManager : MonoBehaviour
                             case MoveResult.Stuck:
                                 moveResult = MoveResult.Stuck;
                                 _entities[i].stuckType=StuckType.PushedStuck;
+                                _entities[i].PushedStuck(direction);
                                 movingEntity.stuckType=StuckType.PushStuck;
                                 break;
                             case MoveResult.Push:

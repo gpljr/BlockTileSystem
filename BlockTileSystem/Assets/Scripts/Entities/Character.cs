@@ -19,6 +19,7 @@ public class Character : MonoBehaviour {
     private Direction _direction;
     public Direction Direction {
         get { return _direction; }
+        set{_direction = value;}
     }
     private bool _bMove;
     public bool MoveInput {
@@ -264,9 +265,8 @@ public class Character : MonoBehaviour {
         }
         _worldEntity.Location = vec;
     }
-    private void Stuck () {
+    public void Stuck () {
         //play stuck animation
-        print(_worldEntity.stuckType);
         switch (_worldEntity.stuckType) {
             case StuckType.MoveStuck:
                 switch (_direction) {
