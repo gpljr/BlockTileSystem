@@ -1641,18 +1641,28 @@ MonoBehaviour:
     m_Curve:
     - time: 0
       value: 0
-      inSlope: .398843914
-      outSlope: .398843914
+      inSlope: .704978466
+      outSlope: .704978466
       tangentMode: 10
-    - time: .499038428
-      value: .199038446
-      inSlope: .000765666366
-      outSlope: .000765666366
+    - time: .374038428
+      value: .263689041
+      inSlope: .435521841
+      outSlope: .435521841
+      tangentMode: 10
+    - time: .656018853
+      value: .310516179
+      inSlope: -.0973531082
+      outSlope: -.0973531082
+      tangentMode: 10
+    - time: .877418995
+      value: .230641335
+      inSlope: -1.12115633
+      outSlope: -1.12115633
       tangentMode: 10
     - time: 1
       value: 1.1920929e-07
-      inSlope: -.397312582
-      outSlope: -.397312582
+      inSlope: -1.88154125
+      outSlope: -1.88154125
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -4089,18 +4099,28 @@ MonoBehaviour:
     m_Curve:
     - time: 0
       value: 0
-      inSlope: .398843914
-      outSlope: .398843914
+      inSlope: .704978466
+      outSlope: .704978466
       tangentMode: 10
-    - time: .499038428
-      value: .199038446
-      inSlope: .000765666366
-      outSlope: .000765666366
+    - time: .374038428
+      value: .263689041
+      inSlope: .435521841
+      outSlope: .435521841
+      tangentMode: 10
+    - time: .656018853
+      value: .310516179
+      inSlope: -.0973531082
+      outSlope: -.0973531082
+      tangentMode: 10
+    - time: .877418995
+      value: .230641335
+      inSlope: -1.12115633
+      outSlope: -1.12115633
       tangentMode: 10
     - time: 1
       value: 1.1920929e-07
-      inSlope: -.397312582
-      outSlope: -.397312582
+      inSlope: -1.88154125
+      outSlope: -1.88154125
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -5203,18 +5223,28 @@ MonoBehaviour:
     m_Curve:
     - time: 0
       value: 0
-      inSlope: .398843914
-      outSlope: .398843914
+      inSlope: .704978466
+      outSlope: .704978466
       tangentMode: 10
-    - time: .499038428
-      value: .199038446
-      inSlope: .000765666366
-      outSlope: .000765666366
+    - time: .374038428
+      value: .263689041
+      inSlope: .435521841
+      outSlope: .435521841
+      tangentMode: 10
+    - time: .656018853
+      value: .310516179
+      inSlope: -.0973531082
+      outSlope: -.0973531082
+      tangentMode: 10
+    - time: .877418995
+      value: .230641335
+      inSlope: -1.12115633
+      outSlope: -1.12115633
       tangentMode: 10
     - time: 1
       value: 1.1920929e-07
-      inSlope: -.397312582
-      outSlope: -.397312582
+      inSlope: -1.88154125
+      outSlope: -1.88154125
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
