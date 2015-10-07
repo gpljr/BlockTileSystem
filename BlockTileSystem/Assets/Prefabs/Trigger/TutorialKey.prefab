@@ -71,6 +71,10 @@ MonoBehaviour:
   _spriteDown: {fileID: 21300000, guid: c04e7bca070f64ae3a00b701d717ba32, type: 3}
   _spriteLeft: {fileID: 21300000, guid: cde6eb2a294d4b74495f11e491a7520b, type: 3}
   _spriteRight: {fileID: 21300000, guid: de6ac68c8cdb49e41a966e590beec38d, type: 3}
+  _spriteW2: {fileID: 21300000, guid: 74184bbc2214740328c72b5d037754fd, type: 3}
+  _spriteS2: {fileID: 21300000, guid: 32d3f485a1c614287938b697a2c73bfd, type: 3}
+  _spriteLeft2: {fileID: 21300000, guid: 59476b65845bb4dd29b8da23e6e549ed, type: 3}
+  _spriteRight2: {fileID: 21300000, guid: 1f047694f31f9405cacfb09af0db6ab8, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -97,6 +101,26 @@ Prefab:
       propertyPath: _spriteDown
       value: 
       objectReference: {fileID: 21300000, guid: c04e7bca070f64ae3a00b701d717ba32,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: _spriteW2
+      value: 
+      objectReference: {fileID: 21300000, guid: 74184bbc2214740328c72b5d037754fd,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: _spriteS2
+      value: 
+      objectReference: {fileID: 21300000, guid: 32d3f485a1c614287938b697a2c73bfd,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: _spriteLeft2
+      value: 
+      objectReference: {fileID: 21300000, guid: 59476b65845bb4dd29b8da23e6e549ed,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: _spriteRight2
+      value: 
+      objectReference: {fileID: 21300000, guid: 1f047694f31f9405cacfb09af0db6ab8,
         type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TutorialKey : MonoBehaviour
-{
+public class TutorialKey : MonoBehaviour {
     public int iID;
     public bool isTriggered;
 
@@ -23,21 +22,30 @@ public class TutorialKey : MonoBehaviour
     [SerializeField]
     private Sprite _spriteRight;
 
+    [SerializeField]
+    private Sprite _spriteW2;
+    [SerializeField]
+    private Sprite _spriteS2;
+    [SerializeField]
+    private Sprite _spriteLeft2;
+    [SerializeField]
+    private Sprite _spriteRight2;
+
     private WorldTrigger _worldTrigger;
-    public void Cache()
-    {
+    public void Cache () {
         _worldTrigger = GetComponent<WorldTrigger>();
     }
-    void Awake()
-    {
+    void Awake () {
         Cache();
         _worldTrigger.triggerType = TriggerType.TutorialKey;
     }
-    void LateUpdate()
-    {
-        if (!_worldTrigger.isSpriteSet && !isTriggered)
-        {
+    void LateUpdate () {
+        if (!_worldTrigger.isSpriteSet) {
             _worldTrigger.SetVisual(GetSpriteByID());
+        } else {
+            if (iID == 1) {
+                _worldTrigger.ChangeVisual( _spriteW2);
+            }
         }
         
         // if (!_worldTrigger.isMessageSent)
@@ -56,11 +64,9 @@ public class TutorialKey : MonoBehaviour
     // }
 
 
-    private Sprite GetSpriteByID()
-    {
+    private Sprite GetSpriteByID () {
         Sprite sprite = new Sprite();
-        switch (iID)
-        {
+        switch (iID) {
             case 1:
                 sprite = _spriteW;
                 break;
