@@ -3,7 +3,10 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class LevelCode : MonoBehaviour {
-    private int _iCurrentLevel;
+    private static int _iCurrentLevel;
+    public static int CurrentLevel{
+        get {return _iCurrentLevel;}
+    }
     private bool _bNewLevelLoaded;
 
     [SerializeField]
