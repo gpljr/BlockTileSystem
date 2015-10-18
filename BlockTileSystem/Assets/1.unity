@@ -1357,7 +1357,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 9566626, guid: 88b7b1b3092d8485fbec830912f96062, type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 21224652, guid: 88b7b1b3092d8485fbec830912f96062, type: 2}
       propertyPath: m_Sprite
@@ -1599,11 +1599,11 @@ MonoBehaviour:
     type: 3}
   _char2MergingGreenSprite: {fileID: 21300000, guid: 6bc19a520a0ad453fab0fabe4061569f,
     type: 3}
-  _char1Face1Sprite: {fileID: 21300000, guid: e73ad324aec1142c19c6cd6f6d423529, type: 3}
-  _char1Face2Sprite: {fileID: 21300000, guid: e73ad324aec1142c19c6cd6f6d423529, type: 3}
+  _char1Face1Sprite: {fileID: 21300000, guid: d23447b428e3240899a3107447cc3e1c, type: 3}
+  _char1Face2Sprite: {fileID: 21300000, guid: 7a29b5a41d7f84ce5905c93b0e285993, type: 3}
   _char1Face3Sprite: {fileID: 21300000, guid: e73ad324aec1142c19c6cd6f6d423529, type: 3}
-  _char2Face1Sprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
-  _char2Face2Sprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
+  _char2Face1Sprite: {fileID: 21300000, guid: f7f929f8eccb64f4e94b5c249692ccb1, type: 3}
+  _char2Face2Sprite: {fileID: 21300000, guid: 93f7e5c275114489fa9fe9201df03b4c, type: 3}
   _char2Face3Sprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
   isPushedDown: 0
   isPushedUp: 0
@@ -4268,11 +4268,11 @@ MonoBehaviour:
     type: 3}
   _char2MergingGreenSprite: {fileID: 21300000, guid: 6bc19a520a0ad453fab0fabe4061569f,
     type: 3}
-  _char1Face1Sprite: {fileID: 21300000, guid: e73ad324aec1142c19c6cd6f6d423529, type: 3}
-  _char1Face2Sprite: {fileID: 21300000, guid: e73ad324aec1142c19c6cd6f6d423529, type: 3}
+  _char1Face1Sprite: {fileID: 21300000, guid: d23447b428e3240899a3107447cc3e1c, type: 3}
+  _char1Face2Sprite: {fileID: 21300000, guid: 7a29b5a41d7f84ce5905c93b0e285993, type: 3}
   _char1Face3Sprite: {fileID: 21300000, guid: e73ad324aec1142c19c6cd6f6d423529, type: 3}
-  _char2Face1Sprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
-  _char2Face2Sprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
+  _char2Face1Sprite: {fileID: 21300000, guid: f7f929f8eccb64f4e94b5c249692ccb1, type: 3}
+  _char2Face2Sprite: {fileID: 21300000, guid: 93f7e5c275114489fa9fe9201df03b4c, type: 3}
   _char2Face3Sprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
   isPushedDown: 0
   isPushedUp: 0
@@ -5516,11 +5516,11 @@ MonoBehaviour:
     type: 3}
   _char2MergingGreenSprite: {fileID: 21300000, guid: 6bc19a520a0ad453fab0fabe4061569f,
     type: 3}
-  _char1Face1Sprite: {fileID: 21300000, guid: e73ad324aec1142c19c6cd6f6d423529, type: 3}
-  _char1Face2Sprite: {fileID: 21300000, guid: e73ad324aec1142c19c6cd6f6d423529, type: 3}
+  _char1Face1Sprite: {fileID: 21300000, guid: d23447b428e3240899a3107447cc3e1c, type: 3}
+  _char1Face2Sprite: {fileID: 21300000, guid: 7a29b5a41d7f84ce5905c93b0e285993, type: 3}
   _char1Face3Sprite: {fileID: 21300000, guid: e73ad324aec1142c19c6cd6f6d423529, type: 3}
-  _char2Face1Sprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
-  _char2Face2Sprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
+  _char2Face1Sprite: {fileID: 21300000, guid: f7f929f8eccb64f4e94b5c249692ccb1, type: 3}
+  _char2Face2Sprite: {fileID: 21300000, guid: 93f7e5c275114489fa9fe9201df03b4c, type: 3}
   _char2Face3Sprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
   isPushedDown: 0
   isPushedUp: 0
