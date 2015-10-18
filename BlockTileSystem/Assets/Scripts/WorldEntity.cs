@@ -94,8 +94,11 @@ public class WorldEntity : MonoBehaviour {
 
     [HideInInspector] public bool isSpriteSet;
     public void SetVisual (Sprite sprite) {
+        
         _visuals = ((GameObject)Instantiate(_visualPrefab, (_location.ToVector2() + new Vector2(0.5f, -0.5f)) * WorldManager.g.TileSize, new Quaternion(0, 0, 0, 0))).transform;
-        _visuals.gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+        if (sprite != null) {
+            _visuals.gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+        }
         _anim = _visuals.gameObject.GetComponent<Animator>();
         _currStateInfo.lastLoc = _location.ToVector2();
         isSpriteSet = true;
@@ -121,12 +124,11 @@ public class WorldEntity : MonoBehaviour {
         _currStateInfo.fractionComplete = 0f;
         _currStateInfo.characterInMoving = false;
     }
-    public void PushedStuck(Direction direction)
-    {
+    public void PushedStuck (Direction direction) {
         if (_character != null) {
-                _character.Stuck();
-                _character.Direction=direction;
-            }
+            _character.Stuck();
+            _character.Direction = direction;
+        }
     }
     private void Update () {
         
@@ -194,7 +196,7 @@ public class WorldEntity : MonoBehaviour {
                     
                     timer = 0f;
                     _character.isStuck = false;
-                    stuckType=StuckType.Null;
+                    stuckType = StuckType.Null;
                     
                 }
 
@@ -229,8 +231,7 @@ public class WorldEntity : MonoBehaviour {
                         }
                         
                     } 
-                    if(timer >= movingDuration) // why can't else work???
-                    {
+                    if (timer >= movingDuration) { // why can't else work???
                         AnimationStop();
                         _currStateInfo.lastLoc = _location.ToVector2();
                         _currStateInfo.fractionComplete = 0f;
@@ -241,6 +242,7 @@ public class WorldEntity : MonoBehaviour {
                             _currStateInfo.characterInMoving = false;
                             _character.isPushedUp = false;
                             _character.isPushedDown = false;
+                            _character.characterInMoving=false;
                         }
                     
                     }
@@ -294,6 +296,10 @@ public class WorldEntity : MonoBehaviour {
         SetBoolAnimationParameter("PushedStuckDown", false);
         SetBoolAnimationParameter("PushedStuckLeft", false);
         SetBoolAnimationParameter("PushedStuckRight", false);
+
+        if (_character != null) {
+            _character.SetSpriteByDistance(true);
+        }
 
     }
     private bool _registered = false;

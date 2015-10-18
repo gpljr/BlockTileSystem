@@ -19,7 +19,7 @@ public class Character : MonoBehaviour {
     private Direction _direction;
     public Direction Direction {
         get { return _direction; }
-        set{_direction = value;}
+        set{ _direction = value; }
     }
     private bool _bMove;
     public bool MoveInput {
@@ -36,29 +36,29 @@ public class Character : MonoBehaviour {
     [SerializeField]
     int _iCharacterID;
 
-    [SerializeField]
-    private Sprite _char1YellowSprite;
-    [SerializeField]
-    private Sprite _char2GreenSprite;
-    [SerializeField]
-    private Sprite _char3CombinedSprite;
-    [SerializeField]
-    private Sprite _char1MergingYellowSprite;
-    [SerializeField]
-    private Sprite _char2MergingGreenSprite;
+    // [SerializeField]
+    // private Sprite _char1YellowSprite;
+    // [SerializeField]
+    // private Sprite _char2GreenSprite;
+    // [SerializeField]
+    // private Sprite _char3CombinedSprite;
+    // [SerializeField]
+    // private Sprite _char1MergingYellowSprite;
+    // [SerializeField]
+    // private Sprite _char2MergingGreenSprite;
 
-    [SerializeField]
-    private Sprite _char1Face1Sprite;
-    [SerializeField]
-    private Sprite _char1Face2Sprite;
-    [SerializeField]
-    private Sprite _char1Face3Sprite;
-    [SerializeField]
-    private Sprite _char2Face1Sprite;
-    [SerializeField]
-    private Sprite _char2Face2Sprite;
-    [SerializeField]
-    private Sprite _char2Face3Sprite;
+    // [SerializeField]
+    // private Sprite _char1Face1Sprite;
+    // [SerializeField]
+    // private Sprite _char1Face2Sprite;
+    // [SerializeField]
+    // private Sprite _char1Face3Sprite;
+    // [SerializeField]
+    // private Sprite _char2Face1Sprite;
+    // [SerializeField]
+    // private Sprite _char2Face2Sprite;
+    // [SerializeField]
+    // private Sprite _char2Face3Sprite;
 
     public static bool oneEnteredMergingStar;
 
@@ -73,6 +73,8 @@ public class Character : MonoBehaviour {
     [SerializeField] float idleTimeRandLimit = 2f;
     bool idling;
     float idlingTimer;
+
+    [HideInInspector] public bool characterInMoving;
 
     public void Cache () {
         _worldEntity = GetComponent<WorldEntity>();
@@ -97,6 +99,7 @@ public class Character : MonoBehaviour {
         oneEnteredMergingStar = false;
         _worldEntity.DestroyVisual();
         _worldEntity.isSpriteSet = false;
+        //StartCoroutine(WaitForSetDistance());
         _worldEntity.Refresh();
     }
     void OnEnable () {
@@ -116,11 +119,12 @@ public class Character : MonoBehaviour {
 
     void Update () {
         if (!_worldEntity.isSpriteSet) {
-            _worldEntity.SetVisual(GetSpriteByID(false));
+            _worldEntity.SetVisual(null);
             SetLayer(false);
-
-        } else if (!onMergingStar) {
-            SetSprite(false);
+            
+        } 
+        if (!isStuck && !characterInMoving && !onMergingStar && !idling) {
+            SetSpriteByDistance(true);
         }
         
         if (LevelCode.gameState == GameState.InLevel) {
@@ -140,6 +144,7 @@ public class Character : MonoBehaviour {
             }
             idleTimer += Time.deltaTime;
             if (idleTimer >= idleTimeLimit + Random.Range(0f, idleTimeRandLimit)) {
+                SetSpriteByDistance(false);
                 _worldEntity.SetBoolAnimationParameter("Idle", true);
                 idleTimer = 0f;
                 idling = true;
@@ -197,6 +202,7 @@ public class Character : MonoBehaviour {
     // }
     private void Pushed (Direction direction) {
         //play pushed animation
+        SetSpriteByDistance(false);
         switch (direction) {
             case Direction.North:
                 _worldEntity.SetBoolAnimationParameter("PushedUp", true);
@@ -220,6 +226,8 @@ public class Character : MonoBehaviour {
     }
     private void Simulate () {
         if (_bMove) {
+            characterInMoving = true;
+            SetSpriteByDistance(false);
             Events.g.Raise(new MoveInputEvent(_iCharacterID, _direction));
             switch (WorldManager.g.CanMove(_worldEntity.Location, _direction, _worldEntity)) {
                 case MoveResult.Move:
@@ -232,6 +240,7 @@ public class Character : MonoBehaviour {
                     Push();
                     break;
             }
+            
             _bMove = false;
         }       
     }
@@ -266,6 +275,7 @@ public class Character : MonoBehaviour {
         _worldEntity.Location = vec;
     }
     public void Stuck () {
+        SetSpriteByDistance(false);
         idleTimer = 0f;
         //play stuck animation
         switch (_worldEntity.stuckType) {
@@ -380,21 +390,20 @@ public class Character : MonoBehaviour {
                 onMergingStar = true;
                 _worldEntity.CollidingType = EntityCollidingType.Empty;
 
-                SetSprite(isInMerging: true);
+                SetSpriteForMerging();
                 SetLayer(isInMerging: true);
                 oneEnteredMergingStar = true;
-            } else {
-                onMergingStar = false;
-                _worldEntity.CollidingType = EntityCollidingType.Pushable;
-                SetSprite(isInMerging: false);
-                SetLayer(isInMerging: false);
-                oneEnteredMergingStar = false;
-            }
+            } 
+            // else {
+            //     onMergingStar = false;
+            //     _worldEntity.CollidingType = EntityCollidingType.Pushable;
+            //     SetSprite(isInMerging: false);
+            //     SetLayer(isInMerging: false);
+            //     oneEnteredMergingStar = false;
+            // }
         }
     }
-    void SetSprite (bool isInMerging) {
-        _worldEntity.ChangeVisual(GetSpriteByID(isInMerging));
-    }
+
     void SetLayer (bool isInMerging) {
         if (!isInMerging || oneEnteredMergingStar) {
             
@@ -403,64 +412,34 @@ public class Character : MonoBehaviour {
             _worldEntity.SetOrderLayer(9);
         }
     }
-    private Sprite GetSpriteByID (bool isInMerging) {
-        Sprite sprite = new Sprite();
-        if (!isInMerging) {
-            sprite = GetSpriteByDistance();
-        } else {//on merging star
-            print("on merging star");
-            if (oneEnteredMergingStar) {
-                //sprite = _char3CombinedSprite;
-                _worldEntity.SetBoolAnimationParameter("Merging2", true);
-                _worldEntity.SetBoolAnimationParameter("Merging", true);
+    private void SetSpriteForMerging () {
+        
+        if (oneEnteredMergingStar) {
+            _worldEntity.SetBoolAnimationParameter("Merging2", true);
+            _worldEntity.SetBoolAnimationParameter("Merging", true);
+        } else {
+            _worldEntity.SetBoolAnimationParameter("Merging2", false);
+            _worldEntity.SetBoolAnimationParameter("Merging", true);
+
+        }
+        
+    }
+    public void SetSpriteByDistance (bool showEmotion) {
+        if (showEmotion) {
+            if (WorldManager.g.fCharacterDistance > 5.5f || LevelCode.levelType == LevelType.Separation || LevelCode.levelType == LevelType.Merging) {
+                _worldEntity.SetBoolAnimationParameter("Sad", true);
+                _worldEntity.SetBoolAnimationParameter("MidSad", false);
+            } else if (WorldManager.g.fCharacterDistance >= 2.1f && WorldManager.g.fCharacterDistance < 5.5f) {
+                _worldEntity.SetBoolAnimationParameter("MidSad", true);
+                _worldEntity.SetBoolAnimationParameter("Sad", false);
             } else {
-                _worldEntity.SetBoolAnimationParameter("Merging2", false);
-                _worldEntity.SetBoolAnimationParameter("Merging", true);
-                // switch (_iCharacterID) {
-                //     case 1:
-                //         sprite = _char1MergingYellowSprite;
-                //         break;
-                //     case 2:
-                //         sprite = _char2MergingGreenSprite;
-                //         break;
-                // }
+                _worldEntity.SetBoolAnimationParameter("Sad", false);
+                _worldEntity.SetBoolAnimationParameter("MidSad", false);
             }
+        } else {
+            _worldEntity.SetBoolAnimationParameter("Sad", false);
+            _worldEntity.SetBoolAnimationParameter("MidSad", false);
         }
-        if (sprite == null) {
-            print("sprite unset");
-        }
-        return sprite;
     }
-    private Sprite GetSpriteByDistance () {
-        Sprite sprite = new Sprite();
-        switch (_iCharacterID) {
-            case 1:
-                if (WorldManager.g.fCharacterDistance > 3.1f || LevelCode.levelType == LevelType.Separation || LevelCode.levelType == LevelType.Merging) {
-                    sprite = _char1Face1Sprite;//sad
-                } else if (WorldManager.g.fCharacterDistance >= 1.1f && WorldManager.g.fCharacterDistance < 2.1f) {
-                    sprite = _char1Face3Sprite;
-                } else if (WorldManager.g.fCharacterDistance >= 2.1f && WorldManager.g.fCharacterDistance < 3.1f) {
-                    sprite = _char1Face2Sprite;
-                } else {
-                    sprite = _char1YellowSprite;
-                }
-                break;
-            case 2:
-                if (WorldManager.g.fCharacterDistance > 3.1f || LevelCode.levelType == LevelType.Separation || LevelCode.levelType == LevelType.Merging) {
-                    sprite = _char2Face1Sprite;//sad
-                } else if (WorldManager.g.fCharacterDistance >= 1.1f && WorldManager.g.fCharacterDistance < 2.1f) {
-                    sprite = _char2Face3Sprite;
-                } else if (WorldManager.g.fCharacterDistance >= 2.1f && WorldManager.g.fCharacterDistance < 3.1f) {
-                    sprite = _char2Face2Sprite;
-                } else {
-                    sprite = _char2GreenSprite;
-                }
-                break;
-            case 3:
-                sprite = _char3CombinedSprite;
-                break;
-        }
-        return sprite;
-            
-    }
+    
 }

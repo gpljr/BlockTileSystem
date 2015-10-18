@@ -1591,25 +1591,12 @@ MonoBehaviour:
   _audioPush: {fileID: 8300000, guid: 69ea6cc063f06479a991fd9658846d12, type: 3}
   _audioStuck: {fileID: 8300000, guid: 732aa6aec60eb4e3ba363f731dfacc83, type: 3}
   _iCharacterID: 3
-  _char1YellowSprite: {fileID: 21300000, guid: e73ad324aec1142c19c6cd6f6d423529, type: 3}
-  _char2GreenSprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
-  _char3CombinedSprite: {fileID: 21300000, guid: 683a4a7c7989844b39479ca1ee9046ad,
-    type: 3}
-  _char1MergingYellowSprite: {fileID: 21300000, guid: 8f7c198e141ce4524aef0009d2117da6,
-    type: 3}
-  _char2MergingGreenSprite: {fileID: 21300000, guid: 6bc19a520a0ad453fab0fabe4061569f,
-    type: 3}
-  _char1Face1Sprite: {fileID: 21300000, guid: d23447b428e3240899a3107447cc3e1c, type: 3}
-  _char1Face2Sprite: {fileID: 21300000, guid: 7a29b5a41d7f84ce5905c93b0e285993, type: 3}
-  _char1Face3Sprite: {fileID: 21300000, guid: e73ad324aec1142c19c6cd6f6d423529, type: 3}
-  _char2Face1Sprite: {fileID: 21300000, guid: f7f929f8eccb64f4e94b5c249692ccb1, type: 3}
-  _char2Face2Sprite: {fileID: 21300000, guid: 93f7e5c275114489fa9fe9201df03b4c, type: 3}
-  _char2Face3Sprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
   isPushedDown: 0
   isPushedUp: 0
   isStuck: 0
   idleTimeLimit: 3
   idleTimeRandLimit: 3
+  characterInMoving: 0
 --- !u!114 &684781640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4260,25 +4247,12 @@ MonoBehaviour:
   _audioPush: {fileID: 8300000, guid: 69ea6cc063f06479a991fd9658846d12, type: 3}
   _audioStuck: {fileID: 8300000, guid: 732aa6aec60eb4e3ba363f731dfacc83, type: 3}
   _iCharacterID: 1
-  _char1YellowSprite: {fileID: 21300000, guid: e73ad324aec1142c19c6cd6f6d423529, type: 3}
-  _char2GreenSprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
-  _char3CombinedSprite: {fileID: 21300000, guid: 683a4a7c7989844b39479ca1ee9046ad,
-    type: 3}
-  _char1MergingYellowSprite: {fileID: 21300000, guid: 8f7c198e141ce4524aef0009d2117da6,
-    type: 3}
-  _char2MergingGreenSprite: {fileID: 21300000, guid: 6bc19a520a0ad453fab0fabe4061569f,
-    type: 3}
-  _char1Face1Sprite: {fileID: 21300000, guid: d23447b428e3240899a3107447cc3e1c, type: 3}
-  _char1Face2Sprite: {fileID: 21300000, guid: 7a29b5a41d7f84ce5905c93b0e285993, type: 3}
-  _char1Face3Sprite: {fileID: 21300000, guid: e73ad324aec1142c19c6cd6f6d423529, type: 3}
-  _char2Face1Sprite: {fileID: 21300000, guid: f7f929f8eccb64f4e94b5c249692ccb1, type: 3}
-  _char2Face2Sprite: {fileID: 21300000, guid: 93f7e5c275114489fa9fe9201df03b4c, type: 3}
-  _char2Face3Sprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
   isPushedDown: 0
   isPushedUp: 0
   isStuck: 0
   idleTimeLimit: 3
   idleTimeRandLimit: 3
+  characterInMoving: 0
 --- !u!1 &1455397163
 GameObject:
   m_ObjectHideFlags: 0
@@ -5508,25 +5482,12 @@ MonoBehaviour:
   _audioPush: {fileID: 8300000, guid: 69ea6cc063f06479a991fd9658846d12, type: 3}
   _audioStuck: {fileID: 8300000, guid: 732aa6aec60eb4e3ba363f731dfacc83, type: 3}
   _iCharacterID: 2
-  _char1YellowSprite: {fileID: 21300000, guid: e73ad324aec1142c19c6cd6f6d423529, type: 3}
-  _char2GreenSprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
-  _char3CombinedSprite: {fileID: 21300000, guid: 683a4a7c7989844b39479ca1ee9046ad,
-    type: 3}
-  _char1MergingYellowSprite: {fileID: 21300000, guid: 8f7c198e141ce4524aef0009d2117da6,
-    type: 3}
-  _char2MergingGreenSprite: {fileID: 21300000, guid: 6bc19a520a0ad453fab0fabe4061569f,
-    type: 3}
-  _char1Face1Sprite: {fileID: 21300000, guid: d23447b428e3240899a3107447cc3e1c, type: 3}
-  _char1Face2Sprite: {fileID: 21300000, guid: 7a29b5a41d7f84ce5905c93b0e285993, type: 3}
-  _char1Face3Sprite: {fileID: 21300000, guid: e73ad324aec1142c19c6cd6f6d423529, type: 3}
-  _char2Face1Sprite: {fileID: 21300000, guid: f7f929f8eccb64f4e94b5c249692ccb1, type: 3}
-  _char2Face2Sprite: {fileID: 21300000, guid: 93f7e5c275114489fa9fe9201df03b4c, type: 3}
-  _char2Face3Sprite: {fileID: 21300000, guid: 909d913e384cb419da45cbf13a3b92cf, type: 3}
   isPushedDown: 0
   isPushedUp: 0
   isStuck: 0
   idleTimeLimit: 3
   idleTimeRandLimit: 3
+  characterInMoving: 0
 --- !u!1 &1755804818
 GameObject:
   m_ObjectHideFlags: 0
