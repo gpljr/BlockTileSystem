@@ -144,18 +144,13 @@ public class Character : MonoBehaviour {
             }
             idleTimer += Time.deltaTime;
             if (idleTimer >= idleTimeLimit + Random.Range(0f, idleTimeRandLimit)) {
-                SetSpriteByDistance(false);
-                _worldEntity.SetBoolAnimationParameter("Idle", true);
-                idleTimer = 0f;
-                idling = true;
+                EnterIdle();
             }
             if (idling) {
                 idlingTimer += Time.deltaTime;
             }
             if (idlingTimer >= 0.4f) {
-                _worldEntity.SetBoolAnimationParameter("Idle", false);
-                idlingTimer = 0f;
-                idling = false;
+                ExitIdle();
             }
 
             if (!_worldEntity.StateInfo.characterInMoving && !onMergingStar) {
@@ -196,6 +191,18 @@ public class Character : MonoBehaviour {
         }
     }
 
+    void EnterIdle () {
+        SetSpriteByDistance(false);
+        _worldEntity.SetBoolAnimationParameter("Idle", true);
+        idleTimer = 0f;
+        idling = true;
+    }
+    void ExitIdle () {
+        _worldEntity.SetBoolAnimationParameter("Idle", false);
+        idlingTimer = 0f;
+        idleTimer = 0f;
+        idling = false;
+    }
     // public void SetIdleTimerZero()
     // {
     //     idleTimer=0f;
@@ -203,6 +210,7 @@ public class Character : MonoBehaviour {
     private void Pushed (Direction direction) {
         //play pushed animation
         SetSpriteByDistance(false);
+        ExitIdle();
         switch (direction) {
             case Direction.North:
                 _worldEntity.SetBoolAnimationParameter("PushedUp", true);
@@ -228,6 +236,7 @@ public class Character : MonoBehaviour {
         if (_bMove) {
             characterInMoving = true;
             SetSpriteByDistance(false);
+            ExitIdle();
             Events.g.Raise(new MoveInputEvent(_iCharacterID, _direction));
             switch (WorldManager.g.CanMove(_worldEntity.Location, _direction, _worldEntity)) {
                 case MoveResult.Move:
@@ -276,7 +285,8 @@ public class Character : MonoBehaviour {
     }
     public void Stuck () {
         SetSpriteByDistance(false);
-        idleTimer = 0f;
+        ExitIdle();
+        
         //play stuck animation
         switch (_worldEntity.stuckType) {
             case StuckType.MoveStuck:
