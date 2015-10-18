@@ -201,6 +201,7 @@ public class WorldEntity : MonoBehaviour {
                 //non stuck
             } else {
                 if (!instantMove && distance > 0f) {
+
                     Vector2 v = Vector2.zero;
                     Vector2 visualOffset = (_location.ToVector2() - _currStateInfo.lastLoc)
                                            * (_currStateInfo.fractionComplete);
@@ -212,7 +213,6 @@ public class WorldEntity : MonoBehaviour {
                         _collidingType = EntityCollidingType.Colliding;
                         _currStateInfo.characterInMoving = true;
                     }
-                
                     if (timer < movingDuration) {
 
                         timer += Time.deltaTime;
@@ -228,7 +228,9 @@ public class WorldEntity : MonoBehaviour {
                             _currStateInfo.fractionComplete = visMovingCurve.Evaluate(timer / movingDuration);
                         }
                         
-                    } else {
+                    } 
+                    if(timer >= movingDuration) // why can't else work???
+                    {
                         AnimationStop();
                         _currStateInfo.lastLoc = _location.ToVector2();
                         _currStateInfo.fractionComplete = 0f;
