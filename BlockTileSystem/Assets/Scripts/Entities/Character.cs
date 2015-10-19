@@ -150,7 +150,7 @@ public class Character : MonoBehaviour {
             if (idling) {
                 idlingTimer += Time.deltaTime;
             }
-            if (idlingTimer >= 0.4f) {
+            if (idlingTimer >= 0.55f) {
                 ExitIdle();
             }
 
@@ -193,7 +193,6 @@ public class Character : MonoBehaviour {
     }
 
     void EnterIdle () {
-        SetSpriteByDistance(false);
         _worldEntity.SetBoolAnimationParameter("Idle", true);
         idleTimer = 0f;
         idling = true;
@@ -204,10 +203,6 @@ public class Character : MonoBehaviour {
         idleTimer = 0f;
         idling = false;
     }
-    // public void SetIdleTimerZero()
-    // {
-    //     idleTimer=0f;
-    // }
     private void Pushed (Direction direction) {
         //play pushed animation
         SetSpriteByDistance(false);
@@ -319,7 +314,6 @@ public class Character : MonoBehaviour {
                         break;
                     case Direction.East:
                         _worldEntity.SetBoolAnimationParameter("PushStuckRight", true);
-                        print("push stuck right");
                         break;
                 }
                 break;
