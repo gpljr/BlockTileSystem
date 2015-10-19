@@ -100,6 +100,7 @@ public class Character : MonoBehaviour {
         _worldEntity.DestroyVisual();
         _worldEntity.isSpriteSet = false;
         //StartCoroutine(WaitForSetDistance());
+        ExitIdle();
         _worldEntity.Refresh();
     }
     void OnEnable () {
