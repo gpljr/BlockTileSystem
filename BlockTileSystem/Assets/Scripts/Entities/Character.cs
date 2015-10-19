@@ -318,6 +318,7 @@ public class Character : MonoBehaviour {
                         break;
                     case Direction.East:
                         _worldEntity.SetBoolAnimationParameter("PushStuckRight", true);
+                        print("push stuck right");
                         break;
                 }
                 break;
