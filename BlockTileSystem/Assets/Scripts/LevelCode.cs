@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class LevelCode : MonoBehaviour {
     private static int _iCurrentLevel;
-    public static int CurrentLevel{
-        get {return _iCurrentLevel;}
+    public static int CurrentLevel {
+        get { return _iCurrentLevel; }
     }
     private bool _bNewLevelLoaded;
 
@@ -56,6 +56,8 @@ public class LevelCode : MonoBehaviour {
     [SerializeField] GameObject DevModeText;
     [SerializeField] int levelCount = 11;
 
+    bool isRestarting;
+
     void Start () {
         image.SetActive(true);
         _image = image.GetComponent<Image>();
@@ -93,7 +95,7 @@ public class LevelCode : MonoBehaviour {
             case GameState.InLevel:
             
                 levelProgression.text = "Level: " + _iCurrentLevel + "/" + levelCount.ToString();
-                if (Input.GetKeyDown(KeyCode.R) ||Input.GetKeyDown(KeyCode.Return) ) {            
+                if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.Return)) {            
                     Restart();
                 }
                 if (Input.GetKeyDown(KeyCode.N)) {
@@ -208,6 +210,7 @@ public class LevelCode : MonoBehaviour {
     }
 
     public void Restart () {
+        isRestarting=true;
         _timeToFadeIn = 0.5f;
         _timeToFadeOut = 0.5f;
         if (WorldManager.g.checkPointsMoved) {
@@ -219,9 +222,11 @@ public class LevelCode : MonoBehaviour {
         }
     }
     void BulletHit (BulletHitEvent e) {
-        
-        Restart();
+        if (!isRestarting) {
+            Restart();
+        }
     }
+
 
     void LevelLoaded (LevelLoadedEvent e) {
         _bNewLevelLoaded = true;
@@ -281,6 +286,7 @@ public class LevelCode : MonoBehaviour {
     void StartLevel () {
         StartCoroutine(Fade(_timeToFadeIn, _fadeCurve, fadeIn: true));
         gameState = GameState.InLevel;
+        isRestarting=false;
     }
 
     private IEnumerator Fade (float timerDuration, AnimationCurve curve, bool fadeIn) {
