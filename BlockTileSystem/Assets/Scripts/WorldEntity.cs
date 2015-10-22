@@ -18,8 +18,10 @@ public class WorldEntity : MonoBehaviour {
             _tempCollisionType = value;
         }
     }
-    [HideInInspector]
-    public bool isPushed;
+    bool isPushed;
+    public bool IsPushed {
+        get { return isPushed; }
+    }
     [HideInInspector]
     public Direction pushedDirection;
 
@@ -242,7 +244,8 @@ public class WorldEntity : MonoBehaviour {
                             _currStateInfo.characterInMoving = false;
                             _character.isPushedUp = false;
                             _character.isPushedDown = false;
-                            _character.characterInMoving=false;
+                            _character.characterInMoving = false;
+                            isPushed = false;
                         }
                     
                     }

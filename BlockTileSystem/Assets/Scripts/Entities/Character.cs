@@ -74,6 +74,8 @@ public class Character : MonoBehaviour {
     bool idling;
     float idlingTimer;
 
+    bool pushed;
+
     [HideInInspector] public bool characterInMoving;
 
     public void Cache () {
@@ -124,7 +126,7 @@ public class Character : MonoBehaviour {
             SetLayer(false);
             
         } 
-        if (!isStuck && !characterInMoving && !onMergingStar && !idling) {
+        if (!isStuck && !characterInMoving && !onMergingStar && !idling && !_worldEntity.IsPushed) {
             SetSpriteByDistance(true);
         }
         
@@ -181,9 +183,9 @@ public class Character : MonoBehaviour {
                     idleTimer = 0f;
                 }
             }
-            if (_worldEntity.isPushed) {
+            if (_worldEntity.IsPushed) {
                 Pushed(_worldEntity.pushedDirection);
-                _worldEntity.isPushed = false;
+                //_worldEntity.isPushed = false;
                 idleTimer = 0f;
             }
             if (onMergingStar) {

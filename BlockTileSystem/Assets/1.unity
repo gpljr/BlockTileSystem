@@ -1611,7 +1611,6 @@ MonoBehaviour:
   entityType: 0
   characterID: 0
   _collidingType: 0
-  isPushed: 0
   pushedDirection: 0
   _location:
     x: 5
@@ -4075,7 +4074,6 @@ MonoBehaviour:
   entityType: 0
   characterID: 0
   _collidingType: 0
-  isPushed: 0
   pushedDirection: 0
   _location:
     x: 2
@@ -5305,7 +5303,6 @@ MonoBehaviour:
   entityType: 0
   characterID: 0
   _collidingType: 0
-  isPushed: 0
   pushedDirection: 0
   _location:
     x: 5
