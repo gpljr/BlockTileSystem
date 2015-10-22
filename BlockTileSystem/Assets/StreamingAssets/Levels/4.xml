@@ -3,12 +3,12 @@
 	<sLevelName>4</sLevelName>
 	<iLevelType>1</iLevelType>
 	<vChar1StartPos>
-		<x>8</x>
-		<y>10</y>
+		<x>2</x>
+		<y>3</y>
 	</vChar1StartPos>
 	<vChar2StartPos>
-		<x>9</x>
-		<y>10</y>
+		<x>1</x>
+		<y>3</y>
 	</vChar2StartPos>
 	<vDim>
 		<x>21</x>
@@ -17,34 +17,25 @@
 	<sStars>
 		<StarInXML>
 			<vPosition>
-				<x>3</x>
-				<y>7</y>
+				<x>6</x>
+				<y>11</y>
 			</vPosition>
 		</StarInXML>
 		<StarInXML>
 			<vPosition>
-				<x>3</x>
-				<y>8</y>
+				<x>6</x>
+				<y>12</y>
 			</vPosition>
 		</StarInXML>
 	</sStars>
 	<dDoors>
 		<DoorInXML>
 			<vPosition>
-				<x>3</x>
-				<y>6</y>
+				<x>6</x>
+				<y>3</y>
 			</vPosition>
 			<iID>1</iID>
-			<triggerNumber>2</triggerNumber>
-		</DoorInXML>
-
-		<DoorInXML>
-			<vPosition>
-				<x>7</x>
-				<y>4</y>
-			</vPosition>
-			<iID>3</iID>
-			<triggerNumber>2</triggerNumber>
+			<triggerNumber>1</triggerNumber>
 		</DoorInXML>
 
 		<DoorInXML>
@@ -55,45 +46,40 @@
 			<iID>2</iID>
 			<triggerNumber>1</triggerNumber>
 		</DoorInXML>
+
+		<DoorInXML>
+			<vPosition>
+				<x>6</x>
+				<y>10</y>
+			</vPosition>
+			<iID>3</iID>
+			<triggerNumber>1</triggerNumber>
+		</DoorInXML>
 		
 	</dDoors>
 	<StepTriggers>
 		<StepTriggerInXML>
 			<vPosition>
-				<x>3</x>
-				<y>2</y>
-			</vPosition>
-			<iID>1</iID>
-		</StepTriggerInXML>
-		<StepTriggerInXML>
-			<vPosition>
-				<x>1</x>
-				<y>4</y>
+				<x>4</x>
+				<y>5</y>
 			</vPosition>
 			<iID>1</iID>
 		</StepTriggerInXML>
 
 		<StepTriggerInXML>
 			<vPosition>
-				<x>8</x>
-				<y>3</y>
-			</vPosition>
-			<iID>3</iID>
-		</StepTriggerInXML>
-		<StepTriggerInXML>
-			<vPosition>
-				<x>9</x>
-				<y>4</y>
-			</vPosition>
-			<iID>3</iID>
-		</StepTriggerInXML>
-
-		<StepTriggerInXML>
-			<vPosition>
-				<x>7</x>
-				<y>11</y>
+				<x>10</x>
+				<y>8</y>
 			</vPosition>
 			<iID>2</iID>
+		</StepTriggerInXML>
+
+		<StepTriggerInXML>
+			<vPosition>
+				<x>5</x>
+				<y>7</y>
+			</vPosition>
+			<iID>3</iID>
 		</StepTriggerInXML>
 
 		
@@ -101,19 +87,25 @@
 	<cCheckPoints>
 		<CheckPointInXML>
 			<vCheckPoint1Position>
-				<x>5</x>
-				<y>4</y>
+				<x>8</x>
+				<y>5</y>
 			</vCheckPoint1Position>
 			<vCheckPoint2Position>
-				<x>6</x>
-				<y>4</y>
+				<x>8</x>
+				<y>6</y>
 			</vCheckPoint2Position>
 		</CheckPointInXML>
 		
 		<CheckPointInXML>
-			<vCheckPoint1Position/>
-			<vCheckPoint2Position/>
-		</CheckPointInXML>
+            <vCheckPoint1Position>
+                <x>6</x>
+                <y>9</y>
+            </vCheckPoint1Position>
+            <vCheckPoint2Position>
+                <x>7</x>
+                <y>9</y>
+            </vCheckPoint2Position>
+        </CheckPointInXML>
 	</cCheckPoints>
 	<pPushers>
 		<PusherInXML>
@@ -123,7 +115,7 @@
 			<vPosition/>
 		</PusherInXML>
 	</pPushers>
-	    <tMap>
+	        <tMap>
         <Tile>
             <vTilePosition>
                 <x>0</x>
@@ -234,7 +226,7 @@
                 <x>0</x>
                 <y>15</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -255,7 +247,7 @@
                 <x>0</x>
                 <y>18</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -374,46 +366,46 @@
                 <x>1</x>
                 <y>14</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>1</x>
                 <y>15</y>
-            </vTilePosition>
-                <iTileType>2</iTileType>
-        </Tile>
-        <Tile>
-            <vTilePosition>
-                <x>1</x>
-                <y>16</y>
-            </vTilePosition>
-                <iTileType>1</iTileType>
-        </Tile>
-        <Tile>
-            <vTilePosition>
-                <x>1</x>
-                <y>17</y>
-            </vTilePosition>
-                <iTileType>2</iTileType>
-        </Tile>
-        <Tile>
-            <vTilePosition>
-                <x>1</x>
-                <y>18</y>
-            </vTilePosition>
-                <iTileType>2</iTileType>
-        </Tile>
-        <Tile>
-            <vTilePosition>
-                <x>1</x>
-                <y>19</y>
             </vTilePosition>
                 <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>1</x>
+                <y>16</y>
+            </vTilePosition>
+                <iTileType>2</iTileType>
+        </Tile>
+        <Tile>
+            <vTilePosition>
+                <x>1</x>
+                <y>17</y>
+            </vTilePosition>
+                <iTileType>1</iTileType>
+        </Tile>
+        <Tile>
+            <vTilePosition>
+                <x>1</x>
+                <y>18</y>
+            </vTilePosition>
+                <iTileType>2</iTileType>
+        </Tile>
+        <Tile>
+            <vTilePosition>
+                <x>1</x>
+                <y>19</y>
+            </vTilePosition>
+                <iTileType>0</iTileType>
+        </Tile>
+        <Tile>
+            <vTilePosition>
+                <x>1</x>
                 <y>20</y>
             </vTilePosition>
                 <iTileType>0</iTileType>
@@ -500,21 +492,21 @@
                 <x>2</x>
                 <y>11</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>2</x>
                 <y>12</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>2</x>
                 <y>13</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -528,14 +520,14 @@
                 <x>2</x>
                 <y>15</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>2</x>
                 <y>16</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -556,7 +548,7 @@
                 <x>2</x>
                 <y>19</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -640,7 +632,7 @@
                 <x>3</x>
                 <y>10</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -654,21 +646,21 @@
                 <x>3</x>
                 <y>12</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>3</x>
                 <y>13</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>3</x>
                 <y>14</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -696,14 +688,14 @@
                 <x>3</x>
                 <y>18</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>3</x>
                 <y>19</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -787,28 +779,28 @@
                 <x>4</x>
                 <y>10</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>4</x>
                 <y>11</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>4</x>
                 <y>12</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>4</x>
                 <y>13</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -850,7 +842,7 @@
                 <x>4</x>
                 <y>19</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -913,49 +905,49 @@
                 <x>5</x>
                 <y>7</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>5</x>
                 <y>8</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>5</x>
                 <y>9</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>5</x>
                 <y>10</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>5</x>
                 <y>11</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>5</x>
                 <y>12</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>5</x>
                 <y>13</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -969,7 +961,7 @@
                 <x>5</x>
                 <y>15</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -983,7 +975,7 @@
                 <x>5</x>
                 <y>17</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -997,7 +989,7 @@
                 <x>5</x>
                 <y>19</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -1060,35 +1052,35 @@
                 <x>6</x>
                 <y>7</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>6</x>
                 <y>8</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>6</x>
                 <y>9</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>6</x>
                 <y>10</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>6</x>
                 <y>11</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -1109,7 +1101,7 @@
                 <x>6</x>
                 <y>14</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -1123,21 +1115,21 @@
                 <x>6</x>
                 <y>16</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>6</x>
                 <y>17</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>6</x>
                 <y>18</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -1207,7 +1199,7 @@
                 <x>7</x>
                 <y>7</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -1221,14 +1213,14 @@
                 <x>7</x>
                 <y>9</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>7</x>
                 <y>10</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -1242,21 +1234,21 @@
                 <x>7</x>
                 <y>12</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>7</x>
                 <y>13</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>7</x>
                 <y>14</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -1270,14 +1262,14 @@
                 <x>7</x>
                 <y>16</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>7</x>
                 <y>17</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -1291,7 +1283,7 @@
                 <x>7</x>
                 <y>19</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -1361,28 +1353,28 @@
                 <x>8</x>
                 <y>8</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>8</x>
                 <y>9</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>8</x>
                 <y>10</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>8</x>
                 <y>11</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -1431,14 +1423,14 @@
                 <x>8</x>
                 <y>18</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>8</x>
                 <y>19</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -1515,35 +1507,35 @@
                 <x>9</x>
                 <y>9</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>9</x>
                 <y>10</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>9</x>
                 <y>11</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>9</x>
                 <y>12</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>9</x>
                 <y>13</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -1564,7 +1556,7 @@
                 <x>9</x>
                 <y>16</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -1585,7 +1577,7 @@
                 <x>9</x>
                 <y>19</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -1662,7 +1654,7 @@
                 <x>10</x>
                 <y>9</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -1676,28 +1668,28 @@
                 <x>10</x>
                 <y>11</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>10</x>
                 <y>12</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>10</x>
                 <y>13</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>10</x>
                 <y>14</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -1711,14 +1703,14 @@
                 <x>10</x>
                 <y>16</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>10</x>
                 <y>17</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -1816,42 +1808,42 @@
                 <x>11</x>
                 <y>10</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>11</x>
                 <y>11</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>11</x>
                 <y>12</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>11</x>
                 <y>13</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>11</x>
                 <y>14</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>11</x>
                 <y>15</y>
             </vTilePosition>
-                <iTileType>0</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -4129,8 +4121,6 @@
                 <iTileType>0</iTileType>
         </Tile>
     </tMap>
-
-
 
 
 </SavableLevel>
