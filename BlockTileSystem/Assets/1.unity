@@ -1835,28 +1835,28 @@ MonoBehaviour:
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 0
-    - time: 1.09216046
+    - time: .616945446
       value: .351088047
       inSlope: -.11401055
       outSlope: -.11401055
       tangentMode: 0
-    - time: 3.71537948
-      value: .170441583
-      inSlope: -.0192401428
-      outSlope: -.0192401428
+    - time: 4.46487236
+      value: .181204259
+      inSlope: -.0180323105
+      outSlope: -.0180323105
       tangentMode: 0
-    - time: 6.03993225
-      value: .133551598
-      inSlope: -.0125066573
-      outSlope: -.0125066573
+    - time: 6.53630257
+      value: .152307242
+      inSlope: -.00741867395
+      outSlope: -.00741867395
       tangentMode: 0
-    - time: 10.6095352
-      value: .0883708075
-      inSlope: -.00463446509
-      outSlope: -.00463446509
+    - time: 9.13115883
+      value: .116727747
+      inSlope: -.00551621662
+      outSlope: -.00551621662
       tangentMode: 0
-    - time: 17.7780876
-      value: .0615095124
+    - time: 18.3906574
+      value: .0934743434
       inSlope: -.000340782019
       outSlope: -.000340782019
       tangentMode: 0
