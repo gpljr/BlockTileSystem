@@ -231,20 +231,22 @@ public class Character : MonoBehaviour {
         
     }
     private void Simulate () {
-        if (_bMove) {
-            characterInMoving = true;
+        if (_bMove && !isStuck && !characterInMoving && !onMergingStar && !_worldEntity.IsPushed) {
+            
             SetSpriteByDistance(false);
             ExitIdle();
             Events.g.Raise(new MoveInputEvent(_iCharacterID, _direction));
             switch (WorldManager.g.CanMove(_worldEntity.Location, _direction, _worldEntity)) {
                 case MoveResult.Move:
                     Move();
+                    characterInMoving = true;
                     break;
                 case MoveResult.Stuck:
                     Stuck();
                     break;
                 case MoveResult.Push:
                     Push();
+                    characterInMoving = true;
                     break;
             }
             

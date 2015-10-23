@@ -190,8 +190,8 @@ public class WorldEntity : MonoBehaviour {
 
                     _currStateInfo.fractionComplete = stuckCurve.Evaluate(timer / stuckDuration);
    
-                } else {
-                    print("stop anim");
+                } 
+                if (timer >= stuckDuration) {
                     AnimationStop();
                     _currStateInfo.lastLoc = _location.ToVector2();
                     _currStateInfo.fractionComplete = 0f;
