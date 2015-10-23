@@ -111,6 +111,8 @@ public class Pusher : MonoBehaviour
 
     private PushingState _pushingState;
 
+    bool isStuck;
+
     
     public void Cache()
     {
@@ -148,7 +150,15 @@ public class Pusher : MonoBehaviour
         if (!_needMove)
         {
             _fTimeBetweenMoves += Time.deltaTime;
-            if (_fTimeBetweenMoves >= fTimeInterval)
+            float timeInterval=fTimeInterval;
+            if(!isStuck)
+            {
+                timeInterval=fTimeInterval;
+            }
+            else{
+                timeInterval=2*fTimeInterval;
+            }
+            if (_fTimeBetweenMoves >= timeInterval )
             {
                 _needMove = true;
                 _fTimeBetweenMoves = 0f;
@@ -222,15 +232,21 @@ public class Pusher : MonoBehaviour
         switch (WorldManager.g.CanMove(_worldEntity.Location, tryDirection, _worldEntity))
         {
             case MoveResult.Move:
+            isStuck=false;
                 MoveOneStep(tryDirection);
                 //AudioSource.PlayClipAtPoint(_audioMove, _worldEntity.Location.ToVector2(), LevelCode.audioVolume);
                 
                     //print("move");
                 break;
             case MoveResult.Stuck:
+            _needMove=false;
                 print("error! pusher stuck!");
+                StartCoroutine(PushingContract(_pushingContractDuration));
+                StartCoroutine(PushingStretch(_pushingStrechDuration));
+                isStuck=true;
                 break;
             case MoveResult.Push:
+            isStuck=false;
                 MoveOneStep(tryDirection);
                 AudioSource.PlayClipAtPoint(_audioPush, CameraControl.cameraLoc, LevelCode.audioVolume);
                 _pushingState=PushingState.Contract;
