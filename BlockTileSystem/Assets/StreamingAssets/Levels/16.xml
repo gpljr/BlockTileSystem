@@ -120,7 +120,7 @@
             </vPosition>
             <isControlled>0</isControlled>
             <sDirection>East</sDirection>
-            <range>5</range>
+            <range>4</range>
             <ID>0</ID>
             <timeInterval>0.8</timeInterval>
         </PusherInXML>
