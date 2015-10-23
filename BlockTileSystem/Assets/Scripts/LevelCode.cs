@@ -213,6 +213,7 @@ public class LevelCode : MonoBehaviour {
         isRestarting=true;
         _timeToFadeIn = 0.5f;
         _timeToFadeOut = 0.5f;
+        Events.g.Raise(new RestartEvent());
         if (WorldManager.g.checkPointsMoved) {
             //restart to checkpoint
             StartLevel();

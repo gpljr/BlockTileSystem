@@ -111,12 +111,27 @@ public class Door : MonoBehaviour
     {
         _worldEntity.Simulators += Simulate;
         Events.g.AddListener<StepTriggerEvent>(Triggered);
+        Events.g.AddListener<RestartEvent>(Reset);
     }
 
     void OnDisable()
     {
         _worldEntity.Simulators -= Simulate;
         Events.g.RemoveListener<StepTriggerEvent>(Triggered);
+        Events.g.RemoveListener<RestartEvent>(Reset);
+    }
+
+    private void Reset(RestartEvent e)
+    {
+        Reset();
+    }
+    void Reset()
+    {
+        isOpen=false;
+        isHalfOpen=false;
+        isTriggered1=false;
+        isTriggered2=false;
+        _worldEntity.ChangeVisual(GetSpriteByID());
     }
 
     private void Simulate()

@@ -83,18 +83,28 @@ public class WorldTrigger : MonoBehaviour
     }
     void OnEnable()
     {
-        Events.g.AddListener<LevelLoadedEvent>(Reset);
+        // Events.g.AddListener<LevelLoadedEvent>(Reset);
+        Events.g.AddListener<RestartEvent>(Reset);
     }
     
     void OnDisable()
     {
-        Events.g.RemoveListener<LevelLoadedEvent>(Reset);
+        // Events.g.RemoveListener<LevelLoadedEvent>(Reset);
+        Events.g.RemoveListener<RestartEvent>(Reset);
         DestroyVisual();
     }
-    private void Reset(LevelLoadedEvent e)
+    // private void Reset(LevelLoadedEvent e)
+    // {
+    //     Reset();
+    // }
+    private void Reset(RestartEvent e)
+    {
+        Reset();
+    }
+    void Reset()
     {
         isSteppedOn = false;
-        isMessageSent = true;
+        isMessageSent = false;
     }
 
     void Start()
