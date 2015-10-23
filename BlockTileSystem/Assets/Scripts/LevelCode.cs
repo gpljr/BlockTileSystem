@@ -57,7 +57,8 @@ public class LevelCode : MonoBehaviour {
 
     bool isRestarting;
 
-    public int LevelCount=16;
+    [SerializeField]int levelCount=16;
+    public static int LevelCount;
 
     void Start () {
         image.SetActive(true);
@@ -66,7 +67,7 @@ public class LevelCode : MonoBehaviour {
         //Cursor.visible = false;
         isDevMode = _isDevMode;
         DevModeText.SetActive(isDevMode);
-        
+        LevelCount=levelCount;
 
     }
 
@@ -148,7 +149,7 @@ public class LevelCode : MonoBehaviour {
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha0)) {
-                LoadLevel(LevelCount);
+                LoadLevel(levelCount);
             }
         }
 
@@ -248,7 +249,7 @@ public class LevelCode : MonoBehaviour {
 
         _timeToFadeIn = 1f;
         _timeToFadeOut = 1f;
-        if (levelType == LevelType.Combined || _iCurrentLevel==LevelCount) {
+        if (levelType == LevelType.Combined || _iCurrentLevel==levelCount) {
             //EndLevel(0);
             EnterEndingScreen();
         } else {
