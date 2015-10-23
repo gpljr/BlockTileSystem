@@ -397,10 +397,8 @@ public class Character : MonoBehaviour {
             if (e.isEntered) {
                 onMergingStar = true;
                 _worldEntity.CollidingType = EntityCollidingType.Empty;
-
-                SetSpriteForMerging();
+                StartCoroutine(SetSpriteForMerging());
                 SetLayer(isInMerging: true);
-                oneEnteredMergingStar = true;
             } 
             // else {
             //     onMergingStar = false;
@@ -420,14 +418,16 @@ public class Character : MonoBehaviour {
             _worldEntity.SetOrderLayer(9);
         }
     }
-    private void SetSpriteForMerging () {
-        
+    IEnumerator SetSpriteForMerging () {
+        yield return new WaitForSeconds(0.7f);
         if (oneEnteredMergingStar) {
             _worldEntity.SetBoolAnimationParameter("Merging2", true);
             _worldEntity.SetBoolAnimationParameter("Merging", true);
         } else {
             _worldEntity.SetBoolAnimationParameter("Merging2", false);
             _worldEntity.SetBoolAnimationParameter("Merging", true);
+
+            oneEnteredMergingStar = true;
 
         }
         
