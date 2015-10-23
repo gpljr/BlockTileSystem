@@ -58,6 +58,8 @@ public class LevelCode : MonoBehaviour {
 
     bool isRestarting;
 
+    public int LevelCount=16;
+
     void Start () {
         image.SetActive(true);
         _image = image.GetComponent<Image>();
@@ -148,7 +150,7 @@ public class LevelCode : MonoBehaviour {
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha0)) {
-                LoadLevel(11);
+                LoadLevel(LevelCount);
             }
         }
 
