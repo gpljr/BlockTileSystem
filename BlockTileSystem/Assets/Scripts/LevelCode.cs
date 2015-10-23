@@ -54,7 +54,6 @@ public class LevelCode : MonoBehaviour {
     public static bool isDevMode;
 
     [SerializeField] GameObject DevModeText;
-    [SerializeField] int levelCount = 11;
 
     bool isRestarting;
 
@@ -96,7 +95,6 @@ public class LevelCode : MonoBehaviour {
                 break;
             case GameState.InLevel:
             
-                levelProgression.text = "Level: " + _iCurrentLevel + "/" + levelCount.ToString();
                 if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.Return)) {            
                     Restart();
                 }
@@ -249,7 +247,7 @@ public class LevelCode : MonoBehaviour {
 
         _timeToFadeIn = 1f;
         _timeToFadeOut = 1f;
-        if (levelType == LevelType.Combined) {
+        if (levelType == LevelType.Combined || _iCurrentLevel==LevelCount) {
             //EndLevel(0);
             EnterEndingScreen();
         } else {
@@ -257,7 +255,7 @@ public class LevelCode : MonoBehaviour {
         }
 
     }
-    void EnterEndingScreen () {
+    public void EnterEndingScreen () {
         StartCoroutine(Fade(_timeToFadeIn, _fadeCurve, fadeIn: true));
         gameState = GameState.Ending;
         startingScreen.SetActive(false);
