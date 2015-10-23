@@ -1487,7 +1487,6 @@ MonoBehaviour:
   _audioNextLevel: {fileID: 8300000, guid: 2b7a3a2bbbc0b47f0883265d292e7b41, type: 3}
   _isDevMode: 0
   DevModeText: {fileID: 1782093725}
-  levelCount: 11
   LevelCount: 16
 --- !u!114 &680905443
 MonoBehaviour:
@@ -3718,7 +3717,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 145, y: 106}
+  m_AnchoredPosition: {x: 145, y: 108.199997}
   m_SizeDelta: {x: 202, y: 140}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1361565379
