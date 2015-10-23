@@ -42,11 +42,12 @@ public class TutorialKey : MonoBehaviour {
     void LateUpdate () {
         if (!_worldTrigger.isSpriteSet) {
             _worldTrigger.SetVisual(GetSpriteByID());
-        } else {
-            if (iID == 1) {
-                _worldTrigger.ChangeVisual( _spriteW2);
-            }
-        }
+        } 
+        // else {
+        //     if (iID == 1) {
+        //         _worldTrigger.ChangeVisual( _spriteW2);
+        //     }
+        // }
         
         // if (!_worldTrigger.isMessageSent)
         // {
