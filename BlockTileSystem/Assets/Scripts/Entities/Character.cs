@@ -95,6 +95,9 @@ public class Character : MonoBehaviour {
     void RefreshOnBulletHit (BulletHitEvent e) {
         Refresh();
     }
+    void RefreshOnRestart (RestartEvent e) {
+        Refresh();
+    }
     void Refresh () {
         _worldEntity.CollidingType = EntityCollidingType.Pushable;
         onMergingStar = false;
@@ -112,13 +115,15 @@ public class Character : MonoBehaviour {
         Events.g.AddListener<MergingStarEvent>(StepOnMergingStar);
         Events.g.AddListener<LevelLoadedEvent>(RefreshOnLevelLoaded);
         Events.g.AddListener<BulletHitEvent>(RefreshOnBulletHit);
+        Events.g.AddListener<RestartEvent>(RefreshOnRestart);
     }
 
     void OnDisable () {
         _worldEntity.Simulators -= Simulate;
         Events.g.RemoveListener<MergingStarEvent>(StepOnMergingStar);
         Events.g.RemoveListener<LevelLoadedEvent>(RefreshOnLevelLoaded);
-        Events.g.AddListener<BulletHitEvent>(RefreshOnBulletHit);
+        Events.g.RemoveListener<BulletHitEvent>(RefreshOnBulletHit);
+        Events.g.RemoveListener<RestartEvent>(RefreshOnRestart);
     }
 
 
