@@ -125,6 +125,7 @@ public class WorldEntity : MonoBehaviour {
         _currStateInfo.lastLoc = _location.ToVector2();
         _currStateInfo.fractionComplete = 0f;
         _currStateInfo.characterInMoving = false;
+        isPushed=false;
     }
     public void PushedStuck (Direction direction) {
         if (_character != null) {

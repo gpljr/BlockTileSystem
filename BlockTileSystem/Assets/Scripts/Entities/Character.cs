@@ -104,6 +104,8 @@ public class Character : MonoBehaviour {
         //StartCoroutine(WaitForSetDistance());
         ExitIdle();
         _worldEntity.Refresh();
+        isStuck =false;
+        characterInMoving=false;
     }
     void OnEnable () {
         _worldEntity.Simulators += Simulate;
