@@ -120,6 +120,7 @@ public class Shooter : MonoBehaviour
         if (!_worldEntity.isSpriteSet)
         {
             _worldEntity.SetVisual(GetSpriteByID());
+            _needShoot=true;
         }
         _worldEntity.movingDuration = fMovingTimeInterval;
         if (!_needMove)
