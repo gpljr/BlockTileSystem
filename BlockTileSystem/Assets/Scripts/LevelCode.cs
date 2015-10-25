@@ -112,6 +112,14 @@ public class LevelCode : MonoBehaviour {
                     }
                 }
                 break;
+            case GameState.Ending:
+                if (Input.GetKeyDown(KeyCode.Return)) {            
+                    Application.LoadLevel(Application.loadedLevel);
+                }
+                if (Input.GetKeyDown(KeyCode.Escape)) {            
+                    Application.Quit();
+                }
+                break;
         }
         
         if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.Escape)) {
