@@ -50,7 +50,7 @@ public class LevelCode : MonoBehaviour {
     public static float musicVolume = 1f;
     public static float audioVolume = 1f;
 
-    [SerializeField] bool _isDevMode;
+    [SerializeField] bool _isDevMode=true;
     public static bool isDevMode;
 
     [SerializeField] GameObject DevModeText;
@@ -72,21 +72,13 @@ public class LevelCode : MonoBehaviour {
     }
 
     void Update () {
-        // if (Input.GetKeyDown(KeyCode.J))
-        // {
-        //     LoadLevel(10);
+        
+        // if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
+        //     if (Input.GetKeyDown(KeyCode.D)) {
+        //         isDevMode = !isDevMode;
+        //         //DevModeText.SetActive(isDevMode);
+        //     }
         // }
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
-            if (Input.GetKeyDown(KeyCode.P)) {
-                inLevelText.SetActive(!inLevelText.activeSelf);
-            }
-        }
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
-            if (Input.GetKeyDown(KeyCode.D)) {
-                isDevMode = !isDevMode;
-                DevModeText.SetActive(isDevMode);
-            }
-        }
         switch (gameState) {
             case GameState.Starting:
                 if (Input.anyKeyDown) {
