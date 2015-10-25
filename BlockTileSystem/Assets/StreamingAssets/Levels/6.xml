@@ -3,7 +3,7 @@
     <sLevelName>4</sLevelName>
     <iLevelType>1</iLevelType>
     <vChar1StartPos>
-        <x>2</x>
+        <x>3</x>
         <y>4</y>
     </vChar1StartPos>
     <vChar2StartPos>
@@ -125,12 +125,12 @@
     <pPushers>
         <PusherInXML>
             <vPosition>
-                <x>1</x>
+                <x>2</x>
                 <y>5</y>
             </vPosition>
             <isControlled>1</isControlled>
             <sDirection>East</sDirection>
-            <range>2</range>
+            <range>1</range>
             <ID>1</ID>
             <timeInterval>0.8</timeInterval>
         </PusherInXML>
@@ -149,7 +149,7 @@
 
     </pPushers>
 
-            <tMap>
+        <tMap>
         <Tile>
             <vTilePosition>
                 <x>0</x>
@@ -253,21 +253,21 @@
                 <x>0</x>
                 <y>14</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>0</x>
                 <y>15</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
                 <x>0</x>
                 <y>16</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -407,7 +407,7 @@
                 <x>1</x>
                 <y>15</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -421,7 +421,7 @@
                 <x>1</x>
                 <y>17</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>0</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -561,7 +561,7 @@
                 <x>2</x>
                 <y>16</y>
             </vTilePosition>
-                <iTileType>1</iTileType>
+                <iTileType>2</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -708,7 +708,7 @@
                 <x>3</x>
                 <y>16</y>
             </vTilePosition>
-                <iTileType>2</iTileType>
+                <iTileType>1</iTileType>
         </Tile>
         <Tile>
             <vTilePosition>
@@ -4778,6 +4778,5 @@
                 <iTileType>0</iTileType>
         </Tile>
     </tMap>
-
 
 </SavableLevel>
