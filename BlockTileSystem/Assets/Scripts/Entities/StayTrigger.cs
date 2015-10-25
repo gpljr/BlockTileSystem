@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StayTrigger : MonoBehaviour
-{
+public class StayTrigger : MonoBehaviour {
 
     //set in the XML
     public int iID;
@@ -41,97 +40,105 @@ public class StayTrigger : MonoBehaviour
     private WorldTrigger _worldTrigger;
     private bool isStayed;
 
-    public void Cache()
-    {
+    bool isInitializing;
+
+    public void Cache () {
         _worldTrigger = GetComponent<WorldTrigger>();
     }
-    void Awake()
-    {
+    void Awake () {
         Cache();
         _worldTrigger.triggerType = TriggerType.StayTrigger;
     }
-    void LateUpdate()
-    {
-        if (!_worldTrigger.isSpriteSet)
-        {
+
+    void OnEnable () {
+        Events.g.AddListener<RestartEvent>(Reset);
+    }
+
+    void OnDisable () {
+        Events.g.RemoveListener<RestartEvent>(Reset);
+    }
+    private void Reset (RestartEvent e) {
+        Reset();
+    }
+    void Reset () {
+        isInitializing = true;
+        
+    }
+
+    void LateUpdate () {
+        if (!_worldTrigger.isSpriteSet) {
             _worldTrigger.SetVisual(GetSpriteByID());
         }
-
-        if (!_worldTrigger.isMessageSent)
-        {
-            if (_worldTrigger.isSteppedOn)
-            {
+        
+        if (!_worldTrigger.isMessageSent) {
+            
+            if (_worldTrigger.isSteppedOn) {
                 TriggerStayed(true);
                 AudioSource.PlayClipAtPoint(_audioOn, CameraControl.cameraLoc, LevelCode.audioVolume);
-            }
-            else
-            {
+            } else {
                 TriggerStayed(false);
-                AudioSource.PlayClipAtPoint(_audioOff, CameraControl.cameraLoc, LevelCode.audioVolume);
+                if (isInitializing) {
+                    isInitializing = false;
+                } else {
+                    AudioSource.PlayClipAtPoint(_audioOff, CameraControl.cameraLoc, LevelCode.audioVolume);
+                }
             }
+            
             _worldTrigger.isMessageSent = true;
         }
     }
-    void TriggerStayed(bool stayed)
-    {
-        isStayed=stayed;
+    void TriggerStayed (bool stayed) {
+        isStayed = stayed;
         _worldTrigger.ChangeVisual(GetSpriteByID());
         
         Events.g.Raise(new StayTriggerEvent(isEntered: stayed, triggerID: iID));
     }
-    private Sprite GetSpriteByID()
-    {
+    private Sprite GetSpriteByID () {
         Sprite sprite = new Sprite();
-        if(!isStayed)
-        {
-        switch (iID%6)
-        {
-            case 1:
-                sprite = _sprite1;
-                break;
-            case 2:
-                sprite = _sprite2;
-                break;
-            case 3:
-                sprite = _sprite3;
-                break;
-            case 4:
-                sprite = _sprite4;
-                break;
-            case 5:
-                sprite = _sprite5;
-                break;
-            case 0:
-                sprite = _sprite6;
-                break;
+        if (!isStayed) {
+            switch (iID % 6) {
+                case 1:
+                    sprite = _sprite1;
+                    break;
+                case 2:
+                    sprite = _sprite2;
+                    break;
+                case 3:
+                    sprite = _sprite3;
+                    break;
+                case 4:
+                    sprite = _sprite4;
+                    break;
+                case 5:
+                    sprite = _sprite5;
+                    break;
+                case 0:
+                    sprite = _sprite6;
+                    break;
+            }
+        } else {
+            switch (iID % 6) {
+                case 1:
+                    sprite = _sprite1Triggered;
+                    break;
+                case 2:
+                    sprite = _sprite2Triggered;
+                    break;
+                case 3:
+                    sprite = _sprite3Triggered;
+                    break;
+                case 4:
+                    sprite = _sprite4Triggered;
+                    break;
+                case 5:
+                    sprite = _sprite5Triggered;
+                    break;
+                case 0:
+                    sprite = _sprite6Triggered;
+                    break;
+            }
         }
-    }
-    else
-    {
-        switch (iID%6)
-        {
-            case 1:
-                sprite = _sprite1Triggered;
-                break;
-            case 2:
-                sprite = _sprite2Triggered;
-                break;
-            case 3:
-                sprite = _sprite3Triggered;
-                break;
-            case 4:
-                sprite = _sprite4Triggered;
-                break;
-            case 5:
-                sprite = _sprite5Triggered;
-                break;
-            case 0:
-                sprite = _sprite6Triggered;
-                break;
-        }
-    }
-        if (sprite == null)
-        {
+        if (sprite == null) {
             print("sprite unset");
         }
         return sprite;
