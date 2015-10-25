@@ -95,7 +95,7 @@ public class Character : MonoBehaviour {
     void RefreshOnBulletHit (BulletHitEvent e) {
         Refresh();
     }
-    void RefreshOnRestart (RestartEvent e) {
+    void RefreshOnRestart (RestartBeginEvent e) {
         Refresh();
     }
     void Refresh () {
@@ -115,7 +115,7 @@ public class Character : MonoBehaviour {
         Events.g.AddListener<MergingStarEvent>(StepOnMergingStar);
         Events.g.AddListener<LevelLoadedEvent>(RefreshOnLevelLoaded);
         Events.g.AddListener<BulletHitEvent>(RefreshOnBulletHit);
-        Events.g.AddListener<RestartEvent>(RefreshOnRestart);
+        Events.g.AddListener<RestartBeginEvent>(RefreshOnRestart);
     }
 
     void OnDisable () {
@@ -123,7 +123,7 @@ public class Character : MonoBehaviour {
         Events.g.RemoveListener<MergingStarEvent>(StepOnMergingStar);
         Events.g.RemoveListener<LevelLoadedEvent>(RefreshOnLevelLoaded);
         Events.g.RemoveListener<BulletHitEvent>(RefreshOnBulletHit);
-        Events.g.RemoveListener<RestartEvent>(RefreshOnRestart);
+        Events.g.RemoveListener<RestartBeginEvent>(RefreshOnRestart);
     }
 
 

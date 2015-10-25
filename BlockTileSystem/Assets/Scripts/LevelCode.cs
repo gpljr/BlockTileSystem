@@ -206,7 +206,7 @@ public class LevelCode : MonoBehaviour {
         isRestarting=true;
         _timeToFadeIn = 0.5f;
         _timeToFadeOut = 0.5f;
-        Events.g.Raise(new RestartEvent());
+        Events.g.Raise(new RestartBeginEvent());
         if (WorldManager.g.checkPointsMoved) {
             //restart to checkpoint
             StartLevel();
@@ -312,6 +312,7 @@ public class LevelCode : MonoBehaviour {
         }
         newColor = new Color(startColor.r, startColor.g, startColor.b, alpha);
         _image.color = newColor;
+        Events.g.Raise(new RestartEvent());
     }
     IEnumerator FadeOut (float timerDuration, AnimationCurve curve, int iLevelToLoad) {
         yield return StartCoroutine(Fade(timerDuration, curve, fadeIn: false));
