@@ -1561,6 +1561,7 @@ MonoBehaviour:
   _isDevMode: 0
   DevModeText: {fileID: 1782093725}
   levelCount: 16
+  inLevelUI: {fileID: 1808486140}
 --- !u!114 &680905443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3173,6 +3174,7 @@ MonoBehaviour:
   _doubleCameraObject2: {fileID: 1900306360}
   _fSingleCameraSize: 5
   _fDoubleCameraSize: 6
+  sizeOffset: 2
 --- !u!1 &1218794003
 GameObject:
   m_ObjectHideFlags: 0

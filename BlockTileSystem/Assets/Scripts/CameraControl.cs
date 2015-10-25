@@ -18,6 +18,7 @@ public class CameraControl : MonoBehaviour {
     private float _fDoubleCameraSize = 4f;
 
     public static Vector3 cameraLoc;
+    [SerializeField] float sizeOffset=2f;
 
 
     Camera _singleCamera, _doubleCamera1, _doubleCamera2;
@@ -48,7 +49,7 @@ public class CameraControl : MonoBehaviour {
             if (isBirdView) {
                 _dims = WorldManager.g.Dims;
                 _singleCameraObject.transform.position = new Vector3(_dims.x * _tileSize / 2, _dims.y * _tileSize / 2, -12f);
-                _singleCamera.orthographicSize = Mathf.Min(_dims.x, _dims.y) * _tileSize / 2+2;
+                _singleCamera.orthographicSize = Mathf.Min(_dims.x, _dims.y) * _tileSize / 2+sizeOffset;
 
                 cameraLoc = _singleCamera.transform.position;
             } else {

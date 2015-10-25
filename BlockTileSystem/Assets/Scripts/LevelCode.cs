@@ -60,6 +60,8 @@ public class LevelCode : MonoBehaviour {
     [SerializeField]int levelCount=16;
     public static int LevelCount;
 
+    [SerializeField] GameObject inLevelUI;
+
     void Start () {
         image.SetActive(true);
         _image = image.GetComponent<Image>();
@@ -79,6 +81,11 @@ public class LevelCode : MonoBehaviour {
         //         //DevModeText.SetActive(isDevMode);
         //     }
         // }
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
+            if (Input.GetKeyDown(KeyCode.U)) {
+                inLevelUI.SetActive(!inLevelUI.activeSelf);
+            }
+        }
         switch (gameState) {
             case GameState.Starting:
                 if (Input.anyKeyDown) {
