@@ -71,9 +71,9 @@ public class StepTrigger : MonoBehaviour {
         Reset();
     }
     void Reset () {
-        isTriggered = false;
-        isFunctioning=true;
-        _worldTrigger.ChangeVisual(GetSpriteByID ());
+        // isTriggered = false;
+        // isFunctioning=true;
+        // _worldTrigger.ChangeVisual(GetSpriteByID ());
     }
 
     void TriggerSteppedOn () {

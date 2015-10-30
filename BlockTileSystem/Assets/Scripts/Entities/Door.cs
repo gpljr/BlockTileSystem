@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Door : MonoBehaviour
-{
+public class Door : MonoBehaviour {
 
     //set in the XML
     public int iID;
@@ -13,7 +12,8 @@ public class Door : MonoBehaviour
     public bool isOpen;
     public bool isHalfOpen;
 
-    public bool isVertical;//up and down passing
+    public bool isVertical;
+//up and down passing
 
     private WorldEntity _worldEntity;
 
@@ -87,77 +87,66 @@ public class Door : MonoBehaviour
 
 
 
-    public void Cache()
-    {
+    public void Cache () {
         _worldEntity = GetComponent<WorldEntity>();
     }
 
-    void Awake()
-    {
+    void Awake () {
         Cache();
         _worldEntity.CollidingType = EntityCollidingType.Colliding;
         _worldEntity.entityType = EntityType.Door;
 
     }
-    void Update()
-    {
-        if (!_worldEntity.isSpriteSet)
-        {
+    void Update () {
+        if (!_worldEntity.isSpriteSet) {
             _worldEntity.SetVisual(GetSpriteByID());
         }
     }
 
-    void OnEnable()
-    {
+    void OnEnable () {
         _worldEntity.Simulators += Simulate;
         Events.g.AddListener<StepTriggerEvent>(Triggered);
         Events.g.AddListener<RestartEvent>(Reset);
     }
 
-    void OnDisable()
-    {
+    void OnDisable () {
         _worldEntity.Simulators -= Simulate;
         Events.g.RemoveListener<StepTriggerEvent>(Triggered);
         Events.g.RemoveListener<RestartEvent>(Reset);
     }
 
-    private void Reset(RestartEvent e)
-    {
+    private void Reset (RestartEvent e) {
         Reset();
     }
-    void Reset()
-    {
-        isOpen=false;
-        isHalfOpen=false;
-        isTriggered1=false;
-        isTriggered2=false;
-        _worldEntity.ChangeVisual(GetSpriteByID());
+    void Reset () {
+        // if (!isOpen) {
+            
+        //     isHalfOpen = false;
+        //     isTriggered1 = false;
+        //     isTriggered2 = false;
+        //     _worldEntity.ChangeVisual(GetSpriteByID());
+            
+        // }
+        //keep open door open and unopen door closed
+        //isOpen = false;
+        //_worldEntity.CollidingType = EntityCollidingType.Colliding;
     }
 
-    private void Simulate()
-    {        
-        if (iTriggerNumber == 1)
-        {
-            if (isTriggered1)
-            {
+    private void Simulate () {        
+        if (iTriggerNumber == 1) {
+            if (isTriggered1) {
                 OpenDoor();
             }
-        }
-        else if (iTriggerNumber == 2)
-        {
-            if (isTriggered1 && isTriggered2)
-            {
+        } else if (iTriggerNumber == 2) {
+            if (isTriggered1 && isTriggered2) {
                 OpenDoor();
-            }
-            else if (isTriggered1 || isTriggered2)
-            {
+            } else if (isTriggered1 || isTriggered2) {
                 HalfOpenDoor();
             }
         }
         
     }
-    void OpenDoor()
-    {
+    void OpenDoor () {
         isOpen = true;
         isHalfOpen = false;
         _worldEntity.CollidingType = EntityCollidingType.Empty;
@@ -165,152 +154,125 @@ public class Door : MonoBehaviour
         
         _worldEntity.ChangeVisual(GetSpriteByID());
     }
-    void HalfOpenDoor()
-    {
+    void HalfOpenDoor () {
         isHalfOpen = true;
         isOpen = false;
         _worldEntity.ChangeVisual(GetSpriteByID());
         //play animation;
     }
-    void Triggered(StepTriggerEvent e)
-    {
-        if (e.triggerID == iID)
-        {
-            if (iTriggerNumber == 1)
-            {
+    void Triggered (StepTriggerEvent e) {
+        if (e.triggerID == iID) {
+            if (iTriggerNumber == 1) {
                 isTriggered1 = true;
-            }
-            else if (iTriggerNumber == 2)
-            {
-                if (isTriggered1)
-                {
+            } else if (iTriggerNumber == 2) {
+                if (isTriggered1) {
                     isTriggered2 = true;
-                }
-                else
-                {
+                } else {
                     isTriggered1 = true;
                 }
             }
         }
     }
-    private Sprite GetSpriteByID()
-    {
+    private Sprite GetSpriteByID () {
         Sprite sprite = new Sprite();
-        if(isVertical)
-        {
-        if (isHalfOpen)
-        {
-            switch (iID%6)
-            {
-                case 1:
-                    sprite = _halfOpenDoor1vertical;
-                    break;
-                case 2:
-                    sprite = _halfOpenDoor2vertical;
-                    break;
-                case 3:
-                    sprite = _halfOpenDoor3vertical;
-                    break;
+        if (isVertical) {
+            if (isHalfOpen) {
+                switch (iID % 6) {
+                    case 1:
+                        sprite = _halfOpenDoor1vertical;
+                        break;
+                    case 2:
+                        sprite = _halfOpenDoor2vertical;
+                        break;
+                    case 3:
+                        sprite = _halfOpenDoor3vertical;
+                        break;
                     case 4:
-                    sprite = _halfOpenDoor4vertical;
-                    break;
+                        sprite = _halfOpenDoor4vertical;
+                        break;
                     case 5:
-                    sprite = _halfOpenDoor5vertical;
-                    break;
+                        sprite = _halfOpenDoor5vertical;
+                        break;
                     case 0:
-                    sprite = _halfOpenDoor6vertical;
-                    break;
-            }
-        }
-        else if (isOpen)
-        {
-            sprite = _openDoor1vertical;
+                        sprite = _halfOpenDoor6vertical;
+                        break;
+                }
+            } else if (isOpen) {
+                sprite = _openDoor1vertical;
                    
-        }
-        else
-        {
-            switch (iID%6)
-            {
-                case 1:
-                    sprite = _closedDoor1vertical;
-                    break;
-                case 2:
-                    sprite = _closedDoor2vertical;
-                    break;
-                case 3:
-                    sprite = _closedDoor3vertical;
-                    break;
-                case 4:
-                    sprite = _closedDoor4vertical;
-                    break;
-                case 5:
-                    sprite = _closedDoor5vertical;
-                    break;
-                case 0:
-                    sprite = _closedDoor6vertical;
-                    break;
+            } else {
+                switch (iID % 6) {
+                    case 1:
+                        sprite = _closedDoor1vertical;
+                        break;
+                    case 2:
+                        sprite = _closedDoor2vertical;
+                        break;
+                    case 3:
+                        sprite = _closedDoor3vertical;
+                        break;
+                    case 4:
+                        sprite = _closedDoor4vertical;
+                        break;
+                    case 5:
+                        sprite = _closedDoor5vertical;
+                        break;
+                    case 0:
+                        sprite = _closedDoor6vertical;
+                        break;
+                }
             }
-        }
-        }else
-            {
-                if (isHalfOpen)
-        {
-            switch (iID%6)
-            {
-                case 1:
-                    sprite = _halfOpenDoor1horizontal;
-                    break;
-                case 2:
-                    sprite = _halfOpenDoor2horizontal;
-                    break;
-                case 3:
-                    sprite = _halfOpenDoor3horizontal;
-                    break;
-                case 4:
-                    sprite = _halfOpenDoor4horizontal;
-                    break;
-                case 5:
-                    sprite = _halfOpenDoor5horizontal;
-                    break;
-                case 0:
-                    sprite = _halfOpenDoor6horizontal;
-                    break;
-            }
-        }
-        else if (isOpen)
-        {
+        } else {
+            if (isHalfOpen) {
+                switch (iID % 6) {
+                    case 1:
+                        sprite = _halfOpenDoor1horizontal;
+                        break;
+                    case 2:
+                        sprite = _halfOpenDoor2horizontal;
+                        break;
+                    case 3:
+                        sprite = _halfOpenDoor3horizontal;
+                        break;
+                    case 4:
+                        sprite = _halfOpenDoor4horizontal;
+                        break;
+                    case 5:
+                        sprite = _halfOpenDoor5horizontal;
+                        break;
+                    case 0:
+                        sprite = _halfOpenDoor6horizontal;
+                        break;
+                }
+            } else if (isOpen) {
             
-                    sprite = _openDoor1horizontal;
+                sprite = _openDoor1horizontal;
                 
-        }
-        else
-        {
-            switch (iID%6)
-            {
-                case 1:
-                    sprite = _closedDoor1horizontal;
-                    break;
-                case 2:
-                    sprite = _closedDoor2horizontal;
-                    break;
-                case 3:
-                    sprite = _closedDoor3horizontal;
-                    break;
-                case 4:
-                    sprite = _closedDoor4horizontal;
-                    break;
-                case 5:
-                    sprite = _closedDoor5horizontal;
-                    break;
-                case 0:
-                    sprite = _closedDoor6horizontal;
-                    break;
+            } else {
+                switch (iID % 6) {
+                    case 1:
+                        sprite = _closedDoor1horizontal;
+                        break;
+                    case 2:
+                        sprite = _closedDoor2horizontal;
+                        break;
+                    case 3:
+                        sprite = _closedDoor3horizontal;
+                        break;
+                    case 4:
+                        sprite = _closedDoor4horizontal;
+                        break;
+                    case 5:
+                        sprite = _closedDoor5horizontal;
+                        break;
+                    case 0:
+                        sprite = _closedDoor6horizontal;
+                        break;
+                }
             }
         }
-            }
         
-        if( sprite == null)
-        {
+        if (sprite == null) {
             print("sprite unset");
         }
         return sprite;
