@@ -62,6 +62,7 @@ public class Character : MonoBehaviour {
 
     public static bool oneEnteredMergingStar;
 
+    [HideInInspector]
     public bool onMergingStar;
 
     [HideInInspector] public bool isPushedDown;
@@ -107,8 +108,8 @@ public class Character : MonoBehaviour {
         //StartCoroutine(WaitForSetDistance());
         ExitIdle();
         _worldEntity.Refresh();
-        isStuck =false;
-        characterInMoving=false;
+        isStuck = false;
+        characterInMoving = false;
     }
     void OnEnable () {
         _worldEntity.Simulators += Simulate;
