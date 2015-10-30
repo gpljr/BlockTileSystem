@@ -116,11 +116,11 @@ public class CheckPointsManager : MonoBehaviour {
             {
                 case 1:
                     _bPlayer1Entered = false;
-                    iChar1InCheckPoint = 0;
+                    //iChar1InCheckPoint = 0;
                     break;
                 case 2:
                     _bPlayer2Entered = false;
-                    iChar2InCheckPoint = 0;
+                    //iChar2InCheckPoint = 0;
                     break;
             }
         }
