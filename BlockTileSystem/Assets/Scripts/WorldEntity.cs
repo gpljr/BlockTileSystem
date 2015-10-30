@@ -125,7 +125,7 @@ public class WorldEntity : MonoBehaviour {
         _currStateInfo.lastLoc = _location.ToVector2();
         _currStateInfo.fractionComplete = 0f;
         _currStateInfo.characterInMoving = false;
-        isPushed=false;
+        isPushed = false;
     }
     public void PushedStuck (Direction direction) {
         if (_character != null) {
@@ -215,7 +215,9 @@ public class WorldEntity : MonoBehaviour {
                     _visuals.position = v * WorldManager.g.TileSize;
                 
                     if (_character != null) {
-                        _collidingType = EntityCollidingType.Colliding;
+                        if (!_character.onMergingStar) {
+                            _collidingType = EntityCollidingType.Colliding;
+                        }
                         _currStateInfo.characterInMoving = true;
                     }
                     if (timer < movingDuration) {

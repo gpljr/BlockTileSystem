@@ -62,7 +62,7 @@ public class Character : MonoBehaviour {
 
     public static bool oneEnteredMergingStar;
 
-    private bool onMergingStar;
+    public bool onMergingStar;
 
     [HideInInspector] public bool isPushedDown;
     [HideInInspector] public bool isPushedUp;
