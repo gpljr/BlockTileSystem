@@ -160,7 +160,7 @@ public class Pusher : MonoBehaviour {
             if (!isStuck) {
                 timeInterval = fTimeInterval;
             } else {
-                timeInterval = 2 * fTimeInterval;
+                timeInterval = 1 * fTimeInterval;
             }
             if (_fTimeBetweenMoves >= timeInterval) {
                 _needMove = true;
