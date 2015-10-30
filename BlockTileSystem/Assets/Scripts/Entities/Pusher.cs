@@ -112,7 +112,7 @@ public class Pusher : MonoBehaviour {
 
     bool isStuck;
 
-    IntVector startLocation;
+    [SerializeField] IntVector startLocation;
     bool isStartLocationSet;
 
     
@@ -143,7 +143,7 @@ public class Pusher : MonoBehaviour {
     }
 
     void Reset(RestartEvent e){
-        _worldEntity.Location=startLocation;
+        //_worldEntity.Location=startLocation;
     }
     void Update () {
         if (!isStartLocationSet) {
