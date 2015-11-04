@@ -1626,8 +1626,13 @@ MonoBehaviour:
   AudioOn: {fileID: 21300000, guid: 1214fb3be86d248289a10cb8bfc687e8, type: 3}
   AudioOff: {fileID: 21300000, guid: dd6f72200309a419c959019b06cbd6bd, type: 3}
   Setting: {fileID: 1724288198}
+  RestartLevel: {fileID: 1455397165}
   settingHighlight: {fileID: 21300000, guid: 8a14b7d4d56bd4b1e93d63f88b52527f, type: 3}
   settingNormal: {fileID: 21300000, guid: 942ce46ec4a694c9b9736cc6a8eec007, type: 3}
+  restartLevelHighlight: {fileID: 21300000, guid: 627ab27865cac4e1182e5528584cc75e,
+    type: 3}
+  restartLevelNormal: {fileID: 21300000, guid: ba4ab7f2c8ce44503a4a32f2088432be, type: 3}
+  RestartText: {fileID: 1228299846}
   cameraControl: {fileID: 1215162032}
 --- !u!1 &684781638
 GameObject:
@@ -1665,6 +1670,7 @@ MonoBehaviour:
   _audioPush: {fileID: 8300000, guid: 69ea6cc063f06479a991fd9658846d12, type: 3}
   _audioStuck: {fileID: 8300000, guid: 732aa6aec60eb4e3ba363f731dfacc83, type: 3}
   _iCharacterID: 3
+  onMergingStar: 0
   isPushedDown: 0
   isPushedUp: 0
   isStuck: 0
@@ -3242,6 +3248,93 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1218794003}
+--- !u!1 &1228299844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 1228299845}
+  - 222: {fileID: 1228299847}
+  - 114: {fileID: 1228299846}
+  - 114: {fileID: 1228299848}
+  m_Layer: 5
+  m_Name: Restart Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1228299845
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1228299844}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1527990759}
+  m_RootOrder: 4
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 337, y: -57}
+  m_SizeDelta: {x: 253, y: 40}
+  m_Pivot: {x: .5, y: .5}
+--- !u!114 &1228299846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1228299844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: .666666687, g: .666666687, b: .666666687, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 9b3bccc3803e044fb83a3fad6f40fca8, type: 3}
+    m_FontSize: 24
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 3
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Press R to restart
+--- !u!222 &1228299847
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1228299844}
+--- !u!114 &1228299848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1228299844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fd6b622081214ec9bf8aa0eeb92cc89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: .800000012
+  _scale: .0500000007
+  _initialScale: 1
 --- !u!1 &1233904636
 GameObject:
   m_ObjectHideFlags: 0
@@ -4299,6 +4392,7 @@ MonoBehaviour:
   _audioPush: {fileID: 8300000, guid: 69ea6cc063f06479a991fd9658846d12, type: 3}
   _audioStuck: {fileID: 8300000, guid: 732aa6aec60eb4e3ba363f731dfacc83, type: 3}
   _iCharacterID: 1
+  onMergingStar: 0
   isPushedDown: 0
   isPushedUp: 0
   isStuck: 0
@@ -4316,6 +4410,7 @@ GameObject:
   - 222: {fileID: 1455397167}
   - 114: {fileID: 1455397166}
   - 114: {fileID: 1455397165}
+  - 114: {fileID: 1455397168}
   m_Layer: 5
   m_Name: Restart Button
   m_TagString: Untagged
@@ -4360,7 +4455,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: .960784316, g: .960784316, b: .960784316, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
     m_DisabledColor: {r: .784313738, g: .784313738, b: .784313738, a: .501960814}
     m_ColorMultiplier: 1
@@ -4425,6 +4520,53 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1455397163}
+--- !u!114 &1455397168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1455397163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 680905445}
+          m_MethodName: RestartButtonPointerEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 680905445}
+          m_MethodName: RestartButtonPointerExit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &1496431008
 GameObject:
   m_ObjectHideFlags: 0
@@ -4457,7 +4599,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 0, y: -45}
+  m_AnchoredPosition: {x: 0, y: -51}
   m_SizeDelta: {x: 400, y: 40}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1496431010
@@ -4541,6 +4683,7 @@ RectTransform:
   - {fileID: 1755804819}
   - {fileID: 1724288197}
   - {fileID: 1455397164}
+  - {fileID: 1228299845}
   m_Father: {fileID: 257968891}
   m_RootOrder: 2
   m_AnchorMin: {x: 0, y: 1}
@@ -5000,7 +5143,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -5233,12 +5376,47 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1724288196}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64f6749cd8c79468e8258f2c23769fba, type: 3}
+  m_Script: {fileID: -1862395651, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightSprite: {fileID: 21300000, guid: 8a14b7d4d56bd4b1e93d63f88b52527f, type: 3}
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 680905445}
+          m_MethodName: SettingButtonPointerEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 680905445}
+          m_MethodName: SettingButtonPointerExit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &1751939962
 GameObject:
   m_ObjectHideFlags: 0
@@ -5605,6 +5783,7 @@ MonoBehaviour:
   _audioPush: {fileID: 8300000, guid: 69ea6cc063f06479a991fd9658846d12, type: 3}
   _audioStuck: {fileID: 8300000, guid: 732aa6aec60eb4e3ba363f731dfacc83, type: 3}
   _iCharacterID: 2
+  onMergingStar: 0
   isPushedDown: 0
   isPushedUp: 0
   isStuck: 0
