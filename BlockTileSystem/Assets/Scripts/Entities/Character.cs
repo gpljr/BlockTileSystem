@@ -193,8 +193,9 @@ public class Character : MonoBehaviour {
             }
             if (_worldEntity.IsPushed) {
                 Pushed(_worldEntity.pushedDirection);
-                //_worldEntity.isPushed = false;
+                //_worldEntity.IsPushed = false;
                 idleTimer = 0f;
+                isStuck=false;
             }
             if (onMergingStar) {
                 idleTimer = 0f;

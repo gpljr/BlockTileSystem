@@ -21,6 +21,7 @@ public class WorldEntity : MonoBehaviour {
     bool isPushed;
     public bool IsPushed {
         get { return isPushed; }
+        set { isPushed=value;}
     }
     [HideInInspector]
     public Direction pushedDirection;
@@ -236,6 +237,7 @@ public class WorldEntity : MonoBehaviour {
                         }
                         
                     } 
+                    print(gameObject+" timer "+timer);
                     if (timer >= movingDuration) { // why can't else work???
                         AnimationStop();
                         _currStateInfo.lastLoc = _location.ToVector2();
@@ -248,8 +250,10 @@ public class WorldEntity : MonoBehaviour {
                             _character.isPushedUp = false;
                             _character.isPushedDown = false;
                             _character.characterInMoving = false;
-                            isPushed = false;
+                            
                         }
+                        isPushed = false;
+                        print(gameObject+"pushed = false");
                     
                     }
                 } else {
@@ -349,6 +353,7 @@ public class WorldEntity : MonoBehaviour {
         //for character being pushed. play pushed animation
         isPushed = true;
         pushedDirection = direction;
+        //AnimationStop();
     }
 
     public delegate void SimulatorDelegates();
