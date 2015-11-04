@@ -89,6 +89,8 @@ public class WorldEntity : MonoBehaviour {
     private Character _character;
     public StuckType stuckType;
 
+    bool inStuckAnimation;
+
     public void SetCharacter () {
         if (gameObject.GetComponent<Character>() != null) {
             _character = gameObject.GetComponent<Character>();
@@ -146,7 +148,7 @@ public class WorldEntity : MonoBehaviour {
             }
             //stuck animation
             if (stuck) {
-                
+                inStuckAnimation=true;
                 Vector2 v = Vector2.zero;
                 float x = 0f;
                 float y = 0f;
@@ -201,12 +203,24 @@ public class WorldEntity : MonoBehaviour {
                     timer = 0f;
                     _character.isStuck = false;
                     stuckType = StuckType.Null;
-                    
+                    inStuckAnimation=false;
                 }
 
                 //non stuck
             } else {
+                
                 if (!instantMove && distance > 0f) {
+                //     if(inStuckAnimation)
+                // {
+                //     AnimationStop();
+                //     _currStateInfo.lastLoc = _location.ToVector2();
+                //     _currStateInfo.fractionComplete = 0f;
+                    
+                //     timer = 0f;
+                //     _character.isStuck = false;
+                //     stuckType = StuckType.Null;
+                //     inStuckAnimation=false;
+                // }
 
                     Vector2 v = Vector2.zero;
                     Vector2 visualOffset = (_location.ToVector2() - _currStateInfo.lastLoc)
@@ -237,7 +251,6 @@ public class WorldEntity : MonoBehaviour {
                         }
                         
                     } 
-                    print(gameObject+" timer "+timer);
                     if (timer >= movingDuration) { // why can't else work???
                         AnimationStop();
                         _currStateInfo.lastLoc = _location.ToVector2();
@@ -253,7 +266,6 @@ public class WorldEntity : MonoBehaviour {
                             
                         }
                         isPushed = false;
-                        print(gameObject+"pushed = false");
                     
                     }
                 } else {
