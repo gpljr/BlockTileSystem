@@ -815,6 +815,102 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -1, y: 0}
   m_Pivot: {x: .5, y: .5}
+--- !u!1 &307930823
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 307930824}
+  - 222: {fileID: 307930826}
+  - 114: {fileID: 307930825}
+  - 114: {fileID: 307930827}
+  m_Layer: 5
+  m_Name: levelProgression
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &307930824
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 307930823}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1808486141}
+  m_RootOrder: 3
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -70, y: -50}
+  m_SizeDelta: {x: 72, y: 72}
+  m_Pivot: {x: .5, y: .5}
+--- !u!114 &307930825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 307930823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 2962c3204ee524324ba5914fca451c5d, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &307930826
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 307930823}
+--- !u!114 &307930827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 307930823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 467f8b8de70dc496cabb106fd917d640, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite:
+  - {fileID: 21300000, guid: 2962c3204ee524324ba5914fca451c5d, type: 3}
+  - {fileID: 21300000, guid: 5df54c71ad784416fb4559e6179275a8, type: 3}
+  - {fileID: 21300000, guid: a7ca614bec0624bdfad49f7444d7d079, type: 3}
+  - {fileID: 21300000, guid: f7b0a9d28a08045c89ddbc3e3c47250b, type: 3}
+  - {fileID: 21300000, guid: e400a1fb68c034e99a54debba5cf2eb6, type: 3}
+  - {fileID: 21300000, guid: 0f793d3ad96f8494fbb99c4ae8ce9f15, type: 3}
+  - {fileID: 21300000, guid: 31dc2df1510254d2199ba7794d534344, type: 3}
+  - {fileID: 21300000, guid: fc49b81ee56c3445e871f6a4fb7c8cfc, type: 3}
+  - {fileID: 21300000, guid: 9935386a6122446859bcbfa8f205f301, type: 3}
+  - {fileID: 21300000, guid: c503798a315154192af095338f998528, type: 3}
+  - {fileID: 21300000, guid: 2725708b6c09a419f92ceaf367874828, type: 3}
+  - {fileID: 21300000, guid: dea6000f646ff465f80649456dbe3806, type: 3}
+  - {fileID: 21300000, guid: 04e03cabcb2eb453c97f53357e323b9d, type: 3}
+  - {fileID: 21300000, guid: 11dc77ffdcd61436eae5b03d5bd3a1ba, type: 3}
+  - {fileID: 21300000, guid: 3b1d87d0bb5b74958b69af5222c1f18d, type: 3}
+  - {fileID: 21300000, guid: 856ea7454660e4fdc9de313298d60ebb, type: 3}
 --- !u!1 &314990212
 GameObject:
   m_ObjectHideFlags: 0
@@ -6053,6 +6149,7 @@ RectTransform:
   - {fileID: 1162694414}
   - {fileID: 1969899230}
   - {fileID: 257968891}
+  - {fileID: 307930824}
   m_Father: {fileID: 1112422250}
   m_RootOrder: 4
   m_AnchorMin: {x: 0, y: 0}
@@ -6291,7 +6388,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1969899230
 RectTransform:
   m_ObjectHideFlags: 0
