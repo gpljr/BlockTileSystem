@@ -105,6 +105,7 @@ public class WorldTrigger : MonoBehaviour
     {
         isSteppedOn = false;
         isMessageSent = false;
+        steppingEntityType=EntityType.Null;
     }
 
     void Start()

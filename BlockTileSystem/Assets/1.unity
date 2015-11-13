@@ -2014,6 +2014,7 @@ MonoBehaviour:
   movingDuration: .349999994
   stuckDuration: .200000003
   stuckType: 0
+  entityActive: 0
   isSpriteSet: 0
 --- !u!4 &684781641
 Transform:
@@ -4544,6 +4545,7 @@ MonoBehaviour:
   movingDuration: .349999994
   stuckDuration: .200000003
   stuckType: 0
+  entityActive: 0
   isSpriteSet: 0
 --- !u!4 &1436136981
 Transform:
@@ -5936,6 +5938,7 @@ MonoBehaviour:
   movingDuration: .349999994
   stuckDuration: .200000003
   stuckType: 0
+  entityActive: 0
   isSpriteSet: 0
 --- !u!4 &1755608594
 Transform:

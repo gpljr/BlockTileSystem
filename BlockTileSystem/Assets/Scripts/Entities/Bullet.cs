@@ -32,6 +32,8 @@ public class Bullet : MonoBehaviour
     
     private WorldTrigger _worldTrigger;
     private WorldEntity _worldEntity;
+
+    public WorldEntity sourceShooter;
     public void Cache()
     {
         _worldTrigger = GetComponent<WorldTrigger>();
@@ -85,6 +87,8 @@ public class Bullet : MonoBehaviour
     {
         if(_worldTrigger.steppingEntityType == EntityType.Character)
         {
+            //print("bullet kill"+_worldEntity.Location+" shooter "+sourceShooter.Location+" id "+_worldTrigger.iStepCharacterID);
+
             AudioSource.PlayClipAtPoint(_audio, CameraControl.cameraLoc, LevelCode.audioVolume);
             Events.g.Raise(new BulletHitEvent());//bullet kill
         }

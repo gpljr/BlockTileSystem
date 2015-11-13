@@ -165,6 +165,7 @@ public class Shooter : MonoBehaviour
         bulletTrigger.Location = _worldEntity.Location;
         bullet.direction = shootingDirection;
         _needShoot = false;
+        bullet.sourceShooter=gameObject.GetComponent<WorldEntity>();
 
 
         StartCoroutine(WaitBeforeShooting(_beforeShootingDuration));

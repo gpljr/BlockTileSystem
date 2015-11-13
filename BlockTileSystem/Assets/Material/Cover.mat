@@ -90,7 +90,7 @@ Material:
       data:
         first:
           name: _Radius
-        second: .20851858
+        second: .600000024
       data:
         first:
           name: _Cutoff
