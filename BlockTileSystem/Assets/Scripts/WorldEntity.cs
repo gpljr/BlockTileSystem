@@ -91,7 +91,7 @@ public class WorldEntity : MonoBehaviour {
 
     bool inStuckAnimation;
 
-    public bool entityActive;
+    public bool entityActive=true;
 
     public void SetCharacter () {
         if (gameObject.GetComponent<Character>() != null) {

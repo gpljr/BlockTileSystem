@@ -195,7 +195,6 @@ public class WorldManager : MonoBehaviour {
                                 if (e != null && e.entityActive && e.entityType != EntityType.Bullet && e.entityType != EntityType.Shooter) {
                                     if (eLocation == tLocation) {
                                         StepOnTrigger(t, e);
-                                        print("bullet on character");
                                     }
                                 }
                             }

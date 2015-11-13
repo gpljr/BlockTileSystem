@@ -67,7 +67,7 @@
             <sDirection>South</sDirection>
             <range>1</range>
             <ID>1</ID>
-            <timeInterval>1.5</timeInterval>
+            <timeInterval>2</timeInterval>
         </PusherInXML>
         <PusherInXML>
             <vPosition>
@@ -78,7 +78,7 @@
             <sDirection>West</sDirection>
             <range>1</range>
             <ID>2</ID>
-            <timeInterval>1.5</timeInterval>
+            <timeInterval>2</timeInterval>
         </PusherInXML>
         <!-- <PusherInXML>
             <vPosition>
