@@ -26,6 +26,9 @@ public class UIController : MonoBehaviour {
     [SerializeField] Text RestartText;
     bool restartTextShowed;
 
+    [SerializeField] Text StuckText;
+    bool stuckTextShowed;
+
     [SerializeField] GameObject cameraControl;
 
     // Use this for initialization
@@ -40,6 +43,7 @@ public class UIController : MonoBehaviour {
 
         SetButtonHighlight(Setting, settingHighlight);
         RestartText.gameObject.SetActive(false);
+        StuckText.gameObject.SetActive(false);
     }
     void SetButtonHighlight (Button button, Sprite highlightSprite) {
         SpriteState settingST = new SpriteState();
@@ -57,6 +61,7 @@ public class UIController : MonoBehaviour {
             RestartText.gameObject.SetActive(true);
         }
         restartTextShowed = true;
+        StuckText.gameObject.SetActive(false);
     }
     public void RestartButtonPointerExit () {
         RestartLevel.image.sprite = restartLevelNormal;
@@ -129,5 +134,30 @@ public class UIController : MonoBehaviour {
     }
     void audioValueUpdate () {
         LevelCode.audioVolume = audioSlider.value;
+    }
+
+    void LevelLoaded (LevelLoadedEvent e) {
+        if (e.iLevel == 2) {
+            StartCoroutine(ShowStuckRestartUI());
+        }
+    }
+    IEnumerator ShowStuckRestartUI () {
+        yield return new WaitForSeconds(1f);
+        if (!stuckTextShowed) {
+            StuckText.gameObject.SetActive(true);
+            stuckTextShowed = true;
+            StartCoroutine(StuckTextDisappear());
+        }
+    }
+    IEnumerator StuckTextDisappear () {
+        yield return new WaitForSeconds(4f);
+        StuckText.gameObject.SetActive(false);
+    }
+
+    void OnEnable () {
+        Events.g.AddListener<LevelLoadedEvent>(LevelLoaded);
+    }
+    void OnDisable () {
+        Events.g.RemoveListener<LevelLoadedEvent>(LevelLoaded);
     }
 }
