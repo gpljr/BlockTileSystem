@@ -91,7 +91,7 @@ public class Character : MonoBehaviour {
         _worldEntity.SetCharacter();
     }
     void RefreshOnLevelLoaded (LevelLoadedEvent e) {
-        Refresh();
+        //Refresh();
     }
     void RefreshOnBulletHit (BulletHitEvent e) {
         Refresh();
@@ -110,6 +110,7 @@ public class Character : MonoBehaviour {
         _worldEntity.Refresh();
         isStuck = false;
         characterInMoving = false;
+
     }
     void OnEnable () {
         _worldEntity.Simulators += Simulate;
@@ -164,35 +165,31 @@ public class Character : MonoBehaviour {
                 ExitIdle();
             }
 
-            if (!_worldEntity.StateInfo.characterInMoving && !onMergingStar) {
+            if (!_bMove && !_worldEntity.StateInfo.characterInMoving && !onMergingStar) {
                 //_input = new IntVector(Vector2.zero);
                 if (Input.GetKeyDown(_leftKey)) {
                     _input.x -= 1;
                     _direction = Direction.West;
                     _bMove = true;
                     idleTimer = 0f;
-                    print("input left");
                 }
                 if (Input.GetKeyDown(_rightKey)) {
                     _input.x += 1;
                     _direction = Direction.East;
                     _bMove = true;
                     idleTimer = 0f;
-                    print("input right");
                 }
                 if (Input.GetKeyDown(_upKey)) {
                     _input.y += 1;
                     _direction = Direction.North;
                     _bMove = true;
                     idleTimer = 0f;
-                    print("input up");
                 }
                 if (Input.GetKeyDown(_downKey)) {
                     _input.y -= 1;
                     _direction = Direction.South;
                     _bMove = true;
                     idleTimer = 0f;
-                    print("input down");
                 }
             }
             if (_worldEntity.IsPushed) {
@@ -244,8 +241,9 @@ public class Character : MonoBehaviour {
         
     }
     private void Simulate () {
+        //print("id "+_iCharacterID+" in moving "+characterInMoving);
         if (_bMove && !isStuck && !characterInMoving && !onMergingStar && !_worldEntity.IsPushed) {
-            
+            //print("need move");
             SetSpriteByDistance(false);
             ExitIdle();
             Events.g.Raise(new MoveInputEvent(_iCharacterID, _direction));
