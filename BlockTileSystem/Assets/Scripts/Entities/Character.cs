@@ -171,24 +171,28 @@ public class Character : MonoBehaviour {
                     _direction = Direction.West;
                     _bMove = true;
                     idleTimer = 0f;
+                    print("input left");
                 }
                 if (Input.GetKeyDown(_rightKey)) {
                     _input.x += 1;
                     _direction = Direction.East;
                     _bMove = true;
                     idleTimer = 0f;
+                    print("input right");
                 }
                 if (Input.GetKeyDown(_upKey)) {
                     _input.y += 1;
                     _direction = Direction.North;
                     _bMove = true;
                     idleTimer = 0f;
+                    print("input up");
                 }
                 if (Input.GetKeyDown(_downKey)) {
                     _input.y -= 1;
                     _direction = Direction.South;
                     _bMove = true;
                     idleTimer = 0f;
+                    print("input down");
                 }
             }
             if (_worldEntity.IsPushed) {

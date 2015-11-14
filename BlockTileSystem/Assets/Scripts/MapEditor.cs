@@ -36,21 +36,26 @@ public class MapEditor : MonoBehaviour
     {
         //read the file
         XmlSerializer levelDeserializer = new XmlSerializer(typeof(SavableLevel));
-        string sLevelName = "Levels/" + iLevel.ToString() + ".xml";
-        FileStream levelReader = new FileStream(Path.Combine(Application.streamingAssetsPath, sLevelName), FileMode.Open); 
-        if (levelReader != null)
-        {    
-            XmlReader xmlReader = XmlReader.Create(levelReader);
-            toLoad = (SavableLevel)levelDeserializer.Deserialize(xmlReader);
-            SetLevelType();
-            levelReader.Close();
-            print("level " + iLevel + " is loaded.");
-        }
-        else
-        {
-            print("no level file");
+        //string sLevelName = "Levels/" + iLevel.ToString() + ".xml";
+        // FileStream levelReader = new FileStream(Path.Combine(Application.streamingAssetsPath, sLevelName), FileMode.Open); 
+        // if (levelReader != null)
+        // {    
+        //     XmlReader xmlReader = XmlReader.Create(levelReader);
+        //     toLoad = (SavableLevel)levelDeserializer.Deserialize(xmlReader);
+        //     SetLevelType();
+        //     levelReader.Close();
+        //     print("level " + iLevel + " is loaded.");
+        // }
 
-        }
+        string sLevelName = "Levels/" + iLevel.ToString();
+        TextAsset levelReader = UnityEngine.Resources.Load<TextAsset>(sLevelName);
+        XmlReader xmlReader = XmlReader.Create(new StringReader(levelReader.text));
+        // XmlDocument xmldoc = new XmlDocument ();
+        // xmldoc.LoadXml ( levelReader.text );
+        // toLoad = (SavableLevel)xmldoc;
+        toLoad = (SavableLevel)levelDeserializer.Deserialize(xmlReader);
+        SetLevelType();
+        
     }
     public IntVector GetDim()
     {
